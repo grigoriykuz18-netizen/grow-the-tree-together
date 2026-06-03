@@ -4,182 +4,114 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Grow The Tree Together</title>
+<meta name="description" content="Claim one of only 100 permanent spots on the Tree.">
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:#071006;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:white}
+html,body{margin:0;min-height:100%;background:#061007;color:white;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
 body{overflow-x:hidden}
 .hero{min-height:100vh;position:relative;overflow:hidden}
 .visual{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
-.hotspot{position:absolute;z-index:10;display:block;border-radius:16px;text-indent:-9999px;overflow:hidden}
-.claim-left{left:2.1%;top:74.5%;width:16.5%;height:6.5%}
-.claim-right{right:3.4%;top:62.4%;width:18.2%;height:6.4%}
-.prices-link{left:3%;top:83.6%;width:15%;height:4%}
+.hotspot{position:absolute;z-index:10;display:block;text-indent:-9999px;overflow:hidden;border-radius:18px}
+.claim-main{left:2.55%;top:78.2%;width:16.8%;height:6.5%}
+.view-all{right:2.6%;bottom:3.5%;width:8.6%;height:5.2%}
 .live-layer{position:absolute;inset:0;z-index:7;pointer-events:none}
-.claimed-dot{
-  position:absolute;
-  transform:translate(-50%,-50%);
-  pointer-events:auto;
-  width:34px;
-  height:34px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  font-weight:900;
-  font-size:13px;
-  box-shadow:0 8px 20px rgba(0,0,0,.28);
-  border:3px solid;
-  cursor:pointer;
-}
-.claimed-dot.green{background:#eaffd1;color:#1d3b10;border-color:#8fd33d}
-.claimed-dot.white{background:#fff;color:#263026;border-color:#f7f8f3}
-.claimed-dot.gold{background:#fff1a8;color:#3b2600;border-color:#e4aa19}
-.claimed-dot:hover:after{
-  content:attr(data-info);
-  position:absolute;
-  left:50%;
-  top:-12px;
-  transform:translate(-50%,-100%);
-  background:rgba(8,18,10,.92);
-  color:white;
-  border-radius:12px;
-  padding:8px 10px;
-  white-space:nowrap;
-  font-size:12px;
-}
-.panel{
-  position:fixed;
-  right:22px;
-  bottom:22px;
-  z-index:30;
-  width:min(380px,calc(100vw - 44px));
-  background:rgba(255,255,255,.96);
-  color:#17330e;
-  border-radius:24px;
-  padding:18px;
-  box-shadow:0 18px 60px rgba(0,0,0,.25);
-  display:none;
-}
+.claimed-avatar{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;display:grid;place-items:center;border-radius:50%;background:#fff;color:#102410;font-weight:950;box-shadow:0 0 22px rgba(255,255,255,.45),0 10px 26px rgba(0,0,0,.28);cursor:pointer}
+.claimed-avatar.green{width:42px;height:42px;border:4px solid #8fd33d}
+.claimed-avatar.white{width:52px;height:52px;border:4px solid #f7f8f3}
+.claimed-avatar.gold{width:66px;height:66px;border:5px solid #e4aa19;box-shadow:0 0 34px rgba(228,170,25,.8),0 12px 30px rgba(0,0,0,.3)}
+.claimed-avatar::after{content:attr(data-info);position:absolute;left:50%;top:-12px;transform:translate(-50%,-100%);background:rgba(8,18,10,.94);color:white;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:9px 11px;white-space:nowrap;font-size:12px;opacity:0;pointer-events:none}
+.claimed-avatar:hover::after{opacity:1}
+.panel{position:fixed;right:24px;bottom:24px;width:min(400px,calc(100vw - 48px));z-index:30;background:rgba(9,18,14,.94);border:1px solid rgba(255,255,255,.18);color:white;border-radius:24px;padding:20px;box-shadow:0 20px 70px rgba(0,0,0,.36);backdrop-filter:blur(18px);display:none}
 .panel.open{display:block}
-.panel h2{margin:0 0 12px;color:#2f6f16;font-size:18px;letter-spacing:.08em;text-transform:uppercase}
-.panel input,.panel select{
-  width:100%;
-  height:46px;
-  border-radius:12px;
-  border:1px solid rgba(0,0,0,.14);
-  padding:0 12px;
-  margin-top:10px;
-  background:white;
-  color:#17330e;
-}
-.panel button{
-  width:100%;
-  height:50px;
-  border:0;
-  border-radius:14px;
-  margin-top:12px;
-  background:linear-gradient(135deg,#8fd345,#4b941f);
-  color:white;
-  font-weight:900;
-  cursor:pointer;
-}
-.close{
-  position:absolute!important;
-  right:14px!important;
-  top:10px!important;
-  width:auto!important;
-  height:auto!important;
-  background:transparent!important;
-  color:#17330e!important;
-  font-size:24px!important;
-  margin:0!important;
-}
-.content{background:#071006;color:white;padding:82px clamp(18px,5vw,72px)}
-.section-head{max-width:840px;margin:0 auto 30px;text-align:center}
-.section-head .kicker{color:#a6d46f;letter-spacing:.16em;text-transform:uppercase;font-weight:900;font-size:12px}
-.section-head h2{font-family:Georgia,serif;font-size:clamp(34px,5vw,64px);line-height:1;margin:10px 0 14px}
-.section-head p{color:rgba(255,255,255,.72);line-height:1.6;margin:0}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1100px;margin:0 auto}
+.panel h2{margin:0 0 14px;font-family:Georgia,serif;font-size:28px}
+.close{position:absolute;right:14px;top:12px;background:transparent;border:0;color:white;font-size:26px;cursor:pointer}
+.panel input,.panel select{width:100%;height:48px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:white;padding:0 12px;margin-top:10px}
+.panel select option{color:#111}
+.panel button.claim{width:100%;height:52px;border:0;border-radius:14px;margin-top:14px;background:linear-gradient(135deg,#93d64b,#4a961f);color:white;font-weight:950;cursor:pointer}
+.small{font-size:12px;color:rgba(255,255,255,.68);line-height:1.4}
+.content{background:#061007;color:white;padding:70px clamp(18px,5vw,72px)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1100px;margin:0 auto}
 .card{border:1px solid rgba(255,255,255,.14);border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));padding:24px}
-.card h3{margin:0 0 10px;color:#a6d46f;font-size:22px}
-.card p{color:rgba(255,255,255,.7);line-height:1.55;margin:0}
-.card strong{font-size:36px;color:#f6c95a;display:block;margin-bottom:8px}
-footer{background:#071006;border-top:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.65);padding:28px clamp(18px,5vw,72px);display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
-@media(max-width:900px){
-  .hero{min-height:70vh}.hotspot{display:none}.panel{right:12px;bottom:12px;width:calc(100vw - 24px)}
-  .grid3{grid-template-columns:1fr}
-}
+.card strong{font-size:40px;color:#b7ef62;display:block}.card h3{color:#fff}.card p{color:rgba(255,255,255,.7);line-height:1.55}
+footer{background:#061007;color:rgba(255,255,255,.65);padding:24px clamp(18px,5vw,72px);border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media(max-width:900px){.hero{min-height:70vh}.hotspot{display:none}.panel{right:12px;bottom:12px;width:calc(100vw - 24px)}.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <main class="hero">
-  <img class="visual" src="./tree-visual.png" alt="Grow The Tree Together">
-  <a href="#" class="hotspot claim-left" id="claimLeft">Claim</a>
-  <a href="#" class="hotspot claim-right" id="claimRight">Claim</a>
-  <a href="#spots" class="hotspot prices-link">Prices</a>
+  <img class="visual" src="./tree-ui.png" alt="Grow The Tree Together">
+  <a href="#" class="hotspot claim-main" id="openClaim">Claim your spot</a>
+  <a href="#spots" class="hotspot view-all">View all</a>
   <div class="live-layer" id="liveLayer"></div>
 </main>
 
 <div class="panel" id="panel">
   <button class="close" id="close">×</button>
-  <h2>Claim your spot</h2>
+  <h2>Claim Your Spot</h2>
   <input id="name" maxlength="16" placeholder="Name / brand">
-  <input id="link" maxlength="48" placeholder="Website / Telegram">
+  <input id="link" maxlength="64" placeholder="Website / Telegram">
   <select id="type">
     <option value="green">Green Spot — $50</option>
     <option value="white">White Spot — $100</option>
     <option value="gold">Golden Spot — $250</option>
   </select>
-  <button id="preview">Preview on tree</button>
+  <button class="claim" id="preview">Preview on Tree</button>
+  <p class="small">PayPal integration comes next. Preview shows how the live avatar appears on the Tree.</p>
 </div>
 
 <section class="content" id="spots">
-  <div class="section-head">
-    <div class="kicker">Fixed supply</div>
-    <h2>100 spots. No more.</h2>
-    <p>Final model: 49 Green, 42 White and 9 Golden spots. The current visual uses the old beautiful tree while we refine live placement.</p>
-  </div>
-  <div class="grid3">
-    <div class="card"><strong>$50</strong><h3>Green Spot</h3><p>49 spots. Outer area.</p></div>
-    <div class="card"><strong>$100</strong><h3>White Spot</h3><p>42 spots. Middle area.</p></div>
-    <div class="card"><strong>$250</strong><h3>Golden Spot</h3><p>9 spots. Premium central area.</p></div>
+  <div class="grid">
+    <div class="card"><strong>49</strong><h3>Green Spots — $50</h3><p>Small avatar spot. Best for early supporters and personal marks.</p></div>
+    <div class="card"><strong>42</strong><h3>White Spots — $100</h3><p>Medium avatar spot with stronger visibility in the crown.</p></div>
+    <div class="card"><strong>9</strong><h3>Golden Spots — $250</h3><p>Largest premium avatar spots with golden glow and central placement.</p></div>
   </div>
 </section>
 
 <footer>
-  <span>Grow The Tree Together</span>
-  <span>Tree — 100 permanent spots.</span>
+  <span>© Grow The Tree Together</span>
+  <span>100 permanent spots on the Tree.</span>
 </footer>
 
 <script>
-const panel=document.getElementById("panel");
-["claimLeft","claimRight"].forEach(id=>{
- const el=document.getElementById(id);
- if(el) el.addEventListener("click",e=>{e.preventDefault();panel.classList.add("open")});
-});
-document.getElementById("close").onclick=()=>panel.classList.remove("open");
+const panel = document.getElementById("panel");
+document.getElementById("openClaim").addEventListener("click", e => { e.preventDefault(); panel.classList.add("open"); });
+document.getElementById("close").addEventListener("click", () => panel.classList.remove("open"));
 
-const zones={
- gold:[[49,30],[53,34],[46,38],[55,42],[50,46],[44,49],[57,50],[48,55],[54,58]],
- white:[[39,25],[44,24],[58,25],[63,28],[36,33],[42,34],[48,34],[56,34],[64,35],[34,42],[40,43],[46,44],[60,44],[66,45],[37,52],[43,53],[51,53],[59,54],[65,55],[35,62],[42,63],[49,64],[57,64],[64,65],[40,72],[48,73],[56,73],[62,72],[32,50],[68,50],[36,70],[66,70],[45,82],[55,82],[30,36],[70,36],[33,57],[67,57],[39,67],[61,67],[47,78],[53,78]],
- green:[[36,15],[42,12],[49,11],[56,12],[63,15],[31,22],[69,22],[27,30],[73,30],[24,40],[76,40],[23,51],[77,51],[25,62],[75,62],[30,72],[70,72],[36,82],[64,82],[43,88],[57,88],[50,91],[29,46],[71,46],[31,58],[69,58],[34,68],[66,68],[39,77],[61,77],[22,34],[78,34],[21,56],[79,56],[28,80],[72,80],[35,90],[65,90],[46,7],[54,7],[32,12],[68,12],[50,84],[18,47],[82,47],[19,65],[81,65],[25,88],[75,88]]
+const zones = {
+  gold: [[58,26],[47,36],[61,42],[51,54],[63,61],[43,66],[72,52],[53,30],[65,33]],
+  white: [[38,26],[44,24],[52,22],[67,24],[73,30],[35,37],[42,39],[49,42],[57,41],[66,39],[74,42],[32,52],[40,52],[48,55],[57,54],[67,55],[75,58],[36,65],[45,68],[55,67],[65,69],[73,70],[42,76],[52,77],[62,76],[69,78],[34,46],[78,48],[39,31],[71,36],[47,49],[61,49],[54,61],[31,61],[79,63],[46,71],[58,72],[37,73],[70,25],[50,34],[59,35],[64,47]],
+  green: [[31,18],[36,14],[43,12],[50,10],[57,11],[64,13],[70,17],[27,25],[75,24],[25,34],[80,35],[23,44],[82,45],[24,55],[81,56],[27,66],[77,66],[33,76],[71,78],[41,84],[52,86],[62,84],[29,39],[76,40],[31,49],[78,51],[34,60],[74,60],[39,70],[68,70],[21,50],[84,52],[22,61],[83,63],[30,72],[78,73],[36,82],[68,83],[47,89],[58,89],[25,29],[79,29],[33,21],[68,21],[45,17],[55,17],[27,58],[76,57],[50,80]]
 };
-let used={gold:0,white:0,green:0};
-function initials(name){return name.split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase() || "?"}
-document.getElementById("preview").onclick=()=>{
- const name=document.getElementById("name").value.trim()||"Your Brand";
- const link=document.getElementById("link").value.trim();
- const type=document.getElementById("type").value;
- const arr=zones[type];
- if(used[type]>=arr.length){alert("No more preview spots in this category.");return;}
- const p=arr[used[type]++];
- const el=document.createElement("div");
- el.className="claimed-dot "+type;
- el.style.left=p[0]+"%"; el.style.top=p[1]+"%";
- el.textContent=initials(name);
- el.dataset.info=name+" — "+(type==="gold"?"Golden Spot":type==="white"?"White Spot":"Green Spot")+(link?" — "+link:"");
- document.getElementById("liveLayer").appendChild(el);
- panel.classList.remove("open");
-};
+let used = {gold:0, white:0, green:0};
+
+function initials(name){ return name.split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase() || "?"; }
+
+document.getElementById("preview").addEventListener("click", () => {
+  const name = document.getElementById("name").value.trim() || "Your Brand";
+  const link = document.getElementById("link").value.trim();
+  const type = document.getElementById("type").value;
+  const arr = zones[type];
+
+  if (used[type] >= arr.length) { alert("No more preview spots in this category."); return; }
+
+  const p = arr[used[type]++];
+  const el = document.createElement("div");
+  el.className = "claimed-avatar " + type;
+  el.style.left = p[0] + "%";
+  el.style.top = p[1] + "%";
+  el.textContent = initials(name);
+  el.dataset.info = name + " — " + (type === "gold" ? "Golden Spot" : type === "white" ? "White Spot" : "Green Spot") + (link ? " — " + link : "");
+  if (link) {
+    el.addEventListener("click", () => {
+      let url = link;
+      if (!/^https?:\/\//i.test(url) && !url.startsWith("@")) url = "https://" + url;
+      if (url.startsWith("@")) url = "https://t.me/" + url.slice(1);
+      window.open(url, "_blank");
+    });
+  }
+  document.getElementById("liveLayer").appendChild(el);
+  panel.classList.remove("open");
+});
 </script>
 </body>
 </html>
