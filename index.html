@@ -4,10 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Grow The Tree Together — Tree #1</title>
-<meta name="description" content="Claim one of only 92 permanent spots on Tree #1.">
+<meta name="description" content="Claim one of only 100 permanent spots on Tree #1.">
 <style>
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 html,body{margin:0;min-height:100%;background:#071006;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:white}
+body{overflow-x:hidden}
 .hero{min-height:100vh;position:relative;overflow:hidden}
 .visual{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
 .hotspot{position:absolute;z-index:5;display:block;border-radius:16px;text-indent:-9999px;overflow:hidden}
@@ -15,13 +17,13 @@ html,body{margin:0;min-height:100%;background:#071006;font-family:Inter,system-u
 .claim-right{right:3.4%;top:62.4%;width:18.2%;height:6.4%}
 .prices-link{left:3%;top:83.6%;width:15%;height:4%}
 .panel{
-  position:fixed;right:22px;bottom:22px;z-index:20;width:min(360px,calc(100vw - 44px));
-  background:rgba(255,255,255,.94);color:#17330e;border-radius:24px;padding:18px;
+  position:fixed;right:22px;bottom:22px;z-index:20;width:min(380px,calc(100vw - 44px));
+  background:rgba(255,255,255,.95);color:#17330e;border-radius:24px;padding:18px;
   box-shadow:0 18px 60px rgba(0,0,0,.25);display:none
 }
 .panel.open{display:block}
 .panel h2{margin:0 0 12px;color:#2f6f16;font-size:18px;letter-spacing:.08em;text-transform:uppercase}
-.panel input,.panel select{width:100%;height:46px;border-radius:12px;border:1px solid rgba(0,0,0,.14);padding:0 12px;margin-top:10px}
+.panel input,.panel select{width:100%;height:46px;border-radius:12px;border:1px solid rgba(0,0,0,.14);padding:0 12px;margin-top:10px;background:white;color:#17330e}
 .panel button{width:100%;height:50px;border:0;border-radius:14px;margin-top:12px;background:linear-gradient(135deg,#8fd345,#4b941f);color:white;font-weight:900;cursor:pointer}
 .close{position:absolute!important;right:14px!important;top:10px!important;width:auto!important;height:auto!important;background:transparent!important;color:#17330e!important;font-size:24px!important;margin:0!important}
 .live-layer{position:absolute;inset:0;z-index:4;pointer-events:none}
@@ -33,8 +35,25 @@ html,body{margin:0;min-height:100%;background:#071006;font-family:Inter,system-u
 .mobile h1{font-family:Georgia,serif;font-size:40px;line-height:.95;margin:0 0 12px}
 .mobile p{color:rgba(255,255,255,.78);line-height:1.5}
 .mobile a{display:inline-flex;min-height:52px;padding:0 20px;border-radius:14px;background:#6caf2e;color:white;text-decoration:none;align-items:center;font-weight:900}
-@media(max-width:850px){
+.content{background:#071006;color:white;padding:82px clamp(18px,5vw,72px)}
+.section-head{max-width:840px;margin:0 auto 30px;text-align:center}
+.section-head .kicker{color:#a6d46f;letter-spacing:.16em;text-transform:uppercase;font-weight:900;font-size:12px}
+.section-head h2{font-family:Georgia,serif;font-size:clamp(34px,5vw,64px);line-height:1;margin:10px 0 14px}
+.section-head p{color:rgba(255,255,255,.72);line-height:1.6;margin:0}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1100px;margin:0 auto}
+.card{border:1px solid rgba(255,255,255,.14);border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));padding:24px}
+.card h3{margin:0 0 10px;color:#a6d46f;font-size:22px}
+.card p{color:rgba(255,255,255,.7);line-height:1.55;margin:0}
+.pricing strong{font-size:36px;color:#f6c95a;display:block;margin-bottom:8px}
+.faq{max-width:950px;margin:0 auto;display:grid;gap:12px}
+.faq details{border:1px solid rgba(255,255,255,.14);border-radius:18px;background:rgba(255,255,255,.045);padding:18px}
+.faq summary{cursor:pointer;font-weight:900;color:#fff}
+.faq p{color:rgba(255,255,255,.7);line-height:1.55}
+.terms{max-width:950px;margin:0 auto;color:rgba(255,255,255,.68);line-height:1.6}
+footer{background:#071006;border-top:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.65);padding:28px clamp(18px,5vw,72px);display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+@media(max-width:900px){
   .hero{min-height:70vh}.hotspot{display:none}.mobile{display:block}.panel{right:12px;bottom:12px;width:calc(100vw - 24px)}
+  .grid3{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -43,13 +62,13 @@ html,body{margin:0;min-height:100%;background:#071006;font-family:Inter,system-u
   <img class="visual" src="./tree-visual.png" alt="Grow The Tree Together Tree #1">
   <a href="#" class="hotspot claim-left" id="claimLeft">Claim</a>
   <a href="#" class="hotspot claim-right" id="claimRight">Claim</a>
-  <a href="#prices" class="hotspot prices-link">Prices</a>
+  <a href="#spots" class="hotspot prices-link">Prices</a>
   <div class="live-layer" id="liveLayer"></div>
 </main>
 
-<section class="mobile" id="prices">
-  <h1>Claim one of only 92 permanent spots.</h1>
-  <p>Tree #1 has 15 Golden Spots, 34 White Spots and 43 Green Spots.</p>
+<section class="mobile">
+  <h1>Claim one of only 100 permanent spots.</h1>
+  <p>Tree #1 has 9 Golden Spots, 42 White Spots and 49 Green Spots. Claimed spots become visible on the tree.</p>
   <a href="#" id="mobileClaim">Claim Your Spot</a>
 </section>
 
@@ -64,7 +83,71 @@ html,body{margin:0;min-height:100%;background:#071006;font-family:Inter,system-u
     <option value="gold">Golden Spot — $250</option>
   </select>
   <button id="preview">Preview on tree</button>
+  <p style="font-size:12px;line-height:1.4;color:#55704a;margin:10px 0 0">PayPal integration comes next. Preview shows how a real claim appears.</p>
 </div>
+
+<section class="content" id="spots">
+  <div class="section-head">
+    <div class="kicker">Fixed supply</div>
+    <h2>100 spots. No more.</h2>
+    <p>Tree #1 has a fixed number of visible places: 49 Green, 42 White and 9 Golden. When all 100 are claimed, Tree #1 closes forever.</p>
+  </div>
+  <div class="grid3">
+    <div class="card pricing"><strong>$50</strong><h3>Green Spot</h3><p>49 spots. Outer area of the tree. Good for names, small projects and early supporters.</p></div>
+    <div class="card pricing"><strong>$100</strong><h3>White Spot</h3><p>42 spots. Middle area of the tree. More visible and more limited.</p></div>
+    <div class="card pricing"><strong>$250</strong><h3>Golden Spot</h3><p>9 spots. Premium central area of Tree #1. The rarest and most visible tier.</p></div>
+  </div>
+</section>
+
+<section class="content" id="how">
+  <div class="section-head">
+    <div class="kicker">How it works</div>
+    <h2>Claim. Appear. Stay.</h2>
+  </div>
+  <div class="grid3">
+    <div class="card"><h3>1. Choose a spot</h3><p>Select Green, White or Golden depending on how visible you want to be.</p></div>
+    <div class="card"><h3>2. Add your name</h3><p>Use your name, project, Telegram channel, company or website.</p></div>
+    <div class="card"><h3>3. Join Tree #1</h3><p>Your claimed spot appears on the tree and in the live claim feed.</p></div>
+  </div>
+</section>
+
+<section class="content" id="why">
+  <div class="section-head">
+    <div class="kicker">Why claim a spot?</div>
+    <h2>Visibility with scarcity.</h2>
+    <p>This is not a normal banner. It is a limited visual place on the first tree of a public internet project.</p>
+  </div>
+</section>
+
+<section class="content" id="faq">
+  <div class="section-head">
+    <div class="kicker">FAQ</div>
+    <h2>Questions before claiming.</h2>
+  </div>
+  <div class="faq">
+    <details><summary>Is this a charity?</summary><p>No. This is a digital interactive art and placement project. Payments support the creation and growth of the project.</p></details>
+    <details><summary>How many spots exist?</summary><p>Tree #1 has exactly 100 spots: 49 Green, 42 White and 9 Golden.</p></details>
+    <details><summary>Can I place a company or Telegram channel?</summary><p>Yes. You can use a personal name, project, company, website or Telegram channel, as long as it is appropriate.</p></details>
+    <details><summary>What happens after all spots are claimed?</summary><p>Tree #1 closes forever. Future trees may open separately later.</p></details>
+    <details><summary>When will PayPal work?</summary><p>The current version is a visual MVP. PayPal will be connected after the final layout is approved.</p></details>
+  </div>
+</section>
+
+<section class="content" id="terms">
+  <div class="section-head">
+    <div class="kicker">Terms</div>
+    <h2>Simple rules.</h2>
+  </div>
+  <div class="terms">
+    <p>Spots must not include illegal, hateful, adult, misleading or harmful content. The project owner may reject or remove inappropriate submissions. Claimed spot design, placement and display may be adjusted to keep the tree readable and visually balanced.</p>
+    <p>Contact: hello@growthetreetogether.com</p>
+  </div>
+</section>
+
+<footer>
+  <span>Grow The Tree Together</span>
+  <span>Tree #1 — 100 permanent spots.</span>
+</footer>
 
 <script>
 const panel=document.getElementById("panel");
@@ -74,17 +157,18 @@ const panel=document.getElementById("panel");
 });
 document.getElementById("close").onclick=()=>panel.classList.remove("open");
 
+const limits = {gold:9, white:42, green:49};
 const zones={
- gold:[[49,30],[53,34],[46,38],[55,42],[50,46],[44,49],[57,50],[48,55],[54,58],[50,63],[43,43],[59,38],[47,25],[52,25],[51,39]],
- white:[[39,25],[44,24],[58,25],[63,28],[36,33],[42,34],[48,34],[56,34],[64,35],[34,42],[40,43],[46,44],[60,44],[66,45],[37,52],[43,53],[51,53],[59,54],[65,55],[35,62],[42,63],[49,64],[57,64],[64,65],[40,72],[48,73],[56,73],[62,72],[32,50],[68,50],[36,70],[66,70],[45,82],[55,82]],
- green:[[36,15],[42,12],[49,11],[56,12],[63,15],[31,22],[69,22],[27,30],[73,30],[24,40],[76,40],[23,51],[77,51],[25,62],[75,62],[30,72],[70,72],[36,82],[64,82],[43,88],[57,88],[50,91],[29,46],[71,46],[31,58],[69,58],[34,68],[66,68],[39,77],[61,77],[22,34],[78,34],[21,56],[79,56],[28,80],[72,80],[35,90],[65,90],[46,7],[54,7],[32,12],[68,12],[50,84]]
+ gold:[[49,30],[53,34],[46,38],[55,42],[50,46],[44,49],[57,50],[48,55],[54,58]],
+ white:[[39,25],[44,24],[58,25],[63,28],[36,33],[42,34],[48,34],[56,34],[64,35],[34,42],[40,43],[46,44],[60,44],[66,45],[37,52],[43,53],[51,53],[59,54],[65,55],[35,62],[42,63],[49,64],[57,64],[64,65],[40,72],[48,73],[56,73],[62,72],[32,50],[68,50],[36,70],[66,70],[45,82],[55,82],[30,36],[70,36],[33,57],[67,57],[39,67],[61,67],[47,78],[53,78]],
+ green:[[36,15],[42,12],[49,11],[56,12],[63,15],[31,22],[69,22],[27,30],[73,30],[24,40],[76,40],[23,51],[77,51],[25,62],[75,62],[30,72],[70,72],[36,82],[64,82],[43,88],[57,88],[50,91],[29,46],[71,46],[31,58],[69,58],[34,68],[66,68],[39,77],[61,77],[22,34],[78,34],[21,56],[79,56],[28,80],[72,80],[35,90],[65,90],[46,7],[54,7],[32,12],[68,12],[50,84],[18,47],[82,47],[19,65],[81,65],[25,88],[75,88]]
 };
 let used={gold:0,white:0,green:0};
 document.getElementById("preview").onclick=()=>{
  const name=document.getElementById("name").value.trim()||"Your Brand";
  const type=document.getElementById("type").value;
  const arr=zones[type];
- if(used[type]>=arr.length){alert("No more preview spots in this category.");return;}
+ if(used[type]>=limits[type]){alert("This category is full.");return;}
  const p=arr[used[type]++];
  const el=document.createElement("div");
  el.className="added "+type;
