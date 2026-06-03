@@ -4,554 +4,165 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Grow The Tree Together</title>
-<meta name="description" content="Claim one of only 100 permanent spots on the tree.">
 <style>
-:root {
-  --green:#8fd33d;
-  --green2:#5fb421;
-  --white:#f5f7f0;
-  --gold:#e4aa19;
-  --ink:#102410;
-}
-* { box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body {
-  margin:0;
-  background:#071006;
-  color:white;
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-  overflow-x:hidden;
-}
-.hero {
-  min-height:100vh;
-  position:relative;
-  display:grid;
-  grid-template-columns:0.72fr 1.48fr 0.78fr;
-  gap:24px;
-  align-items:center;
-  padding:86px clamp(20px,3vw,52px) 34px;
-  background:
-    radial-gradient(circle at 52% 82%, rgba(255,209,97,.35), transparent 19%),
-    linear-gradient(180deg,#0e5c94 0%, #8bcce3 43%, #f2c777 68%, #2b842f 100%);
-  overflow:hidden;
-}
-.hero::before {
-  content:"";
-  position:absolute; inset:0;
-  background:
-    radial-gradient(circle at 20% 72%,rgba(255,255,255,.20),transparent 14%),
-    radial-gradient(circle at 78% 67%,rgba(255,255,255,.18),transparent 17%),
-    linear-gradient(90deg,rgba(3,10,8,.47),rgba(3,10,8,.04) 34%,rgba(3,10,8,.04) 66%,rgba(3,10,8,.40));
-  pointer-events:none;
-}
-.cloud {
-  position:absolute;background:rgba(255,255,255,.58);filter:blur(10px);border-radius:999px;opacity:.72;
-}
-.c1 {width:240px;height:56px;left:18%;top:10%;}
-.c2 {width:190px;height:46px;right:12%;top:16%;}
-.c3 {width:270px;height:58px;left:55%;top:8%;}
-.mountains {
-  position:absolute;left:0;right:0;bottom:15%;height:28%;
-  background:
-    linear-gradient(135deg,transparent 0 34%,rgba(20,75,65,.48) 35% 55%,transparent 56%),
-    linear-gradient(225deg,transparent 0 28%,rgba(19,75,69,.52) 29% 50%,transparent 51%);
-  opacity:.72;
-}
-.lake {
-  position:absolute;left:0;right:0;bottom:22%;height:12%;
-  background:linear-gradient(180deg,rgba(157,218,232,.55),rgba(247,206,120,.34));
-}
-.meadow {
-  position:absolute;left:0;right:0;bottom:0;height:25%;
-  background:linear-gradient(180deg,rgba(78,139,49,.85),#173f1a);
-}
-header {
-  position:absolute;top:0;left:0;right:0;z-index:20;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:22px clamp(20px,3vw,52px);
-  background:linear-gradient(180deg,rgba(2,12,18,.46),transparent);
-}
-.logo {display:flex;gap:12px;align-items:center;font-family:Georgia,serif;font-size:22px;font-weight:800;text-shadow:0 2px 20px rgba(0,0,0,.28)}
-.logo span:first-child {font-size:28px}
-nav {display:flex;gap:28px;font-weight:850}
-nav a {color:white;text-decoration:none}
-nav a.active {color:#b7ef62;border-bottom:2px solid #b7ef62;padding-bottom:8px}
-.left,.tree-zone,.panel {position:relative;z-index:5}
-.kicker {color:#b7ef62;letter-spacing:.16em;text-transform:uppercase;font-weight:950;font-size:14px}
-h1 {
-  margin:14px 0 18px;
-  font-family:Georgia,serif;
-  font-size:clamp(44px,5vw,78px);
-  line-height:.9;
-  letter-spacing:-.05em;
-  text-shadow:0 10px 40px rgba(0,0,0,.42);
-}
-h1 span {color:#b7ef62}
-.lead {font-size:18px;line-height:1.55;max-width:430px;text-shadow:0 3px 16px rgba(0,0,0,.42)}
-.count-card {
-  margin-top:28px;display:inline-flex;flex-direction:column;
-  padding:20px 26px;border-radius:18px;
-  background:rgba(8,18,19,.76);backdrop-filter:blur(12px);
-  box-shadow:0 18px 50px rgba(0,0,0,.24);
-}
-.count-card strong {font-size:36px;color:#b7ef62}
-.count-card span {letter-spacing:.14em;text-transform:uppercase;font-weight:900}
-.legend {display:flex;gap:20px;flex-wrap:wrap;margin:24px 0 0}
-.legend-item {display:flex;gap:8px;align-items:center;font-weight:800}
-.dot {width:18px;height:24px;border-radius:78% 20% 78% 20%;display:inline-block;border:1px solid rgba(255,255,255,.6)}
-.dot.green {background:linear-gradient(135deg,#b9eb60,#6eae2d)}
-.dot.white {background:linear-gradient(135deg,#fff,#cdd3cf)}
-.dot.gold {background:linear-gradient(135deg,#ffe889,#d49d16)}
-.btn {
-  min-height:56px;padding:0 24px;border-radius:14px;border:0;
-  display:inline-flex;align-items:center;justify-content:center;
-  text-decoration:none;font-weight:950;letter-spacing:.04em;color:white;
-  background:linear-gradient(135deg,#93d64b,#4a961f);
-  box-shadow:0 12px 30px rgba(70,140,28,.35);cursor:pointer;
-}
-.cta {margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
-.tree-zone {
-  min-height:680px;height:min(82vh,820px);
-  display:grid;place-items:center;
-}
-.tree-stage {width:min(880px,100%);height:100%;position:relative}
-.tree-svg {width:100%;height:100%;overflow:visible;filter:drop-shadow(0 30px 72px rgba(0,0,0,.42))}
-.spot {cursor:pointer}
-.spot .leaf-shape {transition:.16s ease;transform-box:fill-box;transform-origin:center}
-.spot:hover .leaf-shape,.spot.selected .leaf-shape {transform:scale(1.22);filter:brightness(1.12)}
-.claim-mark {opacity:0;transition:.15s}
-.spot.claimed .claim-mark {opacity:1}
-.spot.claimed .leaf-shape {filter:brightness(1.04) drop-shadow(0 0 6px rgba(255,255,255,.35))}
-.tooltip {
-  position:fixed;z-index:50;background:rgba(8,18,10,.92);
-  border:1px solid rgba(255,255,255,.18);color:white;border-radius:12px;
-  padding:9px 11px;font-size:13px;pointer-events:none;opacity:0;
-  transform:translate(-50%,-115%);white-space:nowrap;box-shadow:0 16px 40px rgba(0,0,0,.25);
-}
-.tooltip.visible {opacity:1}
-.panel {
-  background:rgba(255,255,255,.92);color:#17330e;border-radius:28px;padding:24px;
-  box-shadow:0 20px 70px rgba(0,0,0,.22);backdrop-filter:blur(12px);
-}
-.panel h2 {margin:0 0 18px;font-family:Georgia,serif}
-.field {margin-top:12px}
-label {display:block;font-weight:800;font-size:13px;margin-bottom:6px}
-input {width:100%;height:44px;border-radius:10px;border:1px solid rgba(0,0,0,.14);padding:0 12px}
-.choices {display:grid;gap:12px;margin-top:14px}
-.choice {
-  display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;
-  border:1px solid rgba(0,0,0,.10);border-radius:14px;padding:13px;cursor:pointer;background:rgba(255,255,255,.65);
-}
-.choice.selected {border-color:#5ca327;box-shadow:0 0 0 2px rgba(92,163,39,.12)}
-.choice .mini {width:34px;height:46px;border-radius:78% 20% 78% 20%;border:1px solid rgba(0,0,0,.18)}
-.choice.green .mini {background:linear-gradient(135deg,#b9eb60,#6eae2d)}
-.choice.white .mini {background:linear-gradient(135deg,#fff,#cdd3cf)}
-.choice.gold .mini {background:linear-gradient(135deg,#ffe889,#d49d16)}
-.choice strong {display:block}
-.choice span {font-size:13px;color:#51634d}
-.price {font-weight:950;font-size:20px}
-.selected-info {
-  margin-top:14px;padding:12px;border-radius:12px;background:#eef7e7;
-  color:#2d5f17;font-weight:800;line-height:1.35;
-}
-.pay {width:100%;margin-top:14px;color:white}
-.lock {font-size:12px;color:#5f6d5b;text-align:center;margin-top:12px}
-.feed {
-  position:absolute;z-index:6;left:50%;bottom:28px;transform:translateX(-50%);
-  width:min(720px,90vw);background:rgba(255,255,255,.9);color:#17330e;
-  border-radius:22px;padding:18px 24px;box-shadow:0 16px 50px rgba(0,0,0,.18);
-  display:grid;grid-template-columns:180px 1fr;gap:20px;align-items:center;
-}
-.feed h3 {margin:0;color:#2f6f16;text-transform:uppercase;letter-spacing:.08em;font-size:15px}
-.feed p {margin:0;color:#4a5d45}
-.feed-list {display:grid;gap:6px}
-.feed-item {font-size:13px;color:#17330e}
-.feed-item b {color:#2f6f16}
-.info {
-  background:#f5f6f2;color:#172515;padding:52px clamp(20px,3vw,52px);
-  display:grid;grid-template-columns:repeat(4,1fr);gap:18px;
-}
-.card {
-  background:white;border:1px solid rgba(0,0,0,.08);border-radius:22px;padding:22px;
-  box-shadow:0 8px 28px rgba(0,0,0,.06);
-}
-.card h3 {margin:0 0 12px}
-.card p {margin:0;color:#52624e;line-height:1.55}
-footer {
-  background:#07120a;color:rgba(255,255,255,.72);padding:22px clamp(20px,3vw,52px);
-  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
-}
-@media(max-width:1150px){
-  .hero {grid-template-columns:1fr;min-height:150vh}
-  .left {text-align:center}
-  .lead {margin:auto}
-  .legend,.cta {justify-content:center}
-  .tree-zone {order:-1;height:65vh}
-  .panel {max-width:460px;margin:auto}
-  .feed {position:relative;left:auto;bottom:auto;transform:none;margin:24px auto 0}
-  .info {grid-template-columns:1fr}
-}
-@media(max-width:650px){
-  nav {display:none}
-  .logo {font-size:18px}
-  h1 {font-size:42px}
-  .hero {padding-top:76px}
-  .tree-zone {min-height:500px;height:56vh}
-  .feed {grid-template-columns:1fr}
-}
+:root{--green:#8fd33d;--white:#f7f8f3;--gold:#e4aa19;--dark:#102410}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#071006;color:white;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;overflow-x:hidden}
+.hero{min-height:100vh;position:relative;overflow:hidden;display:grid;grid-template-columns:.74fr 1.48fr .78fr;gap:22px;align-items:center;padding:86px clamp(20px,3vw,52px) 34px}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}.shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,16,8,.54),rgba(5,16,8,.04) 34%,rgba(5,16,8,.04) 66%,rgba(5,16,8,.46));z-index:1}
+header{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:22px clamp(20px,3vw,52px);background:linear-gradient(180deg,rgba(2,12,18,.46),transparent)}.logo{display:flex;gap:12px;align-items:center;font-family:Georgia,serif;font-size:22px;font-weight:800;text-shadow:0 2px 20px rgba(0,0,0,.28)}.logo span:first-child{font-size:28px}nav{display:flex;gap:28px;font-weight:850}nav a{color:white;text-decoration:none}nav a.active{color:#b7ef62;border-bottom:2px solid #b7ef62;padding-bottom:8px}
+.left,.tree-layer,.panel{position:relative;z-index:5}.kicker{color:#b7ef62;letter-spacing:.16em;text-transform:uppercase;font-weight:950;font-size:14px}h1{margin:14px 0 18px;font-family:Georgia,serif;font-size:clamp(44px,5vw,78px);line-height:.9;letter-spacing:-.05em;text-shadow:0 10px 40px rgba(0,0,0,.42)}h1 span{color:#b7ef62}.lead{font-size:18px;line-height:1.55;max-width:430px;text-shadow:0 3px 16px rgba(0,0,0,.42)}
+.legend{display:flex;gap:20px;flex-wrap:wrap;margin:24px 0 0}.legend-item{display:flex;gap:8px;align-items:center;font-weight:800}.mini-leaf{width:18px;height:24px;border-radius:78% 20% 78% 20%;display:inline-block;border:1px solid rgba(255,255,255,.75)}.mini-leaf.green{background:linear-gradient(135deg,#b9eb60,#6eae2d)}.mini-leaf.white{background:linear-gradient(135deg,#fff,#cdd3cf)}.mini-leaf.gold{background:linear-gradient(135deg,#ffe889,#d49d16)}
+.count-card{margin-top:28px;display:inline-flex;flex-direction:column;padding:20px 26px;border-radius:18px;background:rgba(8,18,19,.76);backdrop-filter:blur(12px);box-shadow:0 18px 50px rgba(0,0,0,.24)}.count-card strong{font-size:36px;color:#b7ef62}.count-card span{letter-spacing:.14em;text-transform:uppercase;font-weight:900}.btn{min-height:56px;padding:0 24px;border-radius:14px;border:0;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-weight:950;letter-spacing:.04em;color:white;background:linear-gradient(135deg,#93d64b,#4a961f);box-shadow:0 12px 30px rgba(70,140,28,.35);cursor:pointer}.cta{margin-top:26px}
+.tree-layer{height:min(84vh,820px);min-height:680px}.avatar-map{position:absolute;inset:0;z-index:8;pointer-events:none}.avatar-leaf{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;cursor:pointer;background:transparent;border:0;padding:0}.avatar-wrap{width:38px;height:52px;border-radius:78% 20% 78% 20%;display:grid;place-items:center;border:3px solid;box-shadow:0 8px 18px rgba(0,0,0,.28);transition:.16s ease;overflow:hidden;background:rgba(255,255,255,.2)}.avatar-leaf.green .avatar-wrap{border-color:#8fd33d;background:linear-gradient(135deg,#b9eb60,#6eae2d)}.avatar-leaf.white .avatar-wrap{border-color:#f7f8f3;background:linear-gradient(135deg,#fff,#ccd2cd)}.avatar-leaf.gold .avatar-wrap{border-color:#f2c73e;background:linear-gradient(135deg,#ffe889,#d49d16)}.avatar-leaf:hover .avatar-wrap,.avatar-leaf.selected .avatar-wrap{transform:scale(1.22);filter:brightness(1.12)}.avatar-img{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.4);display:grid;place-items:center;font-size:15px;font-weight:900;color:#17330e}.avatar-leaf.claimed .avatar-img{background:#fff}.avatar-leaf.available .avatar-img{opacity:.35}
+.tooltip{position:fixed;z-index:50;background:rgba(8,18,10,.92);border:1px solid rgba(255,255,255,.18);color:white;border-radius:12px;padding:9px 11px;font-size:13px;pointer-events:none;opacity:0;transform:translate(-50%,-115%);white-space:nowrap;box-shadow:0 16px 40px rgba(0,0,0,.25)}.tooltip.visible{opacity:1}
+.panel{background:rgba(255,255,255,.92);color:#17330e;border-radius:28px;padding:24px;box-shadow:0 20px 70px rgba(0,0,0,.22);backdrop-filter:blur(12px)}.panel h2{margin:0 0 18px;font-family:Georgia,serif}.field{margin-top:12px}label{display:block;font-weight:800;font-size:13px;margin-bottom:6px}input{width:100%;height:44px;border-radius:10px;border:1px solid rgba(0,0,0,.14);padding:0 12px}.choices{display:grid;gap:12px;margin-top:14px}.choice{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;border:1px solid rgba(0,0,0,.10);border-radius:14px;padding:13px;cursor:pointer;background:rgba(255,255,255,.65)}.choice.selected{border-color:#5ca327;box-shadow:0 0 0 2px rgba(92,163,39,.12)}.choice strong{display:block}.choice span{font-size:13px;color:#51634d}.price{font-weight:950;font-size:20px}.selected-info{margin-top:14px;padding:12px;border-radius:12px;background:#eef7e7;color:#2d5f17;font-weight:800;line-height:1.35}.pay{width:100%;margin-top:14px;color:white}.lock{font-size:12px;color:#5f6d5b;text-align:center;margin-top:12px}
+.feed{position:absolute;z-index:10;left:50%;bottom:28px;transform:translateX(-50%);width:min(720px,90vw);background:rgba(255,255,255,.9);color:#17330e;border-radius:22px;padding:18px 24px;box-shadow:0 16px 50px rgba(0,0,0,.18);display:grid;grid-template-columns:180px 1fr;gap:20px;align-items:center}.feed h3{margin:0;color:#2f6f16;text-transform:uppercase;letter-spacing:.08em;font-size:15px}.feed p{margin:0;color:#4a5d45}.feed-list{display:grid;gap:6px}.feed-item{font-size:13px;color:#17330e}.feed-item b{color:#2f6f16}
+.info{background:#f5f6f2;color:#172515;padding:52px clamp(20px,3vw,52px);display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.card{background:white;border:1px solid rgba(0,0,0,.08);border-radius:22px;padding:22px;box-shadow:0 8px 28px rgba(0,0,0,.06)}.card h3{margin:0 0 12px}.card p{margin:0;color:#52624e;line-height:1.55}footer{background:#07120a;color:rgba(255,255,255,.72);padding:22px clamp(20px,3vw,52px);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media(max-width:1150px){.hero{grid-template-columns:1fr;min-height:150vh}.left{text-align:center}.lead{margin:auto}.legend{justify-content:center}.tree-layer{order:-1;height:65vh}.panel{max-width:460px;margin:auto}.feed{position:relative;left:auto;bottom:auto;transform:none;margin:24px auto 0}.info{grid-template-columns:1fr}}
+@media(max-width:650px){nav{display:none}.logo{font-size:18px}h1{font-size:42px}.hero{padding-top:76px}.tree-layer{min-height:500px;height:56vh}.avatar-wrap{width:28px;height:38px;border-width:2px}.avatar-img{width:22px;height:22px;font-size:11px}.feed{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <main class="hero">
-  <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
-  <div class="mountains"></div><div class="lake"></div><div class="meadow"></div>
-
-  <header>
-    <div class="logo"><span>🌳</span><span>Grow The Tree Together</span></div>
-    <nav>
-      <a class="active" href="#">Tree</a>
-      <a href="#spots">Spots</a>
-      <a href="#how">How it works</a>
-      <a href="#why">Why claim?</a>
-      <a href="#faq">FAQ</a>
-    </nav>
-  </header>
-
+  <img class="bg" src="./tree-background.jpg" alt="Beautiful tree background">
+  <div class="shade"></div>
+  <header><div class="logo"><span>🌳</span><span>Grow The Tree Together</span></div><nav><a class="active" href="#">Tree</a><a href="#spots">Spots</a><a href="#how">How it works</a><a href="#why">Why claim?</a><a href="#faq">FAQ</a></nav></header>
   <section class="left">
-    <div class="kicker">Tree</div>
-    <h1>Claim one<br>of only <span>100</span><br>permanent<br>spots.</h1>
-    <p class="lead">Choose a real leaf on the tree. Empty leaves show price on hover. Claimed leaves show the owner in the live feed and on hover.</p>
-    <div class="legend">
-      <div class="legend-item"><span class="dot green"></span><span><b id="greenLeft">49</b> Green</span></div>
-      <div class="legend-item"><span class="dot white"></span><span><b id="whiteLeft">42</b> White</span></div>
-      <div class="legend-item"><span class="dot gold"></span><span><b id="goldLeft">9</b> Golden</span></div>
-    </div>
-    <div class="count-card"><strong><span id="claimed">0</span> / 100</strong><span>spots claimed</span></div>
-    <div class="cta"><a class="btn" href="#claim">Claim your spot</a></div>
+    <div class="kicker">Tree</div><h1>Claim one<br>of only <span>100</span><br>permanent<br>spots.</h1>
+    <p class="lead">Choose a leaf-avatar on the tree. Empty spots show price on hover. Claimed spots show owner details and links.</p>
+    <div class="legend"><div class="legend-item"><span class="mini-leaf green"></span><span><b id="greenLeft">49</b> Green</span></div><div class="legend-item"><span class="mini-leaf white"></span><span><b id="whiteLeft">42</b> White</span></div><div class="legend-item"><span class="mini-leaf gold"></span><span><b id="goldLeft">9</b> Golden</span></div></div>
+    <div class="count-card"><strong><span id="claimed">0</span> / 100</strong><span>spots claimed</span></div><div class="cta"><a class="btn" href="#claim">Claim your spot</a></div>
   </section>
-
-  <section class="tree-zone" aria-label="Interactive tree">
-    <div class="tree-stage">
-      <svg class="tree-svg" viewBox="0 0 1000 860" role="img" aria-label="Interactive tree with 100 claimable leaves">
-        <defs>
-          <radialGradient id="crownGrad" cx="50%" cy="45%" r="58%">
-            <stop offset="0%" stop-color="#b4ec62"/>
-            <stop offset="46%" stop-color="#4b9c35"/>
-            <stop offset="100%" stop-color="#14501d"/>
-          </radialGradient>
-          <radialGradient id="crownLight" cx="35%" cy="25%" r="65%">
-            <stop offset="0%" stop-color="#d9ff83"/>
-            <stop offset="42%" stop-color="#6ebe38"/>
-            <stop offset="100%" stop-color="#15541f"/>
-          </radialGradient>
-          <linearGradient id="woodGrad" x1="0" x2="1">
-            <stop offset="0%" stop-color="#3c2314"/>
-            <stop offset="45%" stop-color="#9d6534"/>
-            <stop offset="100%" stop-color="#2f1e12"/>
-          </linearGradient>
-          <filter id="leafShadow" x="-80%" y="-80%" width="260%" height="260%">
-            <feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".28"/>
-          </filter>
-          <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="16" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-
-        <ellipse cx="500" cy="800" rx="250" ry="42" fill="rgba(50,30,13,.7)"/>
-        <path d="M445 805 C460 680 455 570 440 475 C430 400 455 315 500 240 C545 315 570 400 560 475 C545 570 540 680 555 805 Z" fill="url(#woodGrad)"/>
-        <path d="M500 520 C405 490 330 430 250 340" stroke="url(#woodGrad)" stroke-width="26" stroke-linecap="round" fill="none"/>
-        <path d="M510 500 C620 465 700 390 760 300" stroke="url(#woodGrad)" stroke-width="26" stroke-linecap="round" fill="none"/>
-        <path d="M492 405 C420 360 365 300 330 220" stroke="url(#woodGrad)" stroke-width="20" stroke-linecap="round" fill="none"/>
-        <path d="M515 405 C590 350 640 285 675 200" stroke="url(#woodGrad)" stroke-width="20" stroke-linecap="round" fill="none"/>
-
-        <g filter="url(#softGlow)">
-          <circle cx="500" cy="330" r="300" fill="url(#crownGrad)" opacity=".98"/>
-          <circle cx="310" cy="410" r="175" fill="url(#crownLight)" opacity=".96"/>
-          <circle cx="690" cy="410" r="178" fill="url(#crownGrad)" opacity=".96"/>
-          <circle cx="405" cy="175" r="150" fill="url(#crownLight)" opacity=".96"/>
-          <circle cx="595" cy="175" r="150" fill="url(#crownGrad)" opacity=".96"/>
-          <circle cx="500" cy="610" r="190" fill="url(#crownLight)" opacity=".96"/>
-        </g>
-
-        <g id="spotsLayer"></g>
-      </svg>
-    </div>
-  </section>
-
+  <section class="tree-layer"><div class="avatar-map" id="avatarMap"></div></section>
   <aside class="panel" id="claim">
     <h2>Claim Your Spot</h2>
     <div class="field"><label>Name / Brand</label><input id="name" placeholder="Enter your name or brand" maxlength="16"></div>
     <div class="field"><label>Website / Telegram</label><input id="link" placeholder="https://yourwebsite.com or @username"></div>
-
-    <div class="choices">
-      <div class="choice green selected" data-type="green"><div class="mini"></div><div><strong>Green Spot</strong><span>49 spots</span></div><div class="price">$50</div></div>
-      <div class="choice white" data-type="white"><div class="mini"></div><div><strong>White Spot</strong><span>42 spots</span></div><div class="price">$100</div></div>
-      <div class="choice gold" data-type="gold"><div class="mini"></div><div><strong>Golden Spot</strong><span>9 spots</span></div><div class="price">$250</div></div>
-    </div>
-
-    <div class="selected-info" id="selectedInfo">Selected: next Green Spot — $50</div>
-    <button class="btn pay" id="claimButton">Claim selected spot</button>
-    <div class="lock">🔒 Secure payment with PayPal — coming next</div>
+    <div class="choices"><div class="choice selected" data-type="green"><span class="mini-leaf green"></span><div><strong>Green Spot</strong><span>49 spots</span></div><div class="price">$50</div></div><div class="choice" data-type="white"><span class="mini-leaf white"></span><div><strong>White Spot</strong><span>42 spots</span></div><div class="price">$100</div></div><div class="choice" data-type="gold"><span class="mini-leaf gold"></span><div><strong>Golden Spot</strong><span>9 spots</span></div><div class="price">$250</div></div></div>
+    <div class="selected-info" id="selectedInfo">Selected: next Green Spot — $50</div><button class="btn pay" id="claimButton">Claim selected spot</button><div class="lock">🔒 Secure payment with PayPal — coming next</div>
   </aside>
-
-  <section class="feed">
-    <h3>Latest claims</h3>
-    <div id="feed"><p>No spots claimed yet.<br>Be the first.</p></div>
-  </section>
+  <section class="feed"><h3>Latest claims</h3><div id="feed"><p>No spots claimed yet.<br>Be the first.</p></div></section>
 </main>
-
-<section class="info" id="how">
-  <div class="card"><h3>How it works</h3><p>Hover any empty leaf to see its type and price. Click to select the exact place you want.</p></div>
-  <div class="card" id="why"><h3>Why claim?</h3><p>Your name or brand appears in the live feed and on hover. There are only 100 places.</p></div>
-  <div class="card" id="faq"><h3>FAQ</h3><p>The tree has 49 Green, 42 White and 9 Golden spots. Future trees may open later.</p></div>
-  <div class="card"><h3>Terms & Contact</h3><p>Inappropriate claims may be rejected. Contact: hello@growthetreetogether.com</p></div>
-</section>
-
+<section class="info" id="how"><div class="card"><h3>How it works</h3><p>Hover empty spots to see type and price. Click to choose the exact place you want.</p></div><div class="card" id="why"><h3>Why claim?</h3><p>Your avatar or logo becomes a visible permanent spot. There are only 100 places.</p></div><div class="card" id="faq"><h3>FAQ</h3><p>The tree has 49 Green, 42 White and 9 Golden spots. Future trees may open later.</p></div><div class="card"><h3>Terms & Contact</h3><p>Inappropriate claims may be rejected. Contact: hello@growthetreetogether.com</p></div></section>
 <footer><span>© Grow The Tree Together</span><span>Made with 💚 by the community</span></footer>
-
 <div class="tooltip" id="tooltip"></div>
-
 <script>
 const goldCoords = [
-  [500,250],
-  [455,305],
-  [545,305],
-  [485,355],
-  [525,355],
-  [445,405],
-  [555,405],
-  [485,455],
-  [525,455]
+  [50,29],
+  [46,34],
+  [54,34],
+  [49,39],
+  [52,42],
+  [45,43],
+  [56,44],
+  [48,49],
+  [53,50]
 ];
 const whiteCoords = [
-  [390,165],
-  [450,150],
-  [510,145],
-  [570,155],
-  [630,180],
-  [340,230],
-  [400,220],
-  [460,210],
-  [520,210],
-  [580,220],
-  [645,240],
-  [315,305],
-  [375,295],
-  [435,285],
-  [495,285],
-  [555,285],
-  [615,295],
-  [680,310],
-  [330,380],
-  [390,370],
-  [450,360],
-  [510,360],
-  [570,365],
-  [630,375],
-  [350,455],
-  [410,445],
-  [470,440],
-  [530,440],
-  [590,445],
-  [650,455],
-  [385,530],
-  [445,520],
-  [505,515],
-  [565,520],
-  [625,535],
-  [430,600],
-  [490,590],
-  [550,592],
-  [610,605],
-  [460,665],
-  [540,665]
+  [39,20],
+  [44,19],
+  [49,18],
+  [54,19],
+  [59,20],
+  [36,27],
+  [41,26],
+  [46,25],
+  [51,25],
+  [56,26],
+  [62,28],
+  [33,35],
+  [38,34],
+  [43,33],
+  [48,33],
+  [53,33],
+  [58,34],
+  [64,36],
+  [34,43],
+  [39,42],
+  [44,41],
+  [49,41],
+  [54,41],
+  [59,42],
+  [65,44],
+  [36,51],
+  [41,50],
+  [46,49],
+  [51,49],
+  [56,50],
+  [62,52],
+  [39,59],
+  [44,58],
+  [49,57],
+  [54,58],
+  [59,60],
+  [43,67],
+  [48,66],
+  [53,66],
+  [58,68],
+  [47,74],
+  [53,74]
 ];
 const greenCoords = [
-  [285,120],
-  [355,95],
-  [430,75],
-  [500,65],
-  [570,75],
-  [645,95],
-  [715,120],
-  [245,195],
-  [310,165],
-  [685,165],
-  [755,195],
-  [215,280],
-  [255,350],
-  [235,435],
-  [270,520],
-  [320,610],
-  [390,690],
-  [785,280],
-  [745,350],
-  [765,435],
-  [730,520],
-  [680,610],
-  [610,690],
-  [280,260],
-  [720,260],
-  [280,610],
-  [720,610],
-  [325,720],
-  [675,720],
-  [445,735],
-  [555,735],
-  [500,755],
-  [200,375],
-  [800,375],
-  [205,480],
-  [795,480],
-  [250,575],
-  [750,575],
-  [305,690],
-  [695,690],
-  [340,35],
-  [660,35],
-  [250,80],
-  [750,80],
-  [180,310],
-  [820,310],
-  [180,560],
-  [820,560],
-  [395,25]
+  [36,12],
+  [42,10],
+  [49,9],
+  [56,10],
+  [63,12],
+  [31,17],
+  [69,17],
+  [27,24],
+  [73,24],
+  [24,32],
+  [76,32],
+  [23,42],
+  [77,42],
+  [24,52],
+  [76,52],
+  [27,62],
+  [73,62],
+  [32,72],
+  [68,72],
+  [39,80],
+  [61,80],
+  [46,84],
+  [54,84],
+  [50,87],
+  [29,39],
+  [71,39],
+  [31,50],
+  [69,50],
+  [34,60],
+  [66,60],
+  [38,70],
+  [62,70],
+  [22,28],
+  [78,28],
+  [20,47],
+  [80,47],
+  [22,58],
+  [78,58],
+  [26,69],
+  [74,69],
+  [32,82],
+  [68,82],
+  [41,88],
+  [59,88],
+  [50,92],
+  [33,7],
+  [67,7],
+  [25,16],
+  [75,16]
 ];
-
-const spots = [
-  ...goldCoords.map((p,i)=>({id:"gold-"+(i+1), type:"gold", index:i+1, x:p[0], y:p[1], price:250})),
-  ...whiteCoords.map((p,i)=>({id:"white-"+(i+1), type:"white", index:i+1, x:p[0], y:p[1], price:100})),
-  ...greenCoords.map((p,i)=>({id:"green-"+(i+1), type:"green", index:i+1, x:p[0], y:p[1], price:50}))
-];
-
-let selectedType = "green";
-let selectedSpotId = null;
-let claims = [];
-
-const tooltip = document.getElementById("tooltip");
-
-function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-function icon(type) { return type === "gold" ? "⭐" : type === "white" ? "◻" : "🌿"; }
-function color(type) {
-  if(type === "gold") return "#e4aa19";
-  if(type === "white") return "#f4f6ef";
-  return "#85c63f";
-}
-function stroke(type) {
-  if(type === "gold") return "#fff0a0";
-  if(type === "white") return "#aeb8ae";
-  return "#4d8f1c";
-}
-function price(type) { return type === "gold" ? 250 : type === "white" ? 100 : 50; }
-function spotLabel(spot) { return cap(spot.type) + " Spot #" + spot.index; }
-
-function escapeHtml(str) {
-  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
-}
-
-function renderSpots() {
-  const layer = document.getElementById("spotsLayer");
-  layer.innerHTML = "";
-
-  spots.forEach(spot => {
-    const claim = claims.find(c => c.spotId === spot.id);
-    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    g.classList.add("spot");
-    g.classList.add(claim ? "claimed" : "available");
-    if(selectedSpotId === spot.id) g.classList.add("selected");
-    g.setAttribute("data-id", spot.id);
-    g.setAttribute("transform", `translate(${spot.x} ${spot.y})`);
-
-    g.innerHTML = `
-      <path class="leaf-shape" d="M0,-24 C19,-11 20,13 0,27 C-20,13 -19,-11 0,-24 Z" fill="${color(spot.type)}" stroke="${stroke(spot.type)}" stroke-width="2.2" filter="url(#leafShadow)" opacity=".96"></path>
-      <path d="M0,-15 C1,-3 1,10 0,23" stroke="rgba(40,65,34,.62)" stroke-width="1.5" fill="none"></path>
-      <circle class="claim-mark" cx="0" cy="0" r="8" fill="rgba(255,255,255,.86)" stroke="${stroke(spot.type)}" stroke-width="1.5"></circle>
-    `;
-
-    g.addEventListener("mousemove", (e) => {
-      const claim = claims.find(c => c.spotId === spot.id);
-      tooltip.innerHTML = claim 
-        ? `<b>${escapeHtml(claim.name)}</b><br>${spotLabel(spot)}`
-        : `<b>${spotLabel(spot)}</b><br>$${spot.price} — click to claim`;
-      tooltip.style.left = e.clientX + "px";
-      tooltip.style.top = e.clientY + "px";
-      tooltip.classList.add("visible");
-    });
-    g.addEventListener("mouseleave", () => tooltip.classList.remove("visible"));
-    g.addEventListener("click", () => {
-      if(claim) return;
-      selectedSpotId = spot.id;
-      selectedType = spot.type;
-      document.querySelectorAll(".choice").forEach(c=>c.classList.toggle("selected", c.dataset.type === selectedType));
-      updateSelectedInfo();
-      renderSpots();
-    });
-
-    layer.appendChild(g);
-  });
-
-  updateCounters();
-  renderFeed();
-}
-
-function updateCounters() {
-  document.getElementById("claimed").textContent = claims.length;
-  document.getElementById("greenLeft").textContent = 49 - claims.filter(c=>c.type==="green").length;
-  document.getElementById("whiteLeft").textContent = 42 - claims.filter(c=>c.type==="white").length;
-  document.getElementById("goldLeft").textContent = 9 - claims.filter(c=>c.type==="gold").length;
-}
-
-function updateSelectedInfo() {
-  const selected = spots.find(s => s.id === selectedSpotId);
-  if(selected) {
-    document.getElementById("selectedInfo").textContent = `Selected: ${spotLabel(selected)} — $${selected.price}`;
-  } else {
-    document.getElementById("selectedInfo").textContent = `Selected: next ${cap(selectedType)} Spot — $${price(selectedType)}`;
-  }
-}
-
-function renderFeed() {
-  const feed = document.getElementById("feed");
-  if(!claims.length) {
-    feed.innerHTML = "<p>No spots claimed yet.<br>Be the first.</p>";
-    return;
-  }
-  feed.innerHTML = `<div class="feed-list">` + claims.slice().reverse().slice(0,5).map(c =>
-    `<div class="feed-item"><b>${escapeHtml(c.name)}</b> claimed ${icon(c.type)} ${cap(c.type)} Spot #${c.index}</div>`
-  ).join("") + `</div>`;
-}
-
-document.querySelectorAll(".choice").forEach(el => {
-  el.addEventListener("click", () => {
-    selectedType = el.dataset.type;
-    selectedSpotId = null;
-    document.querySelectorAll(".choice").forEach(c=>c.classList.remove("selected"));
-    el.classList.add("selected");
-    updateSelectedInfo();
-    renderSpots();
-  });
-});
-
-document.getElementById("claimButton").addEventListener("click", () => {
-  const name = (document.getElementById("name").value || "Your Brand").trim().slice(0,16);
-  let spot = selectedSpotId ? spots.find(s=>s.id===selectedSpotId) : spots.find(s => s.type === selectedType && !claims.find(c => c.spotId === s.id));
-  if(!spot) {
-    alert("No available spots in this category.");
-    return;
-  }
-  if(claims.find(c => c.spotId === spot.id)) {
-    alert("This spot is already claimed.");
-    return;
-  }
-  claims.push({spotId: spot.id, name, type: spot.type, index: spot.index});
-  selectedSpotId = null;
-  updateSelectedInfo();
-  renderSpots();
-});
-
-renderSpots();
-updateSelectedInfo();
+const spots=[...goldCoords.map((p,i)=>({id:"gold-"+(i+1),type:"gold",index:i+1,x:p[0],y:p[1],price:250})),...whiteCoords.map((p,i)=>({id:"white-"+(i+1),type:"white",index:i+1,x:p[0],y:p[1],price:100})),...greenCoords.map((p,i)=>({id:"green-"+(i+1),type:"green",index:i+1,x:p[0],y:p[1],price:50}))];
+let selectedType="green";let selectedSpotId=null;let claims=[];const tooltip=document.getElementById("tooltip");
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}function price(type){return type==="gold"?250:type==="white"?100:50}function icon(type){return type==="gold"?"⭐":type==="white"?"◻":"🌿"}function label(spot){return cap(spot.type)+" Spot #"+spot.index}function initials(name){return name.split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase()||"?"}function escapeHtml(str){return String(str).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function render(){const map=document.getElementById("avatarMap");map.innerHTML="";spots.forEach(spot=>{const claim=claims.find(c=>c.spotId===spot.id);const btn=document.createElement("button");btn.className="avatar-leaf "+spot.type+" "+(claim?"claimed":"available")+(selectedSpotId===spot.id?" selected":"");btn.style.left=spot.x+"%";btn.style.top=spot.y+"%";const inside=claim?initials(claim.name):"";btn.innerHTML='<div class="avatar-wrap"><div class="avatar-img">'+escapeHtml(inside)+'</div></div>';btn.addEventListener("mousemove",e=>{tooltip.innerHTML=claim?'<b>'+escapeHtml(claim.name)+'</b><br>'+label(spot)+(claim.link?'<br>'+escapeHtml(claim.link):''):'<b>'+label(spot)+'</b><br>$'+spot.price+' — click to claim';tooltip.style.left=e.clientX+"px";tooltip.style.top=e.clientY+"px";tooltip.classList.add("visible")});btn.addEventListener("mouseleave",()=>tooltip.classList.remove("visible"));btn.addEventListener("click",()=>{if(claim)return;selectedSpotId=spot.id;selectedType=spot.type;document.querySelectorAll(".choice").forEach(c=>c.classList.toggle("selected",c.dataset.type===selectedType));updateInfo();render()});map.appendChild(btn)});updateCounters();renderFeed()}
+function updateCounters(){document.getElementById("claimed").textContent=claims.length;document.getElementById("greenLeft").textContent=49-claims.filter(c=>c.type==="green").length;document.getElementById("whiteLeft").textContent=42-claims.filter(c=>c.type==="white").length;document.getElementById("goldLeft").textContent=9-claims.filter(c=>c.type==="gold").length}
+function updateInfo(){const s=spots.find(x=>x.id===selectedSpotId);document.getElementById("selectedInfo").textContent=s?("Selected: "+label(s)+" — $"+s.price):("Selected: next "+cap(selectedType)+" Spot — $"+price(selectedType))}
+function renderFeed(){const feed=document.getElementById("feed");if(!claims.length){feed.innerHTML="<p>No spots claimed yet.<br>Be the first.</p>";return}feed.innerHTML='<div class="feed-list">'+claims.slice().reverse().slice(0,5).map(c=>'<div class="feed-item"><b>'+escapeHtml(c.name)+'</b> claimed '+icon(c.type)+' '+cap(c.type)+' Spot #'+c.index+'</div>').join("")+'</div>'}
+document.querySelectorAll(".choice").forEach(el=>{el.addEventListener("click",()=>{selectedType=el.dataset.type;selectedSpotId=null;document.querySelectorAll(".choice").forEach(c=>c.classList.remove("selected"));el.classList.add("selected");updateInfo();render()})})
+document.getElementById("claimButton").addEventListener("click",()=>{const name=(document.getElementById("name").value||"Your Brand").trim().slice(0,16);const link=(document.getElementById("link").value||"").trim();let spot=selectedSpotId?spots.find(s=>s.id===selectedSpotId):spots.find(s=>s.type===selectedType&&!claims.find(c=>c.spotId===s.id));if(!spot){alert("No available spots in this category.");return}claims.push({spotId:spot.id,name,link,type:spot.type,index:spot.index});selectedSpotId=null;updateInfo();render()});
+render();updateInfo();
 </script>
 </body>
 </html>
