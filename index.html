@@ -4,160 +4,109 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Grow The Tree Together</title>
-<meta name="description" content="A collective digital tree growing from seed to giant tree.">
 <style>
-:root{--bg:#030806;--text:#f7fff8;--muted:#b6c4b8;--green:#a6d46f;--green2:#d7ff9f;--gold:#f5c45b;--line:rgba(255,255,255,.14)}
+:root{--bg:#030806;--text:#f7fff8;--muted:#bbc7b9;--green:#a6d46f;--green2:#d7ff9f;--gold:#f5c45b;--line:rgba(255,255,255,.14)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
-.hero{min-height:100vh;position:relative;display:grid;grid-template-columns:.78fr 1.22fr .72fr;gap:22px;align-items:center;padding:86px clamp(18px,3.6vw,54px) 36px;overflow:hidden}
-.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(166,212,111,.18),transparent 35%),radial-gradient(circle at 85% 18%,rgba(245,196,91,.08),transparent 28%),#020604;z-index:-3}
-.shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,8,6,.83),rgba(3,8,6,.18) 36%,rgba(3,8,6,.18) 64%,rgba(3,8,6,.82)),linear-gradient(180deg,rgba(3,8,6,.45),rgba(3,8,6,.05) 48%,rgba(3,8,6,.82));z-index:-1}
-header{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:22px clamp(18px,4vw,54px);z-index:5}
-.brand{display:flex;gap:12px;align-items:center;font-family:Georgia,serif;color:#f8d879;font-size:20px;line-height:1.05;letter-spacing:.06em;text-transform:uppercase;text-shadow:0 0 20px rgba(245,196,91,.25)}
-.mark{width:42px;height:42px;border-radius:50%;border:1px solid rgba(245,196,91,.55);display:grid;place-items:center;color:#f8d879}
-nav{display:flex;gap:34px;color:rgba(255,255,255,.72);font-weight:800;font-size:13px;letter-spacing:.1em;text-transform:uppercase}a{color:inherit;text-decoration:none}
-.left h1{font-family:Georgia,serif;font-size:clamp(42px,5.1vw,78px);line-height:.94;letter-spacing:-.055em;margin:0;text-shadow:0 10px 45px rgba(0,0,0,.65)}
-.left h1 em{color:var(--green);font-style:italic}.lead{color:rgba(255,255,255,.82);font-size:18px;line-height:1.55;margin:22px 0 0;max-width:420px}
-.feature{display:flex;gap:14px;align-items:flex-start;margin-top:26px;color:rgba(255,255,255,.78)}
-.feature .circle{min-width:44px;height:44px;border-radius:50%;border:1px solid rgba(166,212,111,.3);display:grid;place-items:center;color:var(--green)}
-.feature strong{display:block;color:var(--green);font-size:13px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
-.feature span{font-size:14px;color:rgba(255,255,255,.72)}
-.stage-strip{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);display:flex;gap:8px;background:rgba(3,8,6,.56);border:1px solid var(--line);border-radius:999px;padding:8px;backdrop-filter:blur(14px);z-index:6}
-.stage-dot{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.13);display:grid;place-items:center;background:rgba(255,255,255,.04);cursor:pointer;font-size:18px}
-.stage-dot.active{background:linear-gradient(135deg,var(--green),var(--green2));color:#061006;box-shadow:0 0 30px rgba(166,212,111,.28)}
-.tree-stage{position:relative;height:min(72vh,680px);min-height:520px;display:grid;place-items:center}
-.ground{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);width:72%;height:70px;border-radius:50%;background:radial-gradient(ellipse,rgba(245,196,91,.2),rgba(50,28,12,.7) 50%,transparent 72%);filter:blur(1px)}
-.stage-visual{position:absolute;inset:0;display:grid;place-items:center;transition:.5s;opacity:0;transform:scale(.94)}
-.stage-visual.active{opacity:1;transform:scale(1)}
-.seed{width:66px;height:92px;border-radius:60% 40% 55% 45%;background:linear-gradient(135deg,#b77b32,#5c3516);box-shadow:0 0 60px rgba(245,196,91,.22);margin-top:220px}
-.sprout{position:relative;width:12px;height:180px;background:linear-gradient(var(--green2),#2f8a45);border-radius:999px;margin-top:150px;box-shadow:0 0 50px rgba(166,212,111,.25)}
-.sprout:before,.sprout:after{content:"";position:absolute;top:58px;width:92px;height:42px;border-radius:80% 20% 80% 20%;background:linear-gradient(135deg,var(--green2),#347d42);box-shadow:0 0 35px rgba(166,212,111,.25)}
-.sprout:before{right:6px;transform:rotate(-28deg)}.sprout:after{left:6px;transform:rotate(28deg)}
-.sapling{position:relative;width:260px;height:430px;margin-top:70px}
-.sapling .trunk{position:absolute;left:50%;bottom:45px;transform:translateX(-50%);width:32px;height:250px;border-radius:999px;background:linear-gradient(90deg,#4a2b17,#b8753c,#5e341b)}
-.sapling .crown{position:absolute;left:50%;top:30px;transform:translateX(-50%);width:260px;height:260px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#d8ffe2,#54db79 45%,#126c33);box-shadow:0 0 90px rgba(112,242,155,.25)}
-.big-tree{position:relative;width:min(660px,100%);height:100%;display:grid;place-items:center}
-.big-tree img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 30px 70px rgba(0,0,0,.55))}
-.nick-layer{position:absolute;inset:0;z-index:4;pointer-events:none}
-.nick{position:absolute;transform:translate(-50%,-50%);background:rgba(8,18,11,.56);border:1px solid rgba(166,212,111,.36);border-radius:18px;padding:7px 10px;color:#f8ffd7;font-weight:800;font-size:13px;box-shadow:0 0 24px rgba(166,212,111,.15);backdrop-filter:blur(10px);white-space:nowrap}
-.nick.gold{background:rgba(60,39,7,.62);border-color:rgba(245,196,91,.55);color:#ffe69a;box-shadow:0 0 28px rgba(245,196,91,.22)}
-.panel{background:rgba(3,8,6,.66);border:1px solid var(--line);border-radius:22px;padding:22px;backdrop-filter:blur(16px);box-shadow:0 24px 70px rgba(0,0,0,.35)}
+body{margin:0;background:#030806;color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;overflow-x:hidden}
+.hero{min-height:100vh;position:relative;display:grid;grid-template-columns:.62fr 1.72fr .62fr;gap:18px;align-items:center;padding:86px clamp(14px,2.7vw,42px) 34px;overflow:hidden;background:radial-gradient(circle at 50% 45%,rgba(166,212,111,.19),transparent 35%),#020604}
+.shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,8,6,.88),rgba(3,8,6,.13) 34%,rgba(3,8,6,.13) 66%,rgba(3,8,6,.88)),linear-gradient(180deg,rgba(3,8,6,.52),rgba(3,8,6,.05) 48%,rgba(3,8,6,.82));z-index:0;pointer-events:none}
+header{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:22px clamp(18px,4vw,54px);z-index:10}
+.brand{display:flex;gap:12px;align-items:center;font-family:Georgia,serif;color:#f8d879;font-size:19px;line-height:1.05;letter-spacing:.06em;text-transform:uppercase;text-shadow:0 0 20px rgba(245,196,91,.25)}
+.mark{width:42px;height:42px;border-radius:50%;border:1px solid rgba(245,196,91,.55);display:grid;place-items:center}
+nav{display:flex;gap:28px;color:rgba(255,255,255,.74);font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase}a{color:inherit;text-decoration:none}
+.left,.panel,.tree-zone{position:relative;z-index:2}
+.left h1{font-family:Georgia,serif;font-size:clamp(38px,4.5vw,68px);line-height:.95;letter-spacing:-.055em;margin:0;text-shadow:0 10px 45px rgba(0,0,0,.65)}
+.left h1 em{color:var(--green);font-style:italic}.lead{color:rgba(255,255,255,.82);font-size:17px;line-height:1.55;margin:22px 0 0;max-width:390px}
+.stage-hint{margin-top:26px;padding:16px;border:1px solid var(--line);border-radius:20px;background:rgba(3,8,6,.52);backdrop-filter:blur(14px);color:rgba(255,255,255,.72);font-size:14px;line-height:1.5}
+.stage-hint strong{display:block;color:var(--green);letter-spacing:.1em;text-transform:uppercase;font-size:12px;margin-bottom:5px}
+.tree-zone{height:min(82vh,760px);min-height:620px;display:grid;place-items:center}
+.stage-scene{position:absolute;inset:0;display:grid;place-items:center;opacity:0;transform:scale(.97);transition:.45s ease}
+.stage-scene.active{opacity:1;transform:scale(1)}
+.ground{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);width:78%;height:95px;border-radius:50%;background:radial-gradient(ellipse,rgba(245,196,91,.22),rgba(55,31,14,.74) 48%,transparent 72%);filter:blur(2px)}
+.seed-scene,.sprout-scene,.young-scene{width:min(620px,95%);height:min(680px,95%);position:relative;display:grid;place-items:center;border-radius:44px;background:radial-gradient(circle at 50% 45%,rgba(166,212,111,.18),transparent 38%),linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));border:1px solid rgba(255,255,255,.08);overflow:hidden}
+.seed-soil{position:absolute;bottom:105px;width:420px;height:82px;border-radius:50%;background:linear-gradient(180deg,#51311a,#21130b);box-shadow:0 22px 80px rgba(0,0,0,.55)}
+.seed-big{position:absolute;bottom:155px;width:92px;height:128px;border-radius:58% 42% 54% 46%;background:radial-gradient(circle at 33% 25%,#e3b260,#a46325 46%,#4f2d14);box-shadow:0 0 70px rgba(245,196,91,.28);transform:rotate(-12deg)}
+.seed-big:after{content:"";position:absolute;left:25px;top:18px;width:18px;height:42px;border-radius:50%;background:rgba(255,255,255,.22);transform:rotate(18deg)}
+.sprout-big{position:absolute;bottom:130px;width:16px;height:300px;border-radius:999px;background:linear-gradient(#d7ff9f,#57b966 55%,#2c7b3b);box-shadow:0 0 70px rgba(166,212,111,.34)}
+.sprout-big:before,.sprout-big:after{content:"";position:absolute;width:170px;height:78px;border-radius:80% 20% 80% 20%;background:radial-gradient(circle at 35% 35%,#eaffc9,#78c964 48%,#2f7438);box-shadow:0 0 50px rgba(166,212,111,.3)}
+.sprout-big:before{right:10px;top:92px;transform:rotate(-28deg)}.sprout-big:after{left:10px;top:145px;transform:rotate(28deg) scaleX(-1)}
+.young-tree{position:absolute;bottom:70px;width:390px;height:520px}
+.young-trunk{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:48px;height:310px;border-radius:999px;background:linear-gradient(90deg,#4a2b17,#b8753c,#5e341b)}
+.young-branch{position:absolute;left:50%;bottom:210px;width:160px;height:20px;border-radius:999px;background:linear-gradient(90deg,#5e341b,#b8753c);transform-origin:left center}
+.yb1{transform:rotate(-30deg)}.yb2{transform:rotate(28deg);width:180px}.yb3{bottom:285px;transform:rotate(-16deg);width:130px}.yb4{bottom:300px;transform:rotate(20deg);width:140px}
+.young-crown{position:absolute;left:50%;top:0;transform:translateX(-50%);width:380px;height:380px;border-radius:48% 52% 45% 55%;background:radial-gradient(circle at 35% 28%,#eaffc9,#6edb70 45%,#126c33);box-shadow:0 0 120px rgba(166,212,111,.25)}
+.final-tree{width:min(980px,115%);height:100%;position:relative;display:grid;place-items:center;transform:scale(1.16)}
+.final-tree img{width:120%;height:118%;object-fit:contain;object-position:center;filter:drop-shadow(0 35px 80px rgba(0,0,0,.7))}
+.nick-layer{position:absolute;inset:0;z-index:5;pointer-events:none}
+.nick{position:absolute;transform:translate(-50%,-50%);background:rgba(8,18,11,.58);border:1px solid rgba(166,212,111,.4);border-radius:18px;padding:7px 10px;color:#f8ffd7;font-weight:850;font-size:13px;box-shadow:0 0 24px rgba(166,212,111,.15);backdrop-filter:blur(10px);white-space:nowrap}
+.nick.gold{background:rgba(60,39,7,.64);border-color:rgba(245,196,91,.6);color:#ffe69a;box-shadow:0 0 30px rgba(245,196,91,.24)}
+.panel{background:rgba(3,8,6,.68);border:1px solid var(--line);border-radius:22px;padding:20px;backdrop-filter:blur(16px);box-shadow:0 24px 70px rgba(0,0,0,.35)}
 .panel h2{margin:0 0 14px;color:var(--green);font-size:18px;letter-spacing:.12em;text-transform:uppercase}
-.counter{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:14px 0;color:rgba(255,255,255,.82)}
-.counter strong{color:var(--gold);font-size:26px}
+.counter{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:14px 0;color:rgba(255,255,255,.82)}.counter strong{color:var(--gold);font-size:25px}
 .progress{height:12px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin:14px 0 18px}.fill{height:100%;width:12.48%;background:linear-gradient(90deg,var(--green),var(--green2),var(--gold));border-radius:999px}
 input,select{width:100%;height:48px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.36);color:var(--text);padding:0 12px;margin-top:10px}
-.btn{min-height:54px;padding:0 22px;border-radius:14px;border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:var(--text);font-weight:900;letter-spacing:.06em;text-transform:uppercase;font-size:13px;backdrop-filter:blur(12px);background:rgba(0,0,0,.32);cursor:pointer}
+.btn{min-height:52px;padding:0 18px;border-radius:14px;border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:var(--text);font-weight:900;letter-spacing:.06em;text-transform:uppercase;font-size:12px;backdrop-filter:blur(12px);background:rgba(0,0,0,.32);cursor:pointer}
 .btn-main{background:linear-gradient(135deg,rgba(166,212,111,.95),rgba(99,139,54,.95));color:#061006;border-color:rgba(166,212,111,.35);box-shadow:0 0 34px rgba(166,212,111,.24)}
 .small{color:rgba(255,255,255,.58);font-size:13px;line-height:1.45;margin-top:14px}
+.stage-strip{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:8px;background:rgba(3,8,6,.58);border:1px solid var(--line);border-radius:999px;padding:8px;backdrop-filter:blur(14px);z-index:9}
+.stage-dot{width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.13);display:grid;place-items:center;background:rgba(255,255,255,.04);cursor:pointer;font-size:20px}.stage-dot.active{background:linear-gradient(135deg,var(--green),var(--green2));color:#061006;box-shadow:0 0 30px rgba(166,212,111,.28)}
 section{padding:90px clamp(18px,5vw,70px);background:#050907}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1100px;margin:0 auto}.card{border:1px solid var(--line);border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.025));padding:24px}.card h3{margin:0 0 10px;color:var(--green)}.card p{margin:0;color:var(--muted);line-height:1.6}
 footer{padding:28px clamp(18px,5vw,70px);border-top:1px solid var(--line);color:var(--muted);background:#050907;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
-@media(max-width:1100px){.hero{grid-template-columns:1fr;min-height:130vh}.left{text-align:center}.lead{margin-left:auto;margin-right:auto}.feature{max-width:420px;margin-left:auto;margin-right:auto;text-align:left}.panel{max-width:420px;margin:0 auto}.tree-stage{order:-1}.stage-strip{position:fixed}.cards{grid-template-columns:1fr}}
-@media(max-width:620px){nav{display:none}.brand{font-size:15px}.hero{padding-top:74px}.left h1{font-size:44px}.tree-stage{min-height:470px;height:54vh}.nick{font-size:11px;padding:5px 7px}.stage-strip{bottom:10px}.stage-dot{width:36px;height:36px}}
+@media(max-width:1180px){.hero{grid-template-columns:1fr;min-height:140vh}.left{text-align:center}.lead{margin-left:auto;margin-right:auto}.stage-hint{max-width:480px;margin-left:auto;margin-right:auto}.panel{max-width:430px;margin:0 auto}.tree-zone{order:-1}.final-tree{transform:scale(1.05)}.cards{grid-template-columns:1fr}.stage-strip{position:fixed}}
+@media(max-width:620px){nav{display:none}.brand{font-size:15px}.hero{padding-top:74px}.left h1{font-size:42px}.tree-zone{min-height:520px;height:60vh}.final-tree{width:128vw;transform:scale(1.12)}.nick{font-size:10px;padding:5px 7px}.stage-strip{bottom:10px}.stage-dot{width:38px;height:38px}.seed-scene,.sprout-scene,.young-scene{height:500px}.young-tree{transform:scale(.78)}}
 </style>
 </head>
 <body>
 <main class="hero">
-  <div class="shade"></div>
-  <header>
-    <div class="brand"><div class="mark">🌳</div><span>Grow The Tree<br>Together</span></div>
-    <nav><a href="#">The Tree</a><a href="#people">People</a><a href="#about">About</a></nav>
-  </header>
+<div class="shade"></div>
+<header><div class="brand"><div class="mark">🌳</div><span>Grow The Tree<br>Together</span></div><nav><a href="#">Growth</a><a href="#people">People</a><a href="#about">About</a></nav></header>
 
-  <div class="left">
-    <h1>From a seed to a tree full of <em>people.</em></h1>
-    <p class="lead">The tree grows step by step. First a seed, then a sprout, then a young tree — and finally a huge living tree where every visible leaf can hold someone’s name.</p>
-    <div class="feature"><div class="circle">🌱</div><div><strong>Stage-based growth</strong><span>Every milestone changes the tree.</span></div></div>
-    <div class="feature"><div class="circle">🍃</div><div><strong>Visible people</strong><span>Names stay on the tree as leaves.</span></div></div>
-    <div class="feature"><div class="circle">⭐</div><div><strong>Rare leaves</strong><span>Founder and golden leaves stand out.</span></div></div>
-  </div>
+<div class="left">
+<h1>From a seed to a giant tree full of <em>people.</em></h1>
+<p class="lead">The website starts as a tiny seed. As more people join, it grows into a living tree where every visible name becomes part of the crown.</p>
+<div class="stage-hint"><strong>How growth works</strong>0–100 leaves: seed. 100–500: sprout. 500–2000: young tree. 2000+: giant tree with visible names.</div>
+</div>
 
-  <div class="tree-stage">
-    <div class="ground"></div>
-    <div class="stage-visual active" id="stage0"><div class="seed"></div></div>
-    <div class="stage-visual" id="stage1"><div class="sprout"></div></div>
-    <div class="stage-visual" id="stage2"><div class="sapling"><div class="crown"></div><div class="trunk"></div></div></div>
-    <div class="stage-visual" id="stage3">
-      <div class="big-tree">
-        <img src="./tree-hero.png" alt="Huge glowing tree">
-        <div class="nick-layer" id="nickLayer"></div>
-      </div>
-    </div>
-  </div>
+<div class="tree-zone">
+  <div class="ground"></div>
+  <div class="stage-scene active" id="stage0"><div class="seed-scene"><div class="seed-soil"></div><div class="seed-big"></div></div></div>
+  <div class="stage-scene" id="stage1"><div class="sprout-scene"><div class="seed-soil"></div><div class="sprout-big"></div></div></div>
+  <div class="stage-scene" id="stage2"><div class="young-scene"><div class="young-tree"><div class="young-crown"></div><div class="young-trunk"></div><div class="young-branch yb1"></div><div class="young-branch yb2"></div><div class="young-branch yb3"></div><div class="young-branch yb4"></div></div></div></div>
+  <div class="stage-scene" id="stage3"><div class="final-tree"><img src="./tree-hero.png" alt="Huge glowing tree"><div class="nick-layer" id="nickLayer"></div></div></div>
+</div>
 
-  <aside class="panel" id="add">
-    <h2>🍃 Add your leaf</h2>
-    <div class="counter"><span>Current leaves</span><strong id="leafCount">1,247</strong></div>
-    <div class="progress"><div class="fill" id="fill"></div></div>
-    <div class="counter"><span>Your leaf</span><strong id="leafNumber">#1248</strong></div>
-    <input id="nameInput" placeholder="Name on your leaf">
-    <select id="leafType">
-      <option value="5">Small leaf — $5</option>
-      <option value="15" selected>Named leaf — $15</option>
-      <option value="30">Glowing leaf — $30</option>
-      <option value="50">Golden leaf — $50</option>
-    </select>
-    <button class="btn btn-main" style="width:100%;margin-top:14px" id="previewBtn">Preview my leaf</button>
-    <p class="small">PayPal will be connected next. For now this previews how the tree grows and how people become visible.</p>
-  </aside>
+<aside class="panel" id="add">
+<h2>🍃 Add your leaf</h2>
+<div class="counter"><span>Current leaves</span><strong id="leafCount">2,047</strong></div>
+<div class="progress"><div class="fill" id="fill"></div></div>
+<div class="counter"><span>Your leaf</span><strong id="leafNumber">#2048</strong></div>
+<input id="nameInput" placeholder="Name on your leaf">
+<select id="leafType"><option value="5">Small leaf — $5</option><option value="15" selected>Named leaf — $15</option><option value="30">Glowing leaf — $30</option><option value="50">Golden leaf — $50</option></select>
+<button class="btn btn-main" style="width:100%;margin-top:14px" id="previewBtn">Preview my leaf</button>
+<p class="small">PayPal will be connected next. For now this previews how the giant tree fills with people.</p>
+</aside>
 
-  <div class="stage-strip">
-    <button class="stage-dot active" data-stage="0">🌰</button>
-    <button class="stage-dot" data-stage="1">🌱</button>
-    <button class="stage-dot" data-stage="2">🌿</button>
-    <button class="stage-dot" data-stage="3">🌳</button>
-  </div>
+<div class="stage-strip">
+<button class="stage-dot active" data-stage="0">🌰</button>
+<button class="stage-dot" data-stage="1">🌱</button>
+<button class="stage-dot" data-stage="2">🌿</button>
+<button class="stage-dot" data-stage="3">🌳</button>
+</div>
 </main>
 
-<section id="people">
-  <div class="cards">
-    <div class="card"><h3>Every person is visible</h3><p>Names appear directly on the tree, not hidden in a table.</p></div>
-    <div class="card"><h3>The tree evolves</h3><p>The project starts as a seed and unlocks new stages as more people join.</p></div>
-    <div class="card"><h3>Shareable identity</h3><p>Each user can become “Leaf #1248” and share it later.</p></div>
-  </div>
-</section>
-
+<section id="people"><div class="cards"><div class="card"><h3>Stages feel bigger</h3><p>The growth is now shown as full visual scenes, not tiny icons.</p></div><div class="card"><h3>Final tree is the hero</h3><p>The giant tree is enlarged and placed at the center of the product.</p></div><div class="card"><h3>People stay visible</h3><p>Names appear directly on the crown, creating a living wall of people.</p></div></div></section>
 <footer><span>Grow The Tree Together</span><span>This is a digital interactive art project.</span></footer>
 
 <script>
-let count = 1247;
-const target = 10000;
-const names = [
-  ["Emma","#1247","gold",50,21],["Olivia","#1241","",66,25],["Noah","#1242","",76,30],
-  ["Sophia","#1238","",31,42],["Ava","#1243","",43,39],["James","#1235","gold",52,37],
-  ["Mason","#1236","",62,43],["Lucas","#1229","",27,58],["Benjamin","#1232","",46,56],
-  ["William","#1233","",60,60],["Amelia","#1234","",68,70],["Harper","#1230","",32,70],
-  ["Ethan","#1231","",46,75],["Liam","#1240","",38,28],["Charlotte","#1237","",78,47]
-];
-const nickLayer = document.getElementById("nickLayer");
-function renderNames(){
-  nickLayer.innerHTML = "";
-  names.forEach(n=>{
-    const el=document.createElement("div");
-    el.className="nick " + (n[2] || "");
-    el.style.left=n[3]+"%"; el.style.top=n[4]+"%";
-    el.innerHTML=n[0]+"<br><span style='font-size:11px;color:#d9ee8e'>"+n[1]+"</span>";
-    nickLayer.appendChild(el);
-  });
-}
-function setStage(i){
-  document.querySelectorAll(".stage-visual").forEach((el,idx)=>el.classList.toggle("active",idx===i));
-  document.querySelectorAll(".stage-dot").forEach((el,idx)=>el.classList.toggle("active",idx===i));
-}
+let count=2047,target=10000;
+const names=[["Emma","#2047","gold",50,22],["Olivia","#2041","",65,24],["Noah","#2042","",75,30],["Sophia","#2038","",29,41],["Ava","#2043","",42,39],["James","#2035","gold",53,36],["Mason","#2036","",62,42],["Lucas","#2029","",27,57],["Benjamin","#2032","",46,55],["William","#2033","",61,59],["Amelia","#2034","",68,69],["Harper","#2030","",33,69],["Ethan","#2031","",47,74],["Liam","#2040","",38,28],["Charlotte","#2037","",78,47],["Mia","#2039","",57,50],["Alex","#2028","gold",36,51]];
+const nickLayer=document.getElementById("nickLayer");
+function renderNames(){nickLayer.innerHTML="";names.forEach(n=>{const el=document.createElement("div");el.className="nick "+(n[2]||"");el.style.left=n[3]+"%";el.style.top=n[4]+"%";el.innerHTML=n[0]+"<br><span style='font-size:11px;color:#d9ee8e'>"+n[1]+"</span>";nickLayer.appendChild(el);});}
+function setStage(i){document.querySelectorAll(".stage-scene").forEach((el,idx)=>el.classList.toggle("active",idx===i));document.querySelectorAll(".stage-dot").forEach((el,idx)=>el.classList.toggle("active",idx===i));}
 document.querySelectorAll(".stage-dot").forEach(btn=>btn.addEventListener("click",()=>setStage(Number(btn.dataset.stage))));
-function updateCounter(){
-  document.getElementById("leafCount").textContent=count.toLocaleString();
-  document.getElementById("leafNumber").textContent="#" + (count+1).toLocaleString();
-  document.getElementById("fill").style.width=Math.min(100,count/target*100)+"%";
-}
-document.getElementById("previewBtn").addEventListener("click",()=>{
-  const name=document.getElementById("nameInput").value.trim() || "You";
-  const value=Number(document.getElementById("leafType").value);
-  count++;
-  names.push([name,"#"+count,(value>=50?"gold":""),25+Math.random()*55,20+Math.random()*58]);
-  setStage(3); renderNames(); updateCounter();
-});
-renderNames(); updateCounter();
+function updateCounter(){document.getElementById("leafCount").textContent=count.toLocaleString();document.getElementById("leafNumber").textContent="#"+(count+1).toLocaleString();document.getElementById("fill").style.width=Math.min(100,count/target*100)+"%";}
+document.getElementById("previewBtn").addEventListener("click",()=>{const name=document.getElementById("nameInput").value.trim()||"You";const value=Number(document.getElementById("leafType").value);count++;names.push([name,"#"+count,(value>=50?"gold":""),24+Math.random()*54,18+Math.random()*58]);setStage(3);renderNames();updateCounter();});
+renderNames();updateCounter();
 </script>
 </body>
 </html>
