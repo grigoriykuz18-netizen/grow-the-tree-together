@@ -6,177 +6,419 @@
 <title>Grow The Tree Together — Tree #1</title>
 <meta name="description" content="Claim one of only 100 permanent spots on Tree #1.">
 <style>
+:root{
+  --bg:#07120a;
+  --sky1:#0d4f7e;
+  --sky2:#f7ce78;
+  --green:#85c63f;
+  --green-dark:#19591f;
+  --white:#f5f7f0;
+  --gold:#dba421;
+  --text:#ffffff;
+  --ink:#132414;
+  --line:rgba(255,255,255,.18);
+}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-html,body{margin:0;min-height:100%;background:#071006;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:white}
-body{overflow-x:hidden}
-.hero{min-height:100vh;position:relative;overflow:hidden}
-.visual{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
-.hotspot{position:absolute;z-index:5;display:block;border-radius:16px;text-indent:-9999px;overflow:hidden}
-.claim-left{left:2.1%;top:74.5%;width:16.5%;height:6.5%}
-.claim-right{right:3.4%;top:62.4%;width:18.2%;height:6.4%}
-.prices-link{left:3%;top:83.6%;width:15%;height:4%}
-.panel{
-  position:fixed;right:22px;bottom:22px;z-index:20;width:min(380px,calc(100vw - 44px));
-  background:rgba(255,255,255,.95);color:#17330e;border-radius:24px;padding:18px;
-  box-shadow:0 18px 60px rgba(0,0,0,.25);display:none
+body{
+  margin:0;
+  background:#07120a;
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  overflow-x:hidden;
 }
-.panel.open{display:block}
-.panel h2{margin:0 0 12px;color:#2f6f16;font-size:18px;letter-spacing:.08em;text-transform:uppercase}
-.panel input,.panel select{width:100%;height:46px;border-radius:12px;border:1px solid rgba(0,0,0,.14);padding:0 12px;margin-top:10px;background:white;color:#17330e}
-.panel button{width:100%;height:50px;border:0;border-radius:14px;margin-top:12px;background:linear-gradient(135deg,#8fd345,#4b941f);color:white;font-weight:900;cursor:pointer}
-.close{position:absolute!important;right:14px!important;top:10px!important;width:auto!important;height:auto!important;background:transparent!important;color:#17330e!important;font-size:24px!important;margin:0!important}
-.live-layer{position:absolute;inset:0;z-index:4;pointer-events:none}
-.added{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;min-width:110px;min-height:34px;padding:7px 12px;border-radius:999px;font-size:13px;font-weight:900;text-align:center;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
-.green{background:rgba(115,170,39,.78);color:#102006;border:1px solid rgba(255,255,255,.55)}
-.white{background:rgba(255,255,255,.84);color:#30352d;border:1px solid rgba(255,255,255,.8)}
-.gold{background:rgba(227,177,36,.84);color:#332000;border:1px solid rgba(255,238,140,.8)}
-.mobile{display:none;padding:24px;background:#071006}
-.mobile h1{font-family:Georgia,serif;font-size:40px;line-height:.95;margin:0 0 12px}
-.mobile p{color:rgba(255,255,255,.78);line-height:1.5}
-.mobile a{display:inline-flex;min-height:52px;padding:0 20px;border-radius:14px;background:#6caf2e;color:white;text-decoration:none;align-items:center;font-weight:900}
-.content{background:#071006;color:white;padding:82px clamp(18px,5vw,72px)}
-.section-head{max-width:840px;margin:0 auto 30px;text-align:center}
-.section-head .kicker{color:#a6d46f;letter-spacing:.16em;text-transform:uppercase;font-weight:900;font-size:12px}
-.section-head h2{font-family:Georgia,serif;font-size:clamp(34px,5vw,64px);line-height:1;margin:10px 0 14px}
-.section-head p{color:rgba(255,255,255,.72);line-height:1.6;margin:0}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1100px;margin:0 auto}
-.card{border:1px solid rgba(255,255,255,.14);border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));padding:24px}
-.card h3{margin:0 0 10px;color:#a6d46f;font-size:22px}
-.card p{color:rgba(255,255,255,.7);line-height:1.55;margin:0}
-.pricing strong{font-size:36px;color:#f6c95a;display:block;margin-bottom:8px}
-.faq{max-width:950px;margin:0 auto;display:grid;gap:12px}
-.faq details{border:1px solid rgba(255,255,255,.14);border-radius:18px;background:rgba(255,255,255,.045);padding:18px}
-.faq summary{cursor:pointer;font-weight:900;color:#fff}
-.faq p{color:rgba(255,255,255,.7);line-height:1.55}
-.terms{max-width:950px;margin:0 auto;color:rgba(255,255,255,.68);line-height:1.6}
-footer{background:#071006;border-top:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.65);padding:28px clamp(18px,5vw,72px);display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
-@media(max-width:900px){
-  .hero{min-height:70vh}.hotspot{display:none}.mobile{display:block}.panel{right:12px;bottom:12px;width:calc(100vw - 24px)}
-  .grid3{grid-template-columns:1fr}
+.hero{
+  min-height:100vh;
+  position:relative;
+  overflow:hidden;
+  padding:86px clamp(20px,3.5vw,56px) 34px;
+  display:grid;
+  grid-template-columns:0.7fr 1.45fr 0.72fr;
+  gap:22px;
+  align-items:center;
+  background:
+    radial-gradient(circle at 54% 83%, rgba(255,217,118,.35), transparent 20%),
+    linear-gradient(180deg,#0c4f83 0%, #64a7ca 43%, #f4c979 67%, #2f7a32 100%);
+}
+.hero:before{
+  content:"";
+  position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 20% 72%,rgba(255,255,255,.22),transparent 14%),
+    radial-gradient(circle at 78% 67%,rgba(255,255,255,.18),transparent 17%),
+    linear-gradient(90deg,rgba(3,8,6,.38),rgba(3,8,6,0) 32%,rgba(3,8,6,0) 68%,rgba(3,8,6,.34));
+  pointer-events:none;
+}
+.cloud{position:absolute;background:rgba(255,255,255,.65);filter:blur(8px);border-radius:999px;opacity:.75}
+.c1{width:230px;height:54px;left:20%;top:10%}.c2{width:180px;height:44px;right:14%;top:16%}.c3{width:260px;height:56px;left:58%;top:8%}
+.mountains{
+  position:absolute;left:0;right:0;bottom:15%;
+  height:28%;
+  background:
+    linear-gradient(135deg,transparent 0 34%,rgba(20,75,65,.55) 35% 55%,transparent 56%),
+    linear-gradient(225deg,transparent 0 28%,rgba(19,75,69,.55) 29% 50%,transparent 51%);
+  opacity:.6;
+}
+.lake{
+  position:absolute;left:0;right:0;bottom:22%;
+  height:12%;
+  background:linear-gradient(180deg,rgba(157,218,232,.55),rgba(247,206,120,.3));
+  filter:blur(.3px);
+}
+.meadow{
+  position:absolute;left:0;right:0;bottom:0;height:25%;
+  background:linear-gradient(180deg,rgba(78,139,49,.82),#173f1a);
+}
+header{
+  position:absolute;top:0;left:0;right:0;z-index:20;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:22px clamp(20px,3.5vw,56px);
+  background:linear-gradient(180deg,rgba(2,10,16,.55),transparent);
+}
+.logo{display:flex;gap:12px;align-items:center;font-family:Georgia,serif;font-size:22px;font-weight:800;text-shadow:0 2px 20px rgba(0,0,0,.28)}
+.logo-mark{font-size:28px}
+nav{display:flex;gap:28px;font-weight:800}
+nav a{color:white;text-decoration:none}.active{color:#b7ef62;border-bottom:2px solid #b7ef62;padding-bottom:8px}
+.left,.tree-wrap,.right{position:relative;z-index:5}
+.kicker{color:#b7ef62;letter-spacing:.16em;text-transform:uppercase;font-weight:950;font-size:14px}
+h1{
+  margin:14px 0 18px;
+  font-family:Georgia,serif;
+  font-size:clamp(46px,5.2vw,82px);
+  line-height:.9;
+  letter-spacing:-.05em;
+  text-shadow:0 10px 40px rgba(0,0,0,.45);
+}
+h1 span{color:#b7ef62}
+.lead{font-size:18px;line-height:1.55;max-width:420px;text-shadow:0 3px 16px rgba(0,0,0,.4)}
+.count-card{
+  margin-top:28px;
+  display:inline-flex;
+  flex-direction:column;
+  padding:20px 26px;
+  border-radius:18px;
+  background:rgba(8,18,19,.76);
+  backdrop-filter:blur(12px);
+  box-shadow:0 18px 50px rgba(0,0,0,.24);
+}
+.count-card strong{font-size:36px;color:#b7ef62}.count-card span{letter-spacing:.14em;text-transform:uppercase;font-weight:900}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{
+  min-height:56px;
+  padding:0 24px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.2);
+  display:inline-flex;align-items:center;justify-content:center;
+  text-decoration:none;
+  font-weight:950;
+  letter-spacing:.04em;
+  color:white;
+  background:rgba(0,0,0,.18);
+  cursor:pointer;
+}
+.btn-main{background:linear-gradient(135deg,#93d64b,#4a961f);box-shadow:0 12px 30px rgba(70,140,28,.35);border:0}
+.tree-wrap{
+  height:min(80vh,780px);
+  min-height:640px;
+  display:grid;
+  place-items:center;
+}
+.tree{
+  position:relative;
+  width:min(760px,100%);
+  height:100%;
+}
+.crown{
+  position:absolute;
+  left:50%;top:8%;
+  transform:translateX(-50%);
+  width:86%;
+  height:66%;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 25% 20%,#b9ee69 0 5%,transparent 6%),
+    radial-gradient(circle at 70% 24%,#b9ee69 0 4%,transparent 5%),
+    radial-gradient(circle at 45% 8%,#c8ff73 0 5%,transparent 6%),
+    radial-gradient(circle at 52% 50%,#5aa336,#1b6a25 68%,#14501d 100%);
+  box-shadow:0 0 80px rgba(93,171,49,.35), inset 0 -30px 70px rgba(0,0,0,.18);
+  filter:saturate(1.08);
+}
+.crown:before,.crown:after{
+  content:"";position:absolute;border-radius:50%;background:inherit;z-index:-1;
+}
+.crown:before{width:58%;height:58%;left:-6%;top:20%}
+.crown:after{width:62%;height:62%;right:-8%;top:24%}
+.trunk{
+  position:absolute;left:50%;bottom:10%;
+  transform:translateX(-50%);
+  width:18%;height:50%;
+  border-radius:45% 45% 18px 18px;
+  background:linear-gradient(90deg,#3c2314,#8c572b 42%,#332011);
+  box-shadow:inset -20px 0 25px rgba(0,0,0,.25);
+}
+.branch{position:absolute;left:50%;bottom:39%;height:18px;border-radius:999px;background:linear-gradient(90deg,#4a2a16,#8c572b);transform-origin:left center}
+.b1{width:210px;transform:rotate(-32deg)}.b2{width:230px;transform:rotate(26deg)}.b3{bottom:50%;width:170px;transform:rotate(-15deg)}.b4{bottom:51%;width:180px;transform:rotate(19deg)}
+.root{position:absolute;left:50%;bottom:5%;transform:translateX(-50%);width:64%;height:10%;border-radius:50%;background:radial-gradient(ellipse,#4a2b15,#221407 60%,transparent 70%)}
+.spots{position:absolute;inset:0;z-index:10}
+.spot{
+  position:absolute;
+  transform:translate(-50%,-50%);
+  cursor:pointer;
+  border:0;
+  background:none;
+  padding:0;
+}
+.leaf{
+  width:33px;height:47px;
+  border-radius:78% 20% 78% 20%;
+  position:relative;
+  border:2px solid rgba(255,255,255,.65);
+  box-shadow:0 6px 14px rgba(0,0,0,.24);
+  transform:rotate(var(--r));
+  transition:.18s ease;
+}
+.leaf:after{
+  content:"";
+  position:absolute;left:50%;top:12%;
+  width:1.8px;height:76%;
+  background:rgba(60,80,40,.55);
+  transform:translateX(-50%);
+}
+.spot:hover .leaf{transform:rotate(var(--r)) scale(1.18);filter:brightness(1.12)}
+.green .leaf{background:linear-gradient(135deg,#b9eb60,#6eae2d)}
+.white .leaf{background:linear-gradient(135deg,#fff,#cdd3cf)}
+.gold .leaf{background:linear-gradient(135deg,#ffe889,#d49d16);border-color:rgba(255,240,150,.9)}
+.green.claimed .leaf,.white.claimed .leaf,.gold.claimed .leaf{width:auto;min-width:112px;height:36px;border-radius:999px;padding:0 12px;display:flex;align-items:center;justify-content:center;font-weight:950;font-size:13px;transform:none}
+.claimed .leaf:after{display:none}
+.green.claimed .leaf{color:#142807}.white.claimed .leaf{color:#263026}.gold.claimed .leaf{color:#3a2703}
+.tooltip{
+  position:absolute;left:50%;top:-12px;
+  transform:translate(-50%,-100%);
+  background:rgba(5,12,8,.86);
+  color:white;
+  border-radius:12px;
+  padding:8px 10px;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:.15s;
+  font-size:12px;
+}
+.spot:hover .tooltip{opacity:1}
+.panel{
+  background:rgba(255,255,255,.92);
+  color:#17330e;
+  border-radius:28px;
+  padding:24px;
+  box-shadow:0 20px 70px rgba(0,0,0,.22);
+  backdrop-filter:blur(12px);
+}
+.panel h2{margin:0 0 18px;font-family:Georgia,serif}
+.field{margin-top:12px}
+label{display:block;font-weight:800;font-size:13px;margin-bottom:6px}
+input{width:100%;height:44px;border-radius:10px;border:1px solid rgba(0,0,0,.14);padding:0 12px}
+.choice{
+  display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;
+  border:1px solid rgba(0,0,0,.10);
+  border-radius:14px;
+  padding:13px;
+  margin-top:12px;
+  cursor:pointer;
+}
+.choice.selected{border-color:#5ca327;box-shadow:0 0 0 2px rgba(92,163,39,.12)}
+.choice .mini{width:34px;height:46px;border-radius:78% 20% 78% 20%;border:1px solid rgba(0,0,0,.18)}
+.choice.green .mini{background:linear-gradient(135deg,#b9eb60,#6eae2d)}
+.choice.white .mini{background:linear-gradient(135deg,#fff,#cdd3cf)}
+.choice.gold .mini{background:linear-gradient(135deg,#ffe889,#d49d16)}
+.choice strong{display:block}.choice span{font-size:13px;color:#51634d}.price{font-weight:950;font-size:20px}
+.pay{width:100%;margin-top:18px;color:white}
+.lock{font-size:12px;color:#5f6d5b;text-align:center;margin-top:12px}
+.feed{
+  position:absolute;
+  z-index:6;
+  left:50%;
+  bottom:32px;
+  transform:translateX(-50%);
+  width:min(720px,90vw);
+  background:rgba(255,255,255,.9);
+  color:#17330e;
+  border-radius:22px;
+  padding:18px 24px;
+  box-shadow:0 16px 50px rgba(0,0,0,.18);
+  display:grid;
+  grid-template-columns:180px 1fr;
+  gap:20px;
+  align-items:center;
+}
+.feed h3{margin:0;color:#2f6f16;text-transform:uppercase;letter-spacing:.08em;font-size:15px}
+.feed p{margin:0;color:#4a5d45}
+.feed-list{display:grid;gap:6px}
+.feed-item{font-size:13px;color:#17330e}.feed-item b{color:#2f6f16}
+.info{
+  background:#f5f6f2;
+  color:#172515;
+  padding:52px clamp(20px,3.5vw,56px);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+.card{
+  background:white;
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:22px;
+  padding:22px;
+  box-shadow:0 8px 28px rgba(0,0,0,.06);
+}
+.card h3{margin:0 0 12px}.card p{margin:0;color:#52624e;line-height:1.55}
+footer{background:#07120a;color:rgba(255,255,255,.72);padding:22px clamp(20px,3.5vw,56px);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media(max-width:1100px){
+  .hero{grid-template-columns:1fr;min-height:150vh}
+  .left{text-align:center}.lead{margin:auto}.cta{justify-content:center}
+  .tree-wrap{order:-1;height:65vh}
+  .panel{max-width:440px;margin:auto}
+  .feed{position:relative;bottom:auto;margin:24px auto 0;left:auto;transform:none}
+  .info{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+  nav{display:none}.hero{padding-top:76px}.logo{font-size:18px}
+  h1{font-size:42px}.tree-wrap{min-height:480px;height:54vh}
+  .leaf{width:22px;height:32px}.green.claimed .leaf,.white.claimed .leaf,.gold.claimed .leaf{min-width:74px;font-size:10px}
+  .feed{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 <main class="hero">
-  <img class="visual" src="./tree-visual.png" alt="Grow The Tree Together Tree #1">
-  <a href="#" class="hotspot claim-left" id="claimLeft">Claim</a>
-  <a href="#" class="hotspot claim-right" id="claimRight">Claim</a>
-  <a href="#spots" class="hotspot prices-link">Prices</a>
-  <div class="live-layer" id="liveLayer"></div>
+  <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
+  <div class="mountains"></div><div class="lake"></div><div class="meadow"></div>
+
+  <header>
+    <div class="logo"><span class="logo-mark">🌳</span><span>Grow The Tree Together</span></div>
+    <nav>
+      <a class="active" href="#">Tree #1</a>
+      <a href="#spots">Spots</a>
+      <a href="#how">How it works</a>
+      <a href="#why">Why claim?</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </header>
+
+  <section class="left">
+    <div class="kicker">Tree #1</div>
+    <h1>Claim one<br>of only <span>100</span><br>permanent<br>spots.</h1>
+    <p class="lead">Tree #1 has exactly 100 spots. Each claimed spot becomes a visible, hoverable leaf on the tree forever.</p>
+    <div class="count-card"><strong><span id="claimed">0</span> / 100</strong><span>spots claimed</span></div>
+    <div class="cta"><a class="btn btn-main" href="#claim">Claim your spot</a></div>
+  </section>
+
+  <section class="tree-wrap" aria-label="Interactive Tree #1">
+    <div class="tree">
+      <div class="crown"></div>
+      <div class="branch b1"></div><div class="branch b2"></div><div class="branch b3"></div><div class="branch b4"></div>
+      <div class="trunk"></div><div class="root"></div>
+      <div class="spots" id="spotsLayer"></div>
+    </div>
+  </section>
+
+  <aside class="right panel" id="claim">
+    <h2>Claim Your Spot</h2>
+    <div class="field"><label>Name / Brand</label><input id="name" placeholder="Enter your name or brand"></div>
+    <div class="field"><label>Website / Telegram</label><input id="link" placeholder="https://yourwebsite.com or @username"></div>
+
+    <div class="choice green selected" data-type="green">
+      <div class="mini"></div><div><strong>Green Spot</strong><span>49 spots</span></div><div class="price">$50</div>
+    </div>
+    <div class="choice white" data-type="white">
+      <div class="mini"></div><div><strong>White Spot</strong><span>42 spots</span></div><div class="price">$100</div>
+    </div>
+    <div class="choice gold" data-type="gold">
+      <div class="mini"></div><div><strong>Golden Spot</strong><span>9 spots</span></div><div class="price">$250</div>
+    </div>
+    <button class="btn btn-main pay" id="preview">Claim Your Spot</button>
+    <div class="lock">🔒 Secure payment with PayPal — coming next</div>
+  </aside>
+
+  <section class="feed">
+    <h3>Latest claims</h3>
+    <div id="feed"><p>No spots claimed yet.<br>Be the first.</p></div>
+  </section>
 </main>
 
-<section class="mobile">
-  <h1>Claim one of only 100 permanent spots.</h1>
-  <p>Tree #1 has 9 Golden Spots, 42 White Spots and 49 Green Spots. Claimed spots become visible on the tree.</p>
-  <a href="#" id="mobileClaim">Claim Your Spot</a>
+<section class="info" id="how">
+  <div class="card"><h3>How it works</h3><p>Choose your spot tier, enter your details and complete payment. Your spot appears on Tree #1.</p></div>
+  <div class="card" id="why"><h3>Why claim?</h3><p>Your name or brand lives on the first tree forever. There are only 100 spots.</p></div>
+  <div class="card" id="faq"><h3>FAQ</h3><p>Tree #1 has 49 Green, 42 White and 9 Golden spots. Future trees may open later.</p></div>
+  <div class="card"><h3>Terms & Contact</h3><p>Inappropriate claims may be rejected. Contact: hello@growthetreetogether.com</p></div>
 </section>
 
-<div class="panel" id="panel">
-  <button class="close" id="close">×</button>
-  <h2>Claim your spot</h2>
-  <input id="name" maxlength="16" placeholder="Name / brand">
-  <input id="link" maxlength="48" placeholder="Website / Telegram">
-  <select id="type">
-    <option value="green">Green Spot — $50</option>
-    <option value="white">White Spot — $100</option>
-    <option value="gold">Golden Spot — $250</option>
-  </select>
-  <button id="preview">Preview on tree</button>
-  <p style="font-size:12px;line-height:1.4;color:#55704a;margin:10px 0 0">PayPal integration comes next. Preview shows how a real claim appears.</p>
-</div>
-
-<section class="content" id="spots">
-  <div class="section-head">
-    <div class="kicker">Fixed supply</div>
-    <h2>100 spots. No more.</h2>
-    <p>Tree #1 has a fixed number of visible places: 49 Green, 42 White and 9 Golden. When all 100 are claimed, Tree #1 closes forever.</p>
-  </div>
-  <div class="grid3">
-    <div class="card pricing"><strong>$50</strong><h3>Green Spot</h3><p>49 spots. Outer area of the tree. Good for names, small projects and early supporters.</p></div>
-    <div class="card pricing"><strong>$100</strong><h3>White Spot</h3><p>42 spots. Middle area of the tree. More visible and more limited.</p></div>
-    <div class="card pricing"><strong>$250</strong><h3>Golden Spot</h3><p>9 spots. Premium central area of Tree #1. The rarest and most visible tier.</p></div>
-  </div>
-</section>
-
-<section class="content" id="how">
-  <div class="section-head">
-    <div class="kicker">How it works</div>
-    <h2>Claim. Appear. Stay.</h2>
-  </div>
-  <div class="grid3">
-    <div class="card"><h3>1. Choose a spot</h3><p>Select Green, White or Golden depending on how visible you want to be.</p></div>
-    <div class="card"><h3>2. Add your name</h3><p>Use your name, project, Telegram channel, company or website.</p></div>
-    <div class="card"><h3>3. Join Tree #1</h3><p>Your claimed spot appears on the tree and in the live claim feed.</p></div>
-  </div>
-</section>
-
-<section class="content" id="why">
-  <div class="section-head">
-    <div class="kicker">Why claim a spot?</div>
-    <h2>Visibility with scarcity.</h2>
-    <p>This is not a normal banner. It is a limited visual place on the first tree of a public internet project.</p>
-  </div>
-</section>
-
-<section class="content" id="faq">
-  <div class="section-head">
-    <div class="kicker">FAQ</div>
-    <h2>Questions before claiming.</h2>
-  </div>
-  <div class="faq">
-    <details><summary>Is this a charity?</summary><p>No. This is a digital interactive art and placement project. Payments support the creation and growth of the project.</p></details>
-    <details><summary>How many spots exist?</summary><p>Tree #1 has exactly 100 spots: 49 Green, 42 White and 9 Golden.</p></details>
-    <details><summary>Can I place a company or Telegram channel?</summary><p>Yes. You can use a personal name, project, company, website or Telegram channel, as long as it is appropriate.</p></details>
-    <details><summary>What happens after all spots are claimed?</summary><p>Tree #1 closes forever. Future trees may open separately later.</p></details>
-    <details><summary>When will PayPal work?</summary><p>The current version is a visual MVP. PayPal will be connected after the final layout is approved.</p></details>
-  </div>
-</section>
-
-<section class="content" id="terms">
-  <div class="section-head">
-    <div class="kicker">Terms</div>
-    <h2>Simple rules.</h2>
-  </div>
-  <div class="terms">
-    <p>Spots must not include illegal, hateful, adult, misleading or harmful content. The project owner may reject or remove inappropriate submissions. Claimed spot design, placement and display may be adjusted to keep the tree readable and visually balanced.</p>
-    <p>Contact: hello@growthetreetogether.com</p>
-  </div>
-</section>
-
-<footer>
-  <span>Grow The Tree Together</span>
-  <span>Tree #1 — 100 permanent spots.</span>
-</footer>
+<footer><span>© Grow The Tree Together</span><span>Made with 💚 by the community</span></footer>
 
 <script>
-const panel=document.getElementById("panel");
-["claimLeft","claimRight","mobileClaim"].forEach(id=>{
- const el=document.getElementById(id);
- if(el) el.addEventListener("click",e=>{e.preventDefault();panel.classList.add("open")});
-});
-document.getElementById("close").onclick=()=>panel.classList.remove("open");
+const positions = {
+  gold: [[50,32],[45,38],[55,38],[48,45],[52,45],[43,51],[57,51],[48,58],[52,58]],
+  white: [[39,20],[45,20],[51,20],[57,20],[63,20],[36,27],[42,28],[48,28],[54,28],[60,28],[66,29],[34,36],[40,36],[46,36],[52,36],[58,36],[64,36],[36,45],[42,45],[48,45],[54,45],[60,45],[66,45],[38,54],[44,54],[50,54],[56,54],[62,54],[40,63],[46,63],[52,63],[58,63],[43,72],[49,72],[55,72],[61,72],[36,63],[64,63],[33,52],[67,52],[32,42],[68,42]],
+  green: [[43,8],[50,7],[57,8],[36,12],[64,12],[30,18],[70,18],[27,27],[73,27],[25,37],[75,37],[24,48],[76,48],[26,59],[74,59],[30,70],[70,70],[36,80],[64,80],[43,87],[50,90],[57,87],[22,32],[78,32],[20,44],[80,44],[21,56],[79,56],[25,68],[75,68],[31,79],[69,79],[38,88],[62,88],[48,83],[52,83],[33,7],[67,7],[24,22],[76,22],[18,50],[82,50],[29,88],[71,88],[34,93],[66,93],[44,96],[56,96],[50,98]]
+};
 
-const limits = {gold:9, white:42, green:49};
-const zones={
- gold:[[49,30],[53,34],[46,38],[55,42],[50,46],[44,49],[57,50],[48,55],[54,58]],
- white:[[39,25],[44,24],[58,25],[63,28],[36,33],[42,34],[48,34],[56,34],[64,35],[34,42],[40,43],[46,44],[60,44],[66,45],[37,52],[43,53],[51,53],[59,54],[65,55],[35,62],[42,63],[49,64],[57,64],[64,65],[40,72],[48,73],[56,73],[62,72],[32,50],[68,50],[36,70],[66,70],[45,82],[55,82],[30,36],[70,36],[33,57],[67,57],[39,67],[61,67],[47,78],[53,78]],
- green:[[36,15],[42,12],[49,11],[56,12],[63,15],[31,22],[69,22],[27,30],[73,30],[24,40],[76,40],[23,51],[77,51],[25,62],[75,62],[30,72],[70,72],[36,82],[64,82],[43,88],[57,88],[50,91],[29,46],[71,46],[31,58],[69,58],[34,68],[66,68],[39,77],[61,77],[22,34],[78,34],[21,56],[79,56],[28,80],[72,80],[35,90],[65,90],[46,7],[54,7],[32,12],[68,12],[50,84],[18,47],[82,47],[19,65],[81,65],[25,88],[75,88]]
-};
-let used={gold:0,white:0,green:0};
-document.getElementById("preview").onclick=()=>{
- const name=document.getElementById("name").value.trim()||"Your Brand";
- const type=document.getElementById("type").value;
- const arr=zones[type];
- if(used[type]>=limits[type]){alert("This category is full.");return;}
- const p=arr[used[type]++];
- const el=document.createElement("div");
- el.className="added "+type;
- el.style.left=p[0]+"%"; el.style.top=p[1]+"%";
- el.textContent=(type==="gold"?"⭐ ":type==="white"?"◻ ":"🌿 ")+name;
- document.getElementById("liveLayer").appendChild(el);
- panel.classList.remove("open");
-};
+const limits = {green:49, white:42, gold:9};
+let selected = "green";
+let claims = [];
+
+function label(type){
+  if(type==="gold") return "Golden Spot";
+  if(type==="white") return "White Spot";
+  return "Green Spot";
+}
+function icon(type){
+  if(type==="gold") return "⭐";
+  if(type==="white") return "◻";
+  return "🌿";
+}
+document.querySelectorAll(".choice").forEach(el=>{
+  el.addEventListener("click",()=>{
+    document.querySelectorAll(".choice").forEach(c=>c.classList.remove("selected"));
+    el.classList.add("selected");
+    selected = el.dataset.type;
+  });
+});
+
+function renderSpots(){
+  const layer = document.getElementById("spotsLayer");
+  layer.innerHTML = "";
+  ["green","white","gold"].forEach(type=>{
+    positions[type].forEach((p,idx)=>{
+      const claim = claims.find(c=>c.type===type && c.index===idx);
+      const btn = document.createElement("button");
+      btn.className = "spot " + type + (claim ? " claimed" : "");
+      btn.style.left = p[0]+"%";
+      btn.style.top = p[1]+"%";
+      btn.style.setProperty("--r", ((idx*31)%80-40)+"deg");
+      btn.innerHTML = claim
+        ? `<div class="tooltip"><b>${claim.name}</b><br>${label(type)}</div><div class="leaf">${icon(type)} ${claim.name}</div>`
+        : `<div class="tooltip">${label(type)} available</div><div class="leaf"></div>`;
+      layer.appendChild(btn);
+    });
+  });
+  document.getElementById("claimed").textContent = claims.length;
+
+  const feed = document.getElementById("feed");
+  if(!claims.length){
+    feed.innerHTML = "<p>No spots claimed yet.<br>Be the first.</p>";
+  } else {
+    feed.innerHTML = claims.slice().reverse().slice(0,5).map(c =>
+      `<div class="feed-item"><b>${c.name}</b> claimed ${icon(c.type)} ${label(c.type)}</div>`
+    ).join("");
+  }
+}
+document.getElementById("preview").addEventListener("click",()=>{
+  const name = (document.getElementById("name").value || "Your Brand").trim().slice(0,16);
+  const type = selected;
+  const used = claims.filter(c=>c.type===type).length;
+  if(used >= limits[type]){ alert("This category is full."); return; }
+  claims.push({name,type,index:used});
+  renderSpots();
+});
+renderSpots();
 </script>
 </body>
 </html>
