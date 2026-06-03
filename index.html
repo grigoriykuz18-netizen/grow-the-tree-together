@@ -1,336 +1,163 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Grow The Tree Together</title>
-  <meta name="description" content="Leave your mark. Become part of something that keeps growing.">
-  <style>
-    :root{
-      --bg:#030806;
-      --text:#f7fff8;
-      --muted:#b6c4b8;
-      --green:#a6d46f;
-      --gold:#f5c45b;
-      --line:rgba(255,255,255,.14);
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      overflow-x:hidden;
-    }
-    .hero{
-      min-height:100vh;
-      position:relative;
-      display:grid;
-      place-items:center;
-      padding:24px;
-      overflow:hidden;
-      isolation:isolate;
-    }
-    .hero:before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(circle at 50% 45%, rgba(166,212,111,.16), transparent 34%),
-        radial-gradient(circle at 80% 20%, rgba(245,196,91,.08), transparent 28%),
-        #020604;
-      z-index:-3;
-    }
-    .hero-image{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      object-position:center;
-      opacity:.92;
-      z-index:-2;
-    }
-    .shade{
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(90deg, rgba(3,8,6,.78) 0%, rgba(3,8,6,.18) 34%, rgba(3,8,6,.18) 66%, rgba(3,8,6,.76) 100%),
-        linear-gradient(180deg, rgba(3,8,6,.50) 0%, rgba(3,8,6,.05) 46%, rgba(3,8,6,.72) 100%);
-      z-index:-1;
-    }
-    header{
-      position:absolute;
-      top:0; left:0; right:0;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:22px clamp(18px,4vw,54px);
-      z-index:3;
-    }
-    .brand{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      font-family:Georgia,serif;
-      color:#f8d879;
-      font-size:20px;
-      line-height:1.05;
-      letter-spacing:.06em;
-      text-transform:uppercase;
-      text-shadow:0 0 20px rgba(245,196,91,.25);
-    }
-    .mark{
-      width:42px;height:42px;border-radius:50%;
-      border:1px solid rgba(245,196,91,.55);
-      display:grid;place-items:center;
-      color:#f8d879;
-    }
-    nav{
-      display:flex;
-      gap:34px;
-      color:rgba(255,255,255,.72);
-      font-weight:700;
-      font-size:13px;
-      letter-spacing:.1em;
-      text-transform:uppercase;
-    }
-    nav a{color:inherit;text-decoration:none}
-    .center-card{
-      width:min(760px,92vw);
-      text-align:center;
-      margin-top:58vh;
-      transform:translateY(-50%);
-      padding:30px;
-    }
-    .title{
-      font-family:Georgia,serif;
-      font-size:clamp(48px,7vw,104px);
-      line-height:.92;
-      letter-spacing:-.055em;
-      margin:0;
-      text-shadow:0 10px 45px rgba(0,0,0,.65);
-    }
-    .title em{
-      color:var(--green);
-      font-style:italic;
-    }
-    .subtitle{
-      margin:22px auto 0;
-      max-width:560px;
-      color:rgba(255,255,255,.82);
-      font-size:clamp(17px,2vw,22px);
-      line-height:1.55;
-      text-shadow:0 8px 30px rgba(0,0,0,.65);
-    }
-    .cta-row{
-      display:flex;
-      justify-content:center;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top:30px;
-    }
-    .btn{
-      min-height:54px;
-      padding:0 24px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      text-decoration:none;
-      color:var(--text);
-      font-weight:900;
-      letter-spacing:.06em;
-      text-transform:uppercase;
-      font-size:13px;
-      backdrop-filter:blur(12px);
-      background:rgba(0,0,0,.32);
-    }
-    .btn-main{
-      background:linear-gradient(135deg, rgba(166,212,111,.95), rgba(99,139,54,.95));
-      color:#061006;
-      border-color:rgba(166,212,111,.35);
-      box-shadow:0 0 34px rgba(166,212,111,.24);
-    }
-    .floating-panel{
-      position:absolute;
-      right:clamp(18px,4vw,54px);
-      top:28%;
-      width:min(310px,calc(100vw - 36px));
-      background:rgba(3,8,6,.62);
-      border:1px solid var(--line);
-      border-radius:22px;
-      padding:22px;
-      backdrop-filter:blur(16px);
-      box-shadow:0 24px 70px rgba(0,0,0,.35);
-    }
-    .floating-panel h2{
-      margin:0 0 14px;
-      color:var(--green);
-      font-size:18px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-    }
-    .counter{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      margin:14px 0;
-      color:rgba(255,255,255,.82);
-    }
-    .counter strong{
-      color:var(--gold);
-      font-size:26px;
-    }
-    input,select{
-      width:100%;
-      height:48px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.36);
-      color:var(--text);
-      padding:0 12px;
-      margin-top:10px;
-    }
-    .small{
-      color:rgba(255,255,255,.58);
-      font-size:13px;
-      line-height:1.45;
-      margin-top:14px;
-    }
-    .bottom-note{
-      position:absolute;
-      left:50%;
-      bottom:24px;
-      transform:translateX(-50%);
-      color:var(--gold);
-      font-size:13px;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      text-align:center;
-    }
-    section{
-      padding:90px clamp(18px,5vw,70px);
-      background:#050907;
-    }
-    .cards{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:16px;
-      max-width:1100px;
-      margin:0 auto;
-    }
-    .card{
-      border:1px solid var(--line);
-      border-radius:24px;
-      background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.025));
-      padding:24px;
-    }
-    .card h3{margin:0 0 10px;color:var(--green)}
-    .card p{margin:0;color:var(--muted);line-height:1.6}
-    footer{
-      padding:28px clamp(18px,5vw,70px);
-      border-top:1px solid var(--line);
-      color:var(--muted);
-      background:#050907;
-      display:flex;
-      justify-content:space-between;
-      gap:18px;
-      flex-wrap:wrap;
-    }
-    @media(max-width:980px){
-      nav{display:none}
-      .floating-panel{
-        position:relative;
-        right:auto;
-        top:auto;
-        margin:62vh auto 0;
-      }
-      .center-card{
-        position:absolute;
-        top:18%;
-        margin:0;
-        transform:none;
-      }
-      .hero{
-        min-height:112vh;
-        align-content:start;
-      }
-      .hero-image{object-position:center}
-      .cards{grid-template-columns:1fr}
-    }
-    @media(max-width:620px){
-      header{align-items:flex-start}
-      .brand{font-size:15px}
-      .center-card{top:14%;padding:16px}
-      .floating-panel{margin-top:68vh}
-      .title{font-size:44px}
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grow The Tree Together</title>
+<meta name="description" content="A collective digital tree growing from seed to giant tree.">
+<style>
+:root{--bg:#030806;--text:#f7fff8;--muted:#b6c4b8;--green:#a6d46f;--green2:#d7ff9f;--gold:#f5c45b;--line:rgba(255,255,255,.14)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+.hero{min-height:100vh;position:relative;display:grid;grid-template-columns:.78fr 1.22fr .72fr;gap:22px;align-items:center;padding:86px clamp(18px,3.6vw,54px) 36px;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(166,212,111,.18),transparent 35%),radial-gradient(circle at 85% 18%,rgba(245,196,91,.08),transparent 28%),#020604;z-index:-3}
+.shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,8,6,.83),rgba(3,8,6,.18) 36%,rgba(3,8,6,.18) 64%,rgba(3,8,6,.82)),linear-gradient(180deg,rgba(3,8,6,.45),rgba(3,8,6,.05) 48%,rgba(3,8,6,.82));z-index:-1}
+header{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:22px clamp(18px,4vw,54px);z-index:5}
+.brand{display:flex;gap:12px;align-items:center;font-family:Georgia,serif;color:#f8d879;font-size:20px;line-height:1.05;letter-spacing:.06em;text-transform:uppercase;text-shadow:0 0 20px rgba(245,196,91,.25)}
+.mark{width:42px;height:42px;border-radius:50%;border:1px solid rgba(245,196,91,.55);display:grid;place-items:center;color:#f8d879}
+nav{display:flex;gap:34px;color:rgba(255,255,255,.72);font-weight:800;font-size:13px;letter-spacing:.1em;text-transform:uppercase}a{color:inherit;text-decoration:none}
+.left h1{font-family:Georgia,serif;font-size:clamp(42px,5.1vw,78px);line-height:.94;letter-spacing:-.055em;margin:0;text-shadow:0 10px 45px rgba(0,0,0,.65)}
+.left h1 em{color:var(--green);font-style:italic}.lead{color:rgba(255,255,255,.82);font-size:18px;line-height:1.55;margin:22px 0 0;max-width:420px}
+.feature{display:flex;gap:14px;align-items:flex-start;margin-top:26px;color:rgba(255,255,255,.78)}
+.feature .circle{min-width:44px;height:44px;border-radius:50%;border:1px solid rgba(166,212,111,.3);display:grid;place-items:center;color:var(--green)}
+.feature strong{display:block;color:var(--green);font-size:13px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.feature span{font-size:14px;color:rgba(255,255,255,.72)}
+.stage-strip{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);display:flex;gap:8px;background:rgba(3,8,6,.56);border:1px solid var(--line);border-radius:999px;padding:8px;backdrop-filter:blur(14px);z-index:6}
+.stage-dot{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.13);display:grid;place-items:center;background:rgba(255,255,255,.04);cursor:pointer;font-size:18px}
+.stage-dot.active{background:linear-gradient(135deg,var(--green),var(--green2));color:#061006;box-shadow:0 0 30px rgba(166,212,111,.28)}
+.tree-stage{position:relative;height:min(72vh,680px);min-height:520px;display:grid;place-items:center}
+.ground{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);width:72%;height:70px;border-radius:50%;background:radial-gradient(ellipse,rgba(245,196,91,.2),rgba(50,28,12,.7) 50%,transparent 72%);filter:blur(1px)}
+.stage-visual{position:absolute;inset:0;display:grid;place-items:center;transition:.5s;opacity:0;transform:scale(.94)}
+.stage-visual.active{opacity:1;transform:scale(1)}
+.seed{width:66px;height:92px;border-radius:60% 40% 55% 45%;background:linear-gradient(135deg,#b77b32,#5c3516);box-shadow:0 0 60px rgba(245,196,91,.22);margin-top:220px}
+.sprout{position:relative;width:12px;height:180px;background:linear-gradient(var(--green2),#2f8a45);border-radius:999px;margin-top:150px;box-shadow:0 0 50px rgba(166,212,111,.25)}
+.sprout:before,.sprout:after{content:"";position:absolute;top:58px;width:92px;height:42px;border-radius:80% 20% 80% 20%;background:linear-gradient(135deg,var(--green2),#347d42);box-shadow:0 0 35px rgba(166,212,111,.25)}
+.sprout:before{right:6px;transform:rotate(-28deg)}.sprout:after{left:6px;transform:rotate(28deg)}
+.sapling{position:relative;width:260px;height:430px;margin-top:70px}
+.sapling .trunk{position:absolute;left:50%;bottom:45px;transform:translateX(-50%);width:32px;height:250px;border-radius:999px;background:linear-gradient(90deg,#4a2b17,#b8753c,#5e341b)}
+.sapling .crown{position:absolute;left:50%;top:30px;transform:translateX(-50%);width:260px;height:260px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#d8ffe2,#54db79 45%,#126c33);box-shadow:0 0 90px rgba(112,242,155,.25)}
+.big-tree{position:relative;width:min(660px,100%);height:100%;display:grid;place-items:center}
+.big-tree img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 30px 70px rgba(0,0,0,.55))}
+.nick-layer{position:absolute;inset:0;z-index:4;pointer-events:none}
+.nick{position:absolute;transform:translate(-50%,-50%);background:rgba(8,18,11,.56);border:1px solid rgba(166,212,111,.36);border-radius:18px;padding:7px 10px;color:#f8ffd7;font-weight:800;font-size:13px;box-shadow:0 0 24px rgba(166,212,111,.15);backdrop-filter:blur(10px);white-space:nowrap}
+.nick.gold{background:rgba(60,39,7,.62);border-color:rgba(245,196,91,.55);color:#ffe69a;box-shadow:0 0 28px rgba(245,196,91,.22)}
+.panel{background:rgba(3,8,6,.66);border:1px solid var(--line);border-radius:22px;padding:22px;backdrop-filter:blur(16px);box-shadow:0 24px 70px rgba(0,0,0,.35)}
+.panel h2{margin:0 0 14px;color:var(--green);font-size:18px;letter-spacing:.12em;text-transform:uppercase}
+.counter{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:14px 0;color:rgba(255,255,255,.82)}
+.counter strong{color:var(--gold);font-size:26px}
+.progress{height:12px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin:14px 0 18px}.fill{height:100%;width:12.48%;background:linear-gradient(90deg,var(--green),var(--green2),var(--gold));border-radius:999px}
+input,select{width:100%;height:48px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.36);color:var(--text);padding:0 12px;margin-top:10px}
+.btn{min-height:54px;padding:0 22px;border-radius:14px;border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:var(--text);font-weight:900;letter-spacing:.06em;text-transform:uppercase;font-size:13px;backdrop-filter:blur(12px);background:rgba(0,0,0,.32);cursor:pointer}
+.btn-main{background:linear-gradient(135deg,rgba(166,212,111,.95),rgba(99,139,54,.95));color:#061006;border-color:rgba(166,212,111,.35);box-shadow:0 0 34px rgba(166,212,111,.24)}
+.small{color:rgba(255,255,255,.58);font-size:13px;line-height:1.45;margin-top:14px}
+section{padding:90px clamp(18px,5vw,70px);background:#050907}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1100px;margin:0 auto}.card{border:1px solid var(--line);border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.025));padding:24px}.card h3{margin:0 0 10px;color:var(--green)}.card p{margin:0;color:var(--muted);line-height:1.6}
+footer{padding:28px clamp(18px,5vw,70px);border-top:1px solid var(--line);color:var(--muted);background:#050907;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+@media(max-width:1100px){.hero{grid-template-columns:1fr;min-height:130vh}.left{text-align:center}.lead{margin-left:auto;margin-right:auto}.feature{max-width:420px;margin-left:auto;margin-right:auto;text-align:left}.panel{max-width:420px;margin:0 auto}.tree-stage{order:-1}.stage-strip{position:fixed}.cards{grid-template-columns:1fr}}
+@media(max-width:620px){nav{display:none}.brand{font-size:15px}.hero{padding-top:74px}.left h1{font-size:44px}.tree-stage{min-height:470px;height:54vh}.nick{font-size:11px;padding:5px 7px}.stage-strip{bottom:10px}.stage-dot{width:36px;height:36px}}
+</style>
 </head>
 <body>
-  <main class="hero">
-    <img class="hero-image" src="./tree-hero.png" alt="Glowing digital tree with named leaves">
-    <div class="shade"></div>
+<main class="hero">
+  <div class="shade"></div>
+  <header>
+    <div class="brand"><div class="mark">🌳</div><span>Grow The Tree<br>Together</span></div>
+    <nav><a href="#">The Tree</a><a href="#people">People</a><a href="#about">About</a></nav>
+  </header>
 
-    <header>
-      <div class="brand"><div class="mark">🌳</div><span>Grow The Tree<br>Together</span></div>
-      <nav>
-        <a href="#">The Tree</a>
-        <a href="#leaves">Leaves</a>
-        <a href="#about">About</a>
-      </nav>
-    </header>
+  <div class="left">
+    <h1>From a seed to a tree full of <em>people.</em></h1>
+    <p class="lead">The tree grows step by step. First a seed, then a sprout, then a young tree — and finally a huge living tree where every visible leaf can hold someone’s name.</p>
+    <div class="feature"><div class="circle">🌱</div><div><strong>Stage-based growth</strong><span>Every milestone changes the tree.</span></div></div>
+    <div class="feature"><div class="circle">🍃</div><div><strong>Visible people</strong><span>Names stay on the tree as leaves.</span></div></div>
+    <div class="feature"><div class="circle">⭐</div><div><strong>Rare leaves</strong><span>Founder and golden leaves stand out.</span></div></div>
+  </div>
 
-    <div class="center-card">
-      <h1 class="title">Leave your mark on a tree that keeps <em>growing.</em></h1>
-      <p class="subtitle">Every leaf is a person. Every person makes a difference. Together, we grow something that will last.</p>
-      <div class="cta-row">
-        <a class="btn btn-main" href="#add">Add your leaf</a>
-        <a class="btn" href="#about">How it works</a>
+  <div class="tree-stage">
+    <div class="ground"></div>
+    <div class="stage-visual active" id="stage0"><div class="seed"></div></div>
+    <div class="stage-visual" id="stage1"><div class="sprout"></div></div>
+    <div class="stage-visual" id="stage2"><div class="sapling"><div class="crown"></div><div class="trunk"></div></div></div>
+    <div class="stage-visual" id="stage3">
+      <div class="big-tree">
+        <img src="./tree-hero.png" alt="Huge glowing tree">
+        <div class="nick-layer" id="nickLayer"></div>
       </div>
     </div>
+  </div>
 
-    <aside class="floating-panel" id="add">
-      <h2>🍃 Add your leaf</h2>
-      <div class="counter"><span>You are leaf</span><strong>#1248</strong></div>
-      <input placeholder="Name on your leaf">
-      <select>
-        <option>Small leaf — $5</option>
-        <option>Named leaf — $15</option>
-        <option>Glowing leaf — $30</option>
-        <option>Golden leaf — $50</option>
-      </select>
-      <a class="btn btn-main" style="width:100%;margin-top:14px" href="mailto:hello@growthetreetogether.com?subject=I want to add my leaf">Add my leaf</a>
-      <p class="small">Secure PayPal payment will be connected next. For now this is the visual MVP.</p>
-    </aside>
+  <aside class="panel" id="add">
+    <h2>🍃 Add your leaf</h2>
+    <div class="counter"><span>Current leaves</span><strong id="leafCount">1,247</strong></div>
+    <div class="progress"><div class="fill" id="fill"></div></div>
+    <div class="counter"><span>Your leaf</span><strong id="leafNumber">#1248</strong></div>
+    <input id="nameInput" placeholder="Name on your leaf">
+    <select id="leafType">
+      <option value="5">Small leaf — $5</option>
+      <option value="15" selected>Named leaf — $15</option>
+      <option value="30">Glowing leaf — $30</option>
+      <option value="50">Golden leaf — $50</option>
+    </select>
+    <button class="btn btn-main" style="width:100%;margin-top:14px" id="previewBtn">Preview my leaf</button>
+    <p class="small">PayPal will be connected next. For now this previews how the tree grows and how people become visible.</p>
+  </aside>
 
-    <div class="bottom-note">The tree continues to grow</div>
-  </main>
+  <div class="stage-strip">
+    <button class="stage-dot active" data-stage="0">🌰</button>
+    <button class="stage-dot" data-stage="1">🌱</button>
+    <button class="stage-dot" data-stage="2">🌿</button>
+    <button class="stage-dot" data-stage="3">🌳</button>
+  </div>
+</main>
 
-  <section id="about">
-    <div class="cards">
-      <div class="card">
-        <h3>Your leaf. Your legacy.</h3>
-        <p>Add your name to the tree and become part of a growing digital artwork.</p>
-      </div>
-      <div class="card">
-        <h3>Real people. Real impact.</h3>
-        <p>Every leaf represents someone who decided to leave a visible trace.</p>
-      </div>
-      <div class="card">
-        <h3>Together we grow.</h3>
-        <p>One leaf today. A forest tomorrow.</p>
-      </div>
-    </div>
-  </section>
+<section id="people">
+  <div class="cards">
+    <div class="card"><h3>Every person is visible</h3><p>Names appear directly on the tree, not hidden in a table.</p></div>
+    <div class="card"><h3>The tree evolves</h3><p>The project starts as a seed and unlocks new stages as more people join.</p></div>
+    <div class="card"><h3>Shareable identity</h3><p>Each user can become “Leaf #1248” and share it later.</p></div>
+  </div>
+</section>
 
-  <footer>
-    <span>Grow The Tree Together</span>
-    <span>This is a digital interactive art project.</span>
-  </footer>
+<footer><span>Grow The Tree Together</span><span>This is a digital interactive art project.</span></footer>
+
+<script>
+let count = 1247;
+const target = 10000;
+const names = [
+  ["Emma","#1247","gold",50,21],["Olivia","#1241","",66,25],["Noah","#1242","",76,30],
+  ["Sophia","#1238","",31,42],["Ava","#1243","",43,39],["James","#1235","gold",52,37],
+  ["Mason","#1236","",62,43],["Lucas","#1229","",27,58],["Benjamin","#1232","",46,56],
+  ["William","#1233","",60,60],["Amelia","#1234","",68,70],["Harper","#1230","",32,70],
+  ["Ethan","#1231","",46,75],["Liam","#1240","",38,28],["Charlotte","#1237","",78,47]
+];
+const nickLayer = document.getElementById("nickLayer");
+function renderNames(){
+  nickLayer.innerHTML = "";
+  names.forEach(n=>{
+    const el=document.createElement("div");
+    el.className="nick " + (n[2] || "");
+    el.style.left=n[3]+"%"; el.style.top=n[4]+"%";
+    el.innerHTML=n[0]+"<br><span style='font-size:11px;color:#d9ee8e'>"+n[1]+"</span>";
+    nickLayer.appendChild(el);
+  });
+}
+function setStage(i){
+  document.querySelectorAll(".stage-visual").forEach((el,idx)=>el.classList.toggle("active",idx===i));
+  document.querySelectorAll(".stage-dot").forEach((el,idx)=>el.classList.toggle("active",idx===i));
+}
+document.querySelectorAll(".stage-dot").forEach(btn=>btn.addEventListener("click",()=>setStage(Number(btn.dataset.stage))));
+function updateCounter(){
+  document.getElementById("leafCount").textContent=count.toLocaleString();
+  document.getElementById("leafNumber").textContent="#" + (count+1).toLocaleString();
+  document.getElementById("fill").style.width=Math.min(100,count/target*100)+"%";
+}
+document.getElementById("previewBtn").addEventListener("click",()=>{
+  const name=document.getElementById("nameInput").value.trim() || "You";
+  const value=Number(document.getElementById("leafType").value);
+  count++;
+  names.push([name,"#"+count,(value>=50?"gold":""),25+Math.random()*55,20+Math.random()*58]);
+  setStage(3); renderNames(); updateCounter();
+});
+renderNames(); updateCounter();
+</script>
 </body>
 </html>
