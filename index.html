@@ -4,276 +4,95 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Grow The Tree Together — Tree #1</title>
-<meta name="description" content="Claim one of only 100 permanent spots on Tree #1.">
+<meta name="description" content="Claim one of only 92 permanent spots on Tree #1.">
 <style>
-  :root{
-    --green:#7abf35;
-    --green2:#a6d46f;
-    --gold:#e6a919;
-    --dark:#071006;
-    --text:#ffffff;
-    --line:rgba(255,255,255,.18);
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#071006;color:var(--text)}
-  body{overflow-x:hidden}
-  .hero{
-    min-height:100vh;
-    position:relative;
-    overflow:hidden;
-    isolation:isolate;
-  }
-  .visual{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    object-position:center;
-    z-index:-3;
-  }
-  .overlay{
-    position:absolute;
-    inset:0;
-    background:
-      linear-gradient(90deg,rgba(0,0,0,.12),rgba(0,0,0,0) 34%,rgba(0,0,0,0) 68%,rgba(0,0,0,.08)),
-      linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,0) 58%,rgba(0,0,0,.08));
-    z-index:-2;
-    pointer-events:none;
-  }
-
-  /* реальные кликабельные зоны поверх картинки */
-  .hotspot{
-    position:absolute;
-    display:block;
-    border-radius:18px;
-    text-indent:-9999px;
-    overflow:hidden;
-  }
-  .hotspot:focus-visible{
-    outline:3px solid rgba(166,212,111,.85);
-    outline-offset:4px;
-  }
-  .claim-left{
-    left:2.2%;
-    top:76.2%;
-    width:15.8%;
-    height:6.6%;
-  }
-  .claim-panel{
-    right:3.4%;
-    top:73.5%;
-    width:17.8%;
-    height:7.3%;
-  }
-  .prices-link{
-    left:3%;
-    top:85%;
-    width:16%;
-    height:4%;
-  }
-
-  .live-layer{
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-  }
-  .added-spot{
-    position:absolute;
-    transform:translate(-50%,-50%);
-    pointer-events:auto;
-    min-width:112px;
-    min-height:34px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:7px 12px;
-    border-radius:999px 999px 999px 10px;
-    font-size:13px;
-    font-weight:900;
-    backdrop-filter:blur(8px);
-    border:1px solid rgba(255,255,255,.65);
-    box-shadow:0 0 24px rgba(166,212,111,.35);
-  }
-  .medium{background:rgba(115,170,39,.72);color:#102006}
-  .white{background:rgba(255,255,255,.78);color:#30352d;box-shadow:0 0 24px rgba(255,255,255,.4)}
-  .gold{background:rgba(227,177,36,.78);color:#332000;box-shadow:0 0 30px rgba(230,169,25,.48)}
-  .added-spot:hover:after{
-    content:attr(data-info);
-    position:absolute;
-    left:50%;
-    top:-12px;
-    transform:translate(-50%,-100%);
-    background:rgba(10,18,8,.88);
-    color:white;
-    border:1px solid rgba(255,255,255,.18);
-    border-radius:12px;
-    padding:8px 10px;
-    white-space:nowrap;
-    font-size:12px;
-  }
-
-  .demo-panel{
-    position:fixed;
-    right:22px;
-    bottom:22px;
-    z-index:30;
-    width:min(360px,calc(100vw - 44px));
-    background:rgba(255,255,255,.92);
-    color:#17330e;
-    border:1px solid rgba(255,255,255,.7);
-    border-radius:24px;
-    padding:18px;
-    box-shadow:0 18px 60px rgba(0,0,0,.25);
-    backdrop-filter:blur(16px);
-    display:none;
-  }
-  .demo-panel.open{display:block}
-  .demo-panel h2{margin:0 0 12px;color:#2f6f16;font-size:18px;letter-spacing:.08em;text-transform:uppercase}
-  .demo-panel input,.demo-panel select{
-    width:100%;
-    height:46px;
-    border-radius:12px;
-    border:1px solid rgba(0,0,0,.14);
-    padding:0 12px;
-    margin-top:10px;
-    background:white;
-    color:#17330e;
-  }
-  .demo-panel button{
-    width:100%;
-    height:50px;
-    border:0;
-    border-radius:14px;
-    margin-top:12px;
-    background:linear-gradient(135deg,#8fd345,#4b941f);
-    color:white;
-    font-weight:900;
-    letter-spacing:.05em;
-    text-transform:uppercase;
-    cursor:pointer;
-  }
-  .close{
-    position:absolute;
-    right:14px;
-    top:12px;
-    border:0!important;
-    background:transparent!important;
-    width:auto!important;
-    height:auto!important;
-    color:#17330e!important;
-    font-size:24px;
-    margin:0!important;
-  }
-  .mobile-content{
-    display:none;
-    padding:24px;
-    background:#071006;
-  }
-  .mobile-content h1{
-    font-family:Georgia,serif;
-    font-size:42px;
-    line-height:.95;
-    margin:0 0 12px;
-  }
-  .mobile-content p{color:rgba(255,255,255,.78);line-height:1.55}
-  .mobile-content .btn{
-    display:inline-flex;
-    min-height:52px;
-    padding:0 20px;
-    align-items:center;
-    justify-content:center;
-    border-radius:14px;
-    background:#6caf2e;
-    color:white;
-    text-decoration:none;
-    font-weight:900;
-    margin-top:12px;
-  }
-  @media(max-width:850px){
-    .hero{min-height:72vh}
-    .visual{object-position:center}
-    .hotspot{display:none}
-    .mobile-content{display:block}
-    .demo-panel{right:12px;bottom:12px;width:calc(100vw - 24px)}
-  }
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#071006;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:white}
+.hero{min-height:100vh;position:relative;overflow:hidden}
+.visual{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
+.hotspot{position:absolute;z-index:5;display:block;border-radius:16px;text-indent:-9999px;overflow:hidden}
+.claim-left{left:2.1%;top:74.5%;width:16.5%;height:6.5%}
+.claim-right{right:3.4%;top:62.4%;width:18.2%;height:6.4%}
+.prices-link{left:3%;top:83.6%;width:15%;height:4%}
+.panel{
+  position:fixed;right:22px;bottom:22px;z-index:20;width:min(360px,calc(100vw - 44px));
+  background:rgba(255,255,255,.94);color:#17330e;border-radius:24px;padding:18px;
+  box-shadow:0 18px 60px rgba(0,0,0,.25);display:none
+}
+.panel.open{display:block}
+.panel h2{margin:0 0 12px;color:#2f6f16;font-size:18px;letter-spacing:.08em;text-transform:uppercase}
+.panel input,.panel select{width:100%;height:46px;border-radius:12px;border:1px solid rgba(0,0,0,.14);padding:0 12px;margin-top:10px}
+.panel button{width:100%;height:50px;border:0;border-radius:14px;margin-top:12px;background:linear-gradient(135deg,#8fd345,#4b941f);color:white;font-weight:900;cursor:pointer}
+.close{position:absolute!important;right:14px!important;top:10px!important;width:auto!important;height:auto!important;background:transparent!important;color:#17330e!important;font-size:24px!important;margin:0!important}
+.live-layer{position:absolute;inset:0;z-index:4;pointer-events:none}
+.added{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;min-width:110px;min-height:34px;padding:7px 12px;border-radius:999px;font-size:13px;font-weight:900;text-align:center;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+.green{background:rgba(115,170,39,.78);color:#102006;border:1px solid rgba(255,255,255,.55)}
+.white{background:rgba(255,255,255,.84);color:#30352d;border:1px solid rgba(255,255,255,.8)}
+.gold{background:rgba(227,177,36,.84);color:#332000;border:1px solid rgba(255,238,140,.8)}
+.mobile{display:none;padding:24px;background:#071006}
+.mobile h1{font-family:Georgia,serif;font-size:40px;line-height:.95;margin:0 0 12px}
+.mobile p{color:rgba(255,255,255,.78);line-height:1.5}
+.mobile a{display:inline-flex;min-height:52px;padding:0 20px;border-radius:14px;background:#6caf2e;color:white;text-decoration:none;align-items:center;font-weight:900}
+@media(max-width:850px){
+  .hero{min-height:70vh}.hotspot{display:none}.mobile{display:block}.panel{right:12px;bottom:12px;width:calc(100vw - 24px)}
+}
 </style>
 </head>
 <body>
 <main class="hero">
   <img class="visual" src="./tree-visual.png" alt="Grow The Tree Together Tree #1">
-  <div class="overlay"></div>
-
-  <a class="hotspot claim-left" href="#" id="claimLeft">Claim your spot</a>
-  <a class="hotspot claim-panel" href="#" id="claimPanel">Claim your spot</a>
-  <a class="hotspot prices-link" href="#prices">See all spots and prices</a>
-
+  <a href="#" class="hotspot claim-left" id="claimLeft">Claim</a>
+  <a href="#" class="hotspot claim-right" id="claimRight">Claim</a>
+  <a href="#prices" class="hotspot prices-link">Prices</a>
   <div class="live-layer" id="liveLayer"></div>
 </main>
 
-<section class="mobile-content" id="prices">
-  <h1>Claim one of only 100 permanent spots.</h1>
-  <p>Tree #1 has 20 Golden Spots, 30 White Spots and 50 Green Spots. Claimed spots become visible on the tree.</p>
-  <a class="btn" href="#" id="mobileClaim">Claim Your Spot</a>
+<section class="mobile" id="prices">
+  <h1>Claim one of only 92 permanent spots.</h1>
+  <p>Tree #1 has 15 Golden Spots, 34 White Spots and 43 Green Spots.</p>
+  <a href="#" id="mobileClaim">Claim Your Spot</a>
 </section>
 
-<div class="demo-panel" id="demoPanel">
-  <button class="close" id="closePanel">×</button>
+<div class="panel" id="panel">
+  <button class="close" id="close">×</button>
   <h2>Claim your spot</h2>
-  <input id="nameInput" maxlength="16" placeholder="Name / brand">
-  <input id="linkInput" maxlength="48" placeholder="Website / Telegram">
-  <select id="spotType">
+  <input id="name" maxlength="16" placeholder="Name / brand">
+  <input id="link" maxlength="48" placeholder="Website / Telegram">
+  <select id="type">
     <option value="green">Green Spot — $50</option>
     <option value="white">White Spot — $100</option>
     <option value="gold">Golden Spot — $250</option>
   </select>
-  <button id="previewBtn">Preview on tree</button>
+  <button id="preview">Preview on tree</button>
 </div>
 
 <script>
-const panel = document.getElementById("demoPanel");
-["claimLeft","claimPanel","mobileClaim"].forEach(id=>{
-  const el=document.getElementById(id);
-  if(el) el.addEventListener("click", e=>{e.preventDefault();panel.classList.add("open");});
+const panel=document.getElementById("panel");
+["claimLeft","claimRight","mobileClaim"].forEach(id=>{
+ const el=document.getElementById(id);
+ if(el) el.addEventListener("click",e=>{e.preventDefault();panel.classList.add("open")});
 });
-document.getElementById("closePanel").addEventListener("click",()=>panel.classList.remove("open"));
+document.getElementById("close").onclick=()=>panel.classList.remove("open");
 
-const zones = {
-  gold: [
-    [47,30],[52,30],[44,36],[50,38],[56,36],[46,44],[53,45],[49,51],[57,50],[43,52],
-    [51,57],[46,60],[55,61],[50,66],[41,42],[60,42],[44,27],[56,27],[48,24],[52,24]
-  ],
-  white: [
-    [38,23],[62,23],[35,29],[65,29],[39,36],[61,36],[33,42],[67,42],[37,49],[63,49],
-    [35,57],[65,57],[41,64],[59,64],[45,70],[55,70],[31,34],[69,34],[30,50],[70,50],
-    [34,66],[66,66],[42,18],[58,18],[46,75],[54,75],[40,55],[60,55],[36,73],[64,73]
-  ],
-  green: [
-    [31,18],[69,18],[28,25],[72,25],[25,34],[75,34],[24,45],[76,45],[25,56],[75,56],
-    [29,66],[71,66],[34,78],[66,78],[40,83],[60,83],[48,86],[52,86],[22,38],[78,38],
-    [22,62],[78,62],[27,75],[73,75],[35,12],[65,12],[45,10],[55,10],[20,50],[80,50],
-    [32,88],[68,88],[39,92],[61,92],[50,94],[28,82],[72,82],[18,44],[82,44],[18,58],
-    [82,58],[24,72],[76,72],[29,12],[71,12],[23,26],[77,26],[33,5],[67,5],[50,6]
-  ]
+const zones={
+ gold:[[49,30],[53,34],[46,38],[55,42],[50,46],[44,49],[57,50],[48,55],[54,58],[50,63],[43,43],[59,38],[47,25],[52,25],[51,39]],
+ white:[[39,25],[44,24],[58,25],[63,28],[36,33],[42,34],[48,34],[56,34],[64,35],[34,42],[40,43],[46,44],[60,44],[66,45],[37,52],[43,53],[51,53],[59,54],[65,55],[35,62],[42,63],[49,64],[57,64],[64,65],[40,72],[48,73],[56,73],[62,72],[32,50],[68,50],[36,70],[66,70],[45,82],[55,82]],
+ green:[[36,15],[42,12],[49,11],[56,12],[63,15],[31,22],[69,22],[27,30],[73,30],[24,40],[76,40],[23,51],[77,51],[25,62],[75,62],[30,72],[70,72],[36,82],[64,82],[43,88],[57,88],[50,91],[29,46],[71,46],[31,58],[69,58],[34,68],[66,68],[39,77],[61,77],[22,34],[78,34],[21,56],[79,56],[28,80],[72,80],[35,90],[65,90],[46,7],[54,7],[32,12],[68,12],[50,84]]
 };
-let used = {gold:0, white:0, green:0};
-
-document.getElementById("previewBtn").addEventListener("click",()=>{
-  const name = document.getElementById("nameInput").value.trim() || "Your Brand";
-  const type = document.getElementById("spotType").value;
-  const list = zones[type];
-  if(used[type] >= list.length){ alert("No more preview spots in this category."); return; }
-  const p = list[used[type]++];
-  const spot = document.createElement("div");
-  spot.className = "added-spot " + type;
-  spot.style.left = p[0] + "%";
-  spot.style.top = p[1] + "%";
-  spot.textContent = (type==="gold" ? "⭐ " : type==="white" ? "◻ " : "🌿 ") + name;
-  spot.dataset.info = name + " — " + (type==="gold" ? "Golden Spot" : type==="white" ? "White Spot" : "Green Spot");
-  document.getElementById("liveLayer").appendChild(spot);
-  panel.classList.remove("open");
-});
+let used={gold:0,white:0,green:0};
+document.getElementById("preview").onclick=()=>{
+ const name=document.getElementById("name").value.trim()||"Your Brand";
+ const type=document.getElementById("type").value;
+ const arr=zones[type];
+ if(used[type]>=arr.length){alert("No more preview spots in this category.");return;}
+ const p=arr[used[type]++];
+ const el=document.createElement("div");
+ el.className="added "+type;
+ el.style.left=p[0]+"%"; el.style.top=p[1]+"%";
+ el.textContent=(type==="gold"?"⭐ ":type==="white"?"◻ ":"🌿 ")+name;
+ document.getElementById("liveLayer").appendChild(el);
+ panel.classList.remove("open");
+};
 </script>
 </body>
 </html>
