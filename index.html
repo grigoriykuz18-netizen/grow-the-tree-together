@@ -1,99 +1,137 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Grow The Tree — 72 Permanent Spots</title>
-  <link rel="preload" as="image" href="assets/tree.webp">
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grow The Tree Together — 72 Permanent Spots</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="[fonts.googleapis.com](https://fonts.googleapis.com)">
+  <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap)" rel="stylesheet">
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <img src="assets/icons/leaf.svg" alt="" class="leaf">
-      <span class="logo">GROW THE TREE <em>together</em></span>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <span class="leaf">🌿</span>
+      <span class="brand">GROW THE TREE <em>together</em></span>
     </div>
-    <nav class="top-actions">
-      <button class="icon-btn" data-help title="Help">?</button>
-      <a class="icon-btn" href="[twitter.com](https://twitter.com)" aria-label="Twitter">
-        <img src="assets/icons/twitter.svg" alt="">
-      </a>
-      <a class="icon-btn" href="[t.me](https://t.me)" aria-label="Telegram">
-        <img src="assets/icons/telegram.svg" alt="">
-      </a>
-      <button class="icon-btn" id="lang">🌐</button>
+    <nav class="nav">
+      <button class="nav-btn">?</button>
+      <a href="[twitter.com](https://twitter.com)" class="nav-btn" target="_blank">𝕏</a>
+      <a href="[t.me](https://t.me)" class="nav-btn" target="_blank">✈</a>
+      <button class="nav-btn">🌐</button>
     </nav>
   </header>
-  <main class="layout">
-    <section class="left">
-      <h1 class="big">72</h1>
-      <p class="subtitle">PERMANENT SPOTS</p>
-      <p class="desc">One tree. Fewer places. More space. Better visibility.</p>
+
+  <!-- Main Layout -->
+  <main class="main">
+
+    <!-- Left Panel -->
+    <aside class="panel-left">
+      <h1 class="big-number">72</h1>
+      <p class="label">PERMANENT SPOTS</p>
+      <p class="tagline">One tree. Fewer places.<br>More space. Better visibility.</p>
+
       <ul class="tiers">
-        <li><span class="dot gold"></span><b>8</b> GOLD SPOTS <span class="price">$250</span></li>
-        <li><span class="dot white"></span><b>28</b> WHITE SPOTS <span class="price">$100</span></li>
-        <li><span class="dot green"></span><b>36</b> GREEN SPOTS <span class="price">$50</span></li>
+        <li>
+          <span class="dot gold"></span>
+          <strong>8</strong> <span class="tier-name">GOLD SPOTS</span>
+          <span class="price">$250</span>
+        </li>
+        <li>
+          <span class="dot white"></span>
+          <strong>28</strong> <span class="tier-name">WHITE SPOTS</span>
+          <span class="price">$100</span>
+        </li>
+        <li>
+          <span class="dot green"></span>
+          <strong>36</strong> <span class="tier-name">GREEN SPOTS</span>
+          <span class="price">$50</span>
+        </li>
       </ul>
-      <div class="claimed">
-        <b><span id="claimedCount">0</span> / 72</b>
-        <span>SPOTS CLAIMED</span>
+
+      <div class="claimed-counter">
+        <span class="count"><span id="claimedCount">0</span> / 72</span>
+        <span class="label-small">SPOTS CLAIMED</span>
       </div>
-      <p>Become one of the <mark>72 founding members.</mark></p>
-      <a class="cta" href="#claim">CLAIM YOUR SPOT</a>
-      <p class="pp"><img src="assets/icons/lock.svg" alt=""> Secure payment with PayPal</p>
-    </section>
-    <section class="center">
-      <div class="tree-wrap">
-        <img src="assets/tree.webp" alt="Tree" class="tree" />
-        <div id="spotsLayer" class="spots"></div>
-        <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+
+      <p class="cta-text">Become one of the <mark>72 founding members.</mark></p>
+
+      <a href="#claim-form" class="cta-btn">🌿 CLAIM YOUR SPOT</a>
+      <p class="secure">🔒 Secure payment with PayPal</p>
+    </aside>
+
+    <!-- Center: Tree -->
+    <section class="tree-section">
+      <div class="tree-container">
+        <img src="assets/tree.png" alt="Tree" class="tree-image">
+        <div class="spots-layer" id="spotsLayer"></div>
+        <div class="tooltip" id="tooltip"></div>
       </div>
     </section>
-    <aside class="right" id="claim">
+
+    <!-- Right Panel: Form -->
+    <aside class="panel-right" id="claim-form">
       <h2>Claim Your Spot</h2>
+
       <form id="claimForm" autocomplete="off">
         <label>
-          Name / brand
-          <input type="text" name="name" required maxlength="32" placeholder="Your brand or name">
+          <span>Name / brand</span>
+          <input type="text" name="name" placeholder="Your name or brand" required maxlength="32">
         </label>
+
         <label>
-          Website / Telegram / X
-          <input type="url" name="url" inputmode="url" placeholder="https://… or t.me/…">
+          <span>Website / Telegram / X</span>
+          <input type="url" name="url" placeholder="https://...">
         </label>
-        <fieldset class="spot-type">
+
+        <fieldset class="tier-select">
           <legend>CHOOSE A SPOT TYPE</legend>
-          <label class="option green">
+          <label class="tier-option green">
             <input type="radio" name="tier" value="green" checked>
-            <span>Green Spot</span><b>$50</b>
+            <span class="tier-label">🌿 Green Spot</span>
+            <span class="tier-price">$50</span>
           </label>
-          <label class="option white">
+          <label class="tier-option white">
             <input type="radio" name="tier" value="white">
-            <span>White Spot</span><b>$100</b>
+            <span class="tier-label">⚪ White Spot</span>
+            <span class="tier-price">$100</span>
           </label>
-          <label class="option gold">
+          <label class="tier-option gold">
             <input type="radio" name="tier" value="gold">
-            <span>Golden Spot</span><b>$250</b>
+            <span class="tier-label">🏆 Golden Spot</span>
+            <span class="tier-price">$250</span>
           </label>
         </fieldset>
-        <div class="hint">
-          <b>Select a glowing dot</b> on the tree to see price and claim that spot.
-        </div>
-        <input type="hidden" name="spotId" id="spotId">
-        <button type="submit" class="primary" disabled id="claimBtn">CLAIM SELECTED SPOT</button>
-        <p class="micro">Hover a dot to see price. Click a dot to select exact place. After claiming, it becomes a leaf-avatar.</p>
+
+        <p class="hint">🌿 <strong>Select a glowing dot</strong> on the tree to see price and claim that spot.</p>
+
+        <input type="hidden" name="spotId" id="spotIdInput">
+        <button type="submit" class="submit-btn" id="submitBtn" disabled>CLAIM SELECTED SPOT</button>
+
+        <p class="note">Hover a dot to see price. Click a dot to select exact place. After claiming, it becomes a leaf-avatar.</p>
       </form>
     </aside>
+
   </main>
-  <section class="latest">
-    <div class="latest-head">
-      <h3>LATEST CLAIMS</h3>
-      <a href="#" id="viewAll">View all →</a>
+
+  <!-- Latest Claims -->
+  <section class="latest-section">
+    <div class="latest-header">
+      <h3>🟢 LATEST CLAIMS</h3>
+      <a href="#" class="view-all">View all →</a>
     </div>
-    <div id="claimsMarquee" class="marquee empty">No spots claimed yet. Be the first.</div>
+    <div class="latest-bar" id="latestBar">
+      <p class="empty-msg">No spots claimed yet. Be the first.</p>
+    </div>
   </section>
+
+  <!-- Footer -->
   <footer class="footer">
     © Grow The Tree Together — 72 permanent spots.
   </footer>
-  <script src="app.js" type="module"></script>
+
+  <script src="app.js"></script>
 </body>
 </html>
