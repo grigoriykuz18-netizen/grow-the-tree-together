@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Grow The Tree Together</title>
+  <meta name="description" content="Leave your mark. Become part of something that keeps growing.">
+  <style>
+    :root{
+      --bg:#050907;
+      --panel:#0b1410;
+      --panel2:#101f17;
+      --text:#f0fff5;
+      --muted:#9db7a6;
+      --green:#70f29b;
+      --green2:#b4ffc8;
+      --gold:#ffd76a;
+      --line:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(112,242,155,.18), transparent 32%),
+        radial-gradient(circle at 15% 80%, rgba(180,255,200,.08), transparent 25%),
+        radial-gradient(circle at 90% 85%, rgba(255,215,106,.07), transparent 28%),
+        var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+    .grain{
+      position:fixed;inset:0;pointer-events:none;opacity:.22;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      mix-blend-mode:soft-light;
+    }
+    header{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:22px clamp(18px,5vw,70px);
+      position:relative;z-index:2;
+    }
+    .logo{display:flex;gap:12px;align-items:center;font-weight:850;letter-spacing:-.03em}
+    .logo-mark{
+      width:40px;height:40px;border-radius:14px;
+      background:linear-gradient(145deg,#102217,#193923);
+      border:1px solid var(--line);
+      display:grid;place-items:center;
+      box-shadow:0 0 32px rgba(112,242,155,.12);
+    }
+    .pill{
+      border:1px solid var(--line);
+      color:var(--green2);
+      padding:10px 16px;border-radius:999px;
+      background:rgba(255,255,255,.03);
+    }
+    main{position:relative;z-index:1}
+    .hero{
+      min-height:calc(100vh - 86px);
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:36px;
+      align-items:center;
+      padding:34px clamp(18px,5vw,70px) 70px;
+    }
+    .eyebrow{
+      color:var(--green2);
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-weight:900;
+      font-size:12px;
+    }
+    h1{
+      max-width:720px;
+      font-size:clamp(46px,7vw,92px);
+      line-height:.9;
+      letter-spacing:-.075em;
+      margin:16px 0 22px;
+    }
+    .lead{
+      max-width:600px;
+      color:var(--muted);
+      font-size:clamp(18px,2vw,22px);
+      line-height:1.55;
+    }
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin:34px 0}
+    .btn{
+      min-height:54px;
+      padding:0 24px;
+      border-radius:999px;
+      border:1px solid transparent;
+      display:inline-flex;align-items:center;justify-content:center;
+      font-weight:900;
+      text-decoration:none;
+      cursor:pointer;
+    }
+    .btn-primary{
+      background:linear-gradient(135deg,var(--green),var(--green2));
+      color:#04200d;
+      box-shadow:0 18px 55px rgba(112,242,155,.24);
+    }
+    .btn-secondary{
+      color:var(--text);
+      border-color:var(--line);
+      background:rgba(255,255,255,.04);
+    }
+    .stats{
+      display:grid;grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      max-width:620px;
+      margin-top:28px;
+    }
+    .stat,.panel{
+      background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:18px;
+      backdrop-filter:blur(12px);
+    }
+    .stat strong{display:block;font-size:28px;color:var(--green2)}
+    .stat span{color:var(--muted);font-size:14px}
+    .tree-card{
+      min-height:650px;
+      border:1px solid var(--line);
+      border-radius:42px;
+      background:
+        radial-gradient(circle at 50% 38%, rgba(112,242,155,.20), transparent 38%),
+        linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.025));
+      position:relative;
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+      box-shadow:inset 0 0 80px rgba(255,255,255,.03);
+    }
+    .stars,.stars:before,.stars:after{
+      position:absolute;inset:0;content:"";
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.55) 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(180,255,200,.45) 1px, transparent 1.5px);
+      background-size:90px 90px, 130px 130px;
+      background-position:10px 20px, 60px 10px;
+      opacity:.35;
+    }
+    .moon{
+      position:absolute;right:13%;top:10%;
+      width:62px;height:62px;border-radius:50%;
+      background:rgba(246,255,248,.9);
+      box-shadow:0 0 80px rgba(246,255,248,.28);
+    }
+    .tree{
+      width:min(430px,88vw);
+      height:560px;
+      position:relative;
+      filter:drop-shadow(0 20px 60px rgba(0,0,0,.35));
+    }
+    .soil{
+      position:absolute;left:50%;bottom:58px;transform:translateX(-50%);
+      width:330px;height:64px;border-radius:50%;
+      background:linear-gradient(180deg,#4b2c18,#29170d);
+      box-shadow:0 28px 90px rgba(0,0,0,.6);
+    }
+    .trunk{
+      position:absolute;left:50%;bottom:98px;transform:translateX(-50%);
+      width:64px;height:310px;border-radius:40px 40px 18px 18px;
+      background:linear-gradient(90deg,#563119,#a76635 50%,#6e3d20);
+    }
+    .branch{
+      position:absolute;bottom:280px;left:50%;
+      width:170px;height:22px;border-radius:999px;
+      background:linear-gradient(90deg,#774421,#a76635);
+      transform-origin:left center;
+    }
+    .b1{transform:rotate(-30deg);width:155px}
+    .b2{transform:rotate(28deg);width:170px}
+    .b3{bottom:355px;transform:rotate(-17deg);width:125px}
+    .b4{bottom:365px;transform:rotate(20deg);width:130px}
+    .crown{
+      position:absolute;left:50%;top:54px;transform:translateX(-50%);
+      width:390px;height:390px;border-radius:48% 52% 45% 55%;
+      background:
+        radial-gradient(circle at 32% 32%, rgba(180,255,200,.95), transparent 10%),
+        radial-gradient(circle at 70% 38%, rgba(112,242,155,.92), transparent 12%),
+        radial-gradient(circle at 42% 68%, rgba(112,242,155,.9), transparent 12%),
+        radial-gradient(circle at 50% 50%, #3bc66a, #178541 72%);
+      opacity:.95;
+      box-shadow:0 0 100px rgba(112,242,155,.18);
+      animation:float 5s ease-in-out infinite;
+    }
+    @keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
+    .leaf{
+      position:absolute;
+      width:22px;height:32px;
+      border-radius:75% 20% 75% 20%;
+      background:var(--green2);
+      box-shadow:0 0 18px rgba(180,255,200,.45);
+      z-index:3;
+    }
+    .leaf.gold{background:var(--gold);box-shadow:0 0 22px rgba(255,215,106,.55)}
+    .leaf.one{left:27%;top:28%;transform:rotate(-25deg)}
+    .leaf.two{right:27%;top:33%;transform:rotate(45deg)}
+    .leaf.three{left:46%;top:18%;transform:rotate(12deg)}
+    .leaf.four{right:35%;top:55%;transform:rotate(-15deg)}
+    .leaf.five{left:34%;top:58%;transform:rotate(34deg)}
+    .badge{
+      position:absolute;left:50%;bottom:24px;transform:translateX(-50%);
+      width:calc(100% - 44px);
+      display:flex;justify-content:space-between;align-items:center;gap:12px;
+      background:rgba(5,9,7,.62);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:14px 16px;
+      backdrop-filter:blur(14px);
+      color:var(--muted);
+      font-size:14px;
+    }
+    .badge strong{color:var(--text)}
+    section{
+      padding:74px clamp(18px,5vw,70px);
+    }
+    .section-head{max-width:820px;margin-bottom:26px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+    .card{
+      background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius:26px;
+      padding:22px;
+    }
+    .card h3{margin:12px 0 8px;font-size:22px}
+    .card p{color:var(--muted);line-height:1.55;margin:0}
+    .icon{font-size:32px}
+    .price strong{display:block;font-size:34px;color:var(--green2);margin:8px 0}
+    .price.featured{border-color:rgba(180,255,200,.42);box-shadow:0 20px 60px rgba(112,242,155,.08)}
+    .progress{
+      margin-top:26px;
+      max-width:860px;
+    }
+    .bar{
+      height:14px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .fill{
+      width:14%;
+      height:100%;
+      background:linear-gradient(90deg,var(--green),var(--green2),var(--gold));
+      border-radius:999px;
+    }
+    .footer-cta{
+      text-align:center;
+      max-width:900px;
+      margin:0 auto;
+    }
+    .footer-cta h2{
+      font-size:clamp(34px,5vw,64px);
+      line-height:1;
+      letter-spacing:-.05em;
+      margin:0 0 18px;
+    }
+    footer{
+      padding:30px clamp(18px,5vw,70px);
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+    }
+    @media(max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .tree-card{min-height:560px}
+      .grid5{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:720px){
+      .stats,.grid3,.grid5{grid-template-columns:1fr}
+      header{padding-top:16px}
+      .tree{transform:scale(.82)}
+      .tree-card{min-height:500px}
+      .pill{display:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+  <header>
+    <div class="logo">
+      <div class="logo-mark">🌱</div>
+      <span>Grow The Tree Together</span>
+    </div>
+    <a class="pill" href="#leaf">Add your leaf</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Collective digital tree</div>
+        <h1>Leave your mark on a tree that keeps growing.</h1>
+        <p class="lead">
+          Every contribution adds a leaf. Every leaf holds a name.
+          Become part of something small, strange and alive on the internet.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#leaf">🌱 Add your leaf</a>
+          <a class="btn btn-secondary" href="#how">How it works</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><strong>124</strong><span>early leaves</span></div>
+          <div class="stat"><strong>6</strong><span>growth stages</span></div>
+          <div class="stat"><strong>#125</strong><span>could be yours</span></div>
+        </div>
+        <div class="progress">
+          <div class="bar"><div class="fill"></div></div>
+        </div>
+      </div>
+
+      <div class="tree-card">
+        <div class="stars"></div>
+        <div class="moon"></div>
+        <div class="tree" aria-label="Beautiful digital tree">
+          <div class="crown"></div>
+          <div class="branch b1"></div>
+          <div class="branch b2"></div>
+          <div class="branch b3"></div>
+          <div class="branch b4"></div>
+          <div class="trunk"></div>
+          <div class="soil"></div>
+          <div class="leaf one"></div>
+          <div class="leaf two"></div>
+          <div class="leaf three gold"></div>
+          <div class="leaf four"></div>
+          <div class="leaf five"></div>
+        </div>
+        <div class="badge">
+          <span>Current stage: <strong>Young Tree</strong></span>
+          <span>Goal: <strong>10,000 leaves</strong></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="section-head">
+        <div class="eyebrow">How it works</div>
+        <h2>One click. One leaf. One visible trace.</h2>
+      </div>
+      <div class="grid3">
+        <div class="card"><div class="icon">🌱</div><h3>Choose a leaf</h3><p>Select the type of mark you want to leave on the tree.</p></div>
+        <div class="card"><div class="icon">✍️</div><h3>Add your name</h3><p>Your nickname becomes part of the tree and its story.</p></div>
+        <div class="card"><div class="icon">🌳</div><h3>Watch it grow</h3><p>The tree grows leaf by leaf, branch by branch, with every new person.</p></div>
+      </div>
+    </section>
+
+    <section id="leaf">
+      <div class="section-head">
+        <div class="eyebrow">Choose your mark</div>
+        <h2>Not a donation. A place on the tree.</h2>
+      </div>
+      <div class="grid5">
+        <div class="card price"><div class="icon">🌱</div><strong>$2</strong><p>Small leaf</p></div>
+        <div class="card price featured"><div class="icon">🍃</div><strong>$5</strong><p>Named leaf</p></div>
+        <div class="card price"><div class="icon">✨</div><strong>$10</strong><p>Glowing leaf</p></div>
+        <div class="card price"><div class="icon">🌿</div><strong>$25</strong><p>Branch mark</p></div>
+        <div class="card price"><div class="icon">⭐</div><strong>$50</strong><p>Founder leaf</p></div>
+      </div>
+      <div style="margin-top:24px">
+        <a class="btn btn-primary" href="mailto:hello@growthetreetogether.com?subject=I want to add my leaf">Add your leaf soon</a>
+      </div>
+    </section>
+
+    <section>
+      <div class="footer-cta">
+        <h2>Thousands may see it. Only a few become part of it.</h2>
+        <p class="lead" style="margin-left:auto;margin-right:auto">
+          This is a digital interactive art project. Contributions support its creation and growth.
+        </p>
+        <div class="actions" style="justify-content:center">
+          <a class="btn btn-primary" href="#leaf">Become leaf #125</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Grow The Tree Together</span>
+    <span>We grow it together.</span>
+  </footer>
+</body>
+</html>
