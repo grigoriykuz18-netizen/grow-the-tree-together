@@ -1,0 +1,15 @@
+{
+  "tiers": { "gold": 8, "white": 28, "green": 36 },
+  "prices": { "gold": 250, "white": 100, "green": 50 },
+  "spots": [
+    { "id": "g1", "tier": "gold", "x": 62, "y": 22, "claimed": false },
+    { "id": "g2", "tier": "gold", "x": 42, "y": 18, "claimed": false },
+    { "id": "g3", "tier": "gold", "x": 73, "y": 36, "claimed": false },
+    { "id": "w1", "tier": "white", "x": 30, "y": 28, "claimed": false },
+    { "id": "w2", "tier": "white", "x": 52, "y": 30, "claimed": false },
+    { "id": "w3", "tier": "white", "x": 67, "y": 48, "claimed": false },
+    { "id": "gr1","tier": "green", "x": 22, "y": 44, "claimed": false },
+    { "id": "gr2","tier": "green", "x": 48, "y": 52, "claimed": false },
+    { "id": "gr3","tier": "green", "x": 58, "y": 66, "claimed": false }
+  ]
+}
