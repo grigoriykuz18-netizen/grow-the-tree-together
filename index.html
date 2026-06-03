@@ -7,14 +7,11 @@
 <meta name="description" content="Claim one of only 100 permanent spots on the tree.">
 <style>
 :root {
-  --green:#7dbd34;
-  --green-dark:#2b6d1f;
-  --white:#f4f6ef;
-  --white-stroke:#aeb8ae;
+  --green:#8fd33d;
+  --green2:#5fb421;
+  --white:#f5f7f0;
   --gold:#e4aa19;
-  --gold-dark:#8b650b;
   --ink:#102410;
-  --bg:#071006;
 }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -29,45 +26,39 @@ body {
   min-height:100vh;
   position:relative;
   display:grid;
-  grid-template-columns:0.72fr 1.45fr 0.78fr;
-  gap:22px;
+  grid-template-columns:0.72fr 1.48fr 0.78fr;
+  gap:24px;
   align-items:center;
   padding:86px clamp(20px,3vw,52px) 34px;
   background:
-    radial-gradient(circle at 52% 80%, rgba(255,209,97,.35), transparent 18%),
-    linear-gradient(180deg,#0e5c94 0%, #87c8e1 43%, #f2c777 68%, #2b842f 100%);
+    radial-gradient(circle at 52% 82%, rgba(255,209,97,.35), transparent 19%),
+    linear-gradient(180deg,#0e5c94 0%, #8bcce3 43%, #f2c777 68%, #2b842f 100%);
   overflow:hidden;
 }
 .hero::before {
   content:"";
   position:absolute; inset:0;
   background:
-    radial-gradient(circle at 20% 72%,rgba(255,255,255,.22),transparent 14%),
+    radial-gradient(circle at 20% 72%,rgba(255,255,255,.20),transparent 14%),
     radial-gradient(circle at 78% 67%,rgba(255,255,255,.18),transparent 17%),
-    linear-gradient(90deg,rgba(3,10,8,.48),rgba(3,10,8,.04) 34%,rgba(3,10,8,.04) 66%,rgba(3,10,8,.42));
+    linear-gradient(90deg,rgba(3,10,8,.47),rgba(3,10,8,.04) 34%,rgba(3,10,8,.04) 66%,rgba(3,10,8,.40));
   pointer-events:none;
 }
 .cloud {
-  position:absolute;
-  background:rgba(255,255,255,.58);
-  filter:blur(9px);
-  border-radius:999px;
-  opacity:.72;
+  position:absolute;background:rgba(255,255,255,.58);filter:blur(10px);border-radius:999px;opacity:.72;
 }
 .c1 {width:240px;height:56px;left:18%;top:10%;}
 .c2 {width:190px;height:46px;right:12%;top:16%;}
 .c3 {width:270px;height:58px;left:55%;top:8%;}
 .mountains {
-  position:absolute;left:0;right:0;bottom:15%;
-  height:28%;
+  position:absolute;left:0;right:0;bottom:15%;height:28%;
   background:
     linear-gradient(135deg,transparent 0 34%,rgba(20,75,65,.48) 35% 55%,transparent 56%),
     linear-gradient(225deg,transparent 0 28%,rgba(19,75,69,.52) 29% 50%,transparent 51%);
   opacity:.72;
 }
 .lake {
-  position:absolute;left:0;right:0;bottom:22%;
-  height:12%;
+  position:absolute;left:0;right:0;bottom:22%;height:12%;
   background:linear-gradient(180deg,rgba(157,218,232,.55),rgba(247,206,120,.34));
 }
 .meadow {
@@ -75,24 +66,18 @@ body {
   background:linear-gradient(180deg,rgba(78,139,49,.85),#173f1a);
 }
 header {
-  position:absolute; top:0; left:0; right:0; z-index:20;
-  display:flex; justify-content:space-between; align-items:center;
+  position:absolute;top:0;left:0;right:0;z-index:20;
+  display:flex;justify-content:space-between;align-items:center;
   padding:22px clamp(20px,3vw,52px);
   background:linear-gradient(180deg,rgba(2,12,18,.46),transparent);
 }
-.logo {
-  display:flex; gap:12px; align-items:center;
-  font-family:Georgia,serif;
-  font-size:22px;
-  font-weight:800;
-  text-shadow:0 2px 20px rgba(0,0,0,.28);
-}
-.logo span:first-child { font-size:28px; }
-nav { display:flex; gap:28px; font-weight:850; }
-nav a { color:white; text-decoration:none; }
-nav a.active { color:#b7ef62; border-bottom:2px solid #b7ef62; padding-bottom:8px; }
-.left,.tree-zone,.panel { position:relative; z-index:5; }
-.kicker { color:#b7ef62; letter-spacing:.16em; text-transform:uppercase; font-weight:950; font-size:14px; }
+.logo {display:flex;gap:12px;align-items:center;font-family:Georgia,serif;font-size:22px;font-weight:800;text-shadow:0 2px 20px rgba(0,0,0,.28)}
+.logo span:first-child {font-size:28px}
+nav {display:flex;gap:28px;font-weight:850}
+nav a {color:white;text-decoration:none}
+nav a.active {color:#b7ef62;border-bottom:2px solid #b7ef62;padding-bottom:8px}
+.left,.tree-zone,.panel {position:relative;z-index:5}
+.kicker {color:#b7ef62;letter-spacing:.16em;text-transform:uppercase;font-weight:950;font-size:14px}
 h1 {
   margin:14px 0 18px;
   font-family:Georgia,serif;
@@ -101,224 +86,118 @@ h1 {
   letter-spacing:-.05em;
   text-shadow:0 10px 40px rgba(0,0,0,.42);
 }
-h1 span { color:#b7ef62; }
-.lead { font-size:18px; line-height:1.55; max-width:430px; text-shadow:0 3px 16px rgba(0,0,0,.42); }
+h1 span {color:#b7ef62}
+.lead {font-size:18px;line-height:1.55;max-width:430px;text-shadow:0 3px 16px rgba(0,0,0,.42)}
 .count-card {
-  margin-top:28px;
-  display:inline-flex;
-  flex-direction:column;
-  padding:20px 26px;
-  border-radius:18px;
-  background:rgba(8,18,19,.76);
-  backdrop-filter:blur(12px);
+  margin-top:28px;display:inline-flex;flex-direction:column;
+  padding:20px 26px;border-radius:18px;
+  background:rgba(8,18,19,.76);backdrop-filter:blur(12px);
   box-shadow:0 18px 50px rgba(0,0,0,.24);
 }
-.count-card strong { font-size:36px; color:#b7ef62; }
-.count-card span { letter-spacing:.14em; text-transform:uppercase; font-weight:900; }
-.legend {
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-  margin:24px 0 0;
-}
-.legend-item { display:flex; gap:8px; align-items:center; font-weight:800; }
-.dot { width:18px;height:24px;border-radius:78% 20% 78% 20%; display:inline-block; border:1px solid rgba(255,255,255,.6); }
-.dot.green {background:linear-gradient(135deg,#b9eb60,#6eae2d);}
-.dot.white {background:linear-gradient(135deg,#fff,#cdd3cf);}
-.dot.gold {background:linear-gradient(135deg,#ffe889,#d49d16);}
+.count-card strong {font-size:36px;color:#b7ef62}
+.count-card span {letter-spacing:.14em;text-transform:uppercase;font-weight:900}
+.legend {display:flex;gap:20px;flex-wrap:wrap;margin:24px 0 0}
+.legend-item {display:flex;gap:8px;align-items:center;font-weight:800}
+.dot {width:18px;height:24px;border-radius:78% 20% 78% 20%;display:inline-block;border:1px solid rgba(255,255,255,.6)}
+.dot.green {background:linear-gradient(135deg,#b9eb60,#6eae2d)}
+.dot.white {background:linear-gradient(135deg,#fff,#cdd3cf)}
+.dot.gold {background:linear-gradient(135deg,#ffe889,#d49d16)}
 .btn {
-  min-height:56px;
-  padding:0 24px;
-  border-radius:14px;
-  border:0;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-  font-weight:950;
-  letter-spacing:.04em;
-  color:white;
+  min-height:56px;padding:0 24px;border-radius:14px;border:0;
+  display:inline-flex;align-items:center;justify-content:center;
+  text-decoration:none;font-weight:950;letter-spacing:.04em;color:white;
   background:linear-gradient(135deg,#93d64b,#4a961f);
-  box-shadow:0 12px 30px rgba(70,140,28,.35);
-  cursor:pointer;
+  box-shadow:0 12px 30px rgba(70,140,28,.35);cursor:pointer;
 }
-.cta { margin-top:26px; display:flex; gap:12px; flex-wrap:wrap; }
+.cta {margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
 .tree-zone {
-  min-height:680px;
-  height:min(82vh,820px);
-  display:grid;
-  place-items:center;
+  min-height:680px;height:min(82vh,820px);
+  display:grid;place-items:center;
 }
-.tree-stage {
-  width:min(840px,100%);
-  height:100%;
-  position:relative;
-}
-.tree-svg {
-  width:100%;
-  height:100%;
-  overflow:visible;
-  filter:drop-shadow(0 28px 70px rgba(0,0,0,.42));
-}
-.spot {
-  cursor:pointer;
-  transition:.16s ease;
-}
-.spot .leaf-shape {
-  transition:.16s ease;
-  transform-box:fill-box;
-  transform-origin:center;
-}
-.spot:hover .leaf-shape,
-.spot.selected .leaf-shape {
-  transform:scale(1.18);
-  filter:brightness(1.12);
-}
-.spot.available .label {
-  opacity:0;
-  pointer-events:none;
-}
-.spot.claimed .label {
-  opacity:1;
-}
-.label-bg {
-  fill:rgba(255,255,255,.88);
-  stroke:rgba(255,255,255,.55);
-}
-.label-text {
-  font-size:13px;
-  font-weight:900;
-  fill:#12220e;
-  text-anchor:middle;
-  dominant-baseline:middle;
-}
+.tree-stage {width:min(880px,100%);height:100%;position:relative}
+.tree-svg {width:100%;height:100%;overflow:visible;filter:drop-shadow(0 30px 72px rgba(0,0,0,.42))}
+.spot {cursor:pointer}
+.spot .leaf-shape {transition:.16s ease;transform-box:fill-box;transform-origin:center}
+.spot:hover .leaf-shape,.spot.selected .leaf-shape {transform:scale(1.22);filter:brightness(1.12)}
+.claim-mark {opacity:0;transition:.15s}
+.spot.claimed .claim-mark {opacity:1}
+.spot.claimed .leaf-shape {filter:brightness(1.04) drop-shadow(0 0 6px rgba(255,255,255,.35))}
 .tooltip {
-  position:fixed;
-  z-index:50;
-  background:rgba(8,18,10,.92);
-  border:1px solid rgba(255,255,255,.18);
-  color:white;
-  border-radius:12px;
-  padding:9px 11px;
-  font-size:13px;
-  pointer-events:none;
-  opacity:0;
-  transform:translate(-50%,-115%);
-  white-space:nowrap;
-  box-shadow:0 16px 40px rgba(0,0,0,.25);
+  position:fixed;z-index:50;background:rgba(8,18,10,.92);
+  border:1px solid rgba(255,255,255,.18);color:white;border-radius:12px;
+  padding:9px 11px;font-size:13px;pointer-events:none;opacity:0;
+  transform:translate(-50%,-115%);white-space:nowrap;box-shadow:0 16px 40px rgba(0,0,0,.25);
 }
-.tooltip.visible { opacity:1; }
+.tooltip.visible {opacity:1}
 .panel {
-  background:rgba(255,255,255,.92);
-  color:#17330e;
-  border-radius:28px;
-  padding:24px;
-  box-shadow:0 20px 70px rgba(0,0,0,.22);
-  backdrop-filter:blur(12px);
+  background:rgba(255,255,255,.92);color:#17330e;border-radius:28px;padding:24px;
+  box-shadow:0 20px 70px rgba(0,0,0,.22);backdrop-filter:blur(12px);
 }
-.panel h2 { margin:0 0 18px; font-family:Georgia,serif; }
-.field { margin-top:12px; }
-label { display:block; font-weight:800; font-size:13px; margin-bottom:6px; }
-input {
-  width:100%;
-  height:44px;
-  border-radius:10px;
-  border:1px solid rgba(0,0,0,.14);
-  padding:0 12px;
-}
-.choices { display:grid; gap:12px; margin-top:14px; }
+.panel h2 {margin:0 0 18px;font-family:Georgia,serif}
+.field {margin-top:12px}
+label {display:block;font-weight:800;font-size:13px;margin-bottom:6px}
+input {width:100%;height:44px;border-radius:10px;border:1px solid rgba(0,0,0,.14);padding:0 12px}
+.choices {display:grid;gap:12px;margin-top:14px}
 .choice {
-  display:grid; grid-template-columns:auto 1fr auto; gap:14px; align-items:center;
-  border:1px solid rgba(0,0,0,.10);
-  border-radius:14px;
-  padding:13px;
-  cursor:pointer;
-  background:rgba(255,255,255,.65);
+  display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;
+  border:1px solid rgba(0,0,0,.10);border-radius:14px;padding:13px;cursor:pointer;background:rgba(255,255,255,.65);
 }
-.choice.selected { border-color:#5ca327; box-shadow:0 0 0 2px rgba(92,163,39,.12); }
-.choice .mini { width:34px;height:46px;border-radius:78% 20% 78% 20%;border:1px solid rgba(0,0,0,.18); }
-.choice.green .mini { background:linear-gradient(135deg,#b9eb60,#6eae2d); }
-.choice.white .mini { background:linear-gradient(135deg,#fff,#cdd3cf); }
-.choice.gold .mini { background:linear-gradient(135deg,#ffe889,#d49d16); }
-.choice strong { display:block; }
-.choice span { font-size:13px; color:#51634d; }
-.price { font-weight:950; font-size:20px; }
+.choice.selected {border-color:#5ca327;box-shadow:0 0 0 2px rgba(92,163,39,.12)}
+.choice .mini {width:34px;height:46px;border-radius:78% 20% 78% 20%;border:1px solid rgba(0,0,0,.18)}
+.choice.green .mini {background:linear-gradient(135deg,#b9eb60,#6eae2d)}
+.choice.white .mini {background:linear-gradient(135deg,#fff,#cdd3cf)}
+.choice.gold .mini {background:linear-gradient(135deg,#ffe889,#d49d16)}
+.choice strong {display:block}
+.choice span {font-size:13px;color:#51634d}
+.price {font-weight:950;font-size:20px}
 .selected-info {
-  margin-top:14px;
-  padding:12px;
-  border-radius:12px;
-  background:#eef7e7;
-  color:#2d5f17;
-  font-weight:800;
-  line-height:1.35;
+  margin-top:14px;padding:12px;border-radius:12px;background:#eef7e7;
+  color:#2d5f17;font-weight:800;line-height:1.35;
 }
-.pay { width:100%; margin-top:14px; color:white; }
-.lock { font-size:12px; color:#5f6d5b; text-align:center; margin-top:12px; }
+.pay {width:100%;margin-top:14px;color:white}
+.lock {font-size:12px;color:#5f6d5b;text-align:center;margin-top:12px}
 .feed {
-  position:absolute;
-  z-index:6;
-  left:50%;
-  bottom:28px;
-  transform:translateX(-50%);
-  width:min(720px,90vw);
-  background:rgba(255,255,255,.9);
-  color:#17330e;
-  border-radius:22px;
-  padding:18px 24px;
-  box-shadow:0 16px 50px rgba(0,0,0,.18);
-  display:grid;
-  grid-template-columns:180px 1fr;
-  gap:20px;
-  align-items:center;
+  position:absolute;z-index:6;left:50%;bottom:28px;transform:translateX(-50%);
+  width:min(720px,90vw);background:rgba(255,255,255,.9);color:#17330e;
+  border-radius:22px;padding:18px 24px;box-shadow:0 16px 50px rgba(0,0,0,.18);
+  display:grid;grid-template-columns:180px 1fr;gap:20px;align-items:center;
 }
-.feed h3 { margin:0;color:#2f6f16;text-transform:uppercase;letter-spacing:.08em;font-size:15px; }
-.feed p { margin:0;color:#4a5d45; }
-.feed-list { display:grid; gap:6px; }
-.feed-item { font-size:13px;color:#17330e; }
-.feed-item b { color:#2f6f16; }
+.feed h3 {margin:0;color:#2f6f16;text-transform:uppercase;letter-spacing:.08em;font-size:15px}
+.feed p {margin:0;color:#4a5d45}
+.feed-list {display:grid;gap:6px}
+.feed-item {font-size:13px;color:#17330e}
+.feed-item b {color:#2f6f16}
 .info {
-  background:#f5f6f2;
-  color:#172515;
-  padding:52px clamp(20px,3vw,52px);
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
+  background:#f5f6f2;color:#172515;padding:52px clamp(20px,3vw,52px);
+  display:grid;grid-template-columns:repeat(4,1fr);gap:18px;
 }
 .card {
-  background:white;
-  border:1px solid rgba(0,0,0,.08);
-  border-radius:22px;
-  padding:22px;
+  background:white;border:1px solid rgba(0,0,0,.08);border-radius:22px;padding:22px;
   box-shadow:0 8px 28px rgba(0,0,0,.06);
 }
-.card h3 { margin:0 0 12px; }
-.card p { margin:0;color:#52624e;line-height:1.55; }
+.card h3 {margin:0 0 12px}
+.card p {margin:0;color:#52624e;line-height:1.55}
 footer {
-  background:#07120a;
-  color:rgba(255,255,255,.72);
-  padding:22px clamp(20px,3vw,52px);
-  display:flex;
-  justify-content:space-between;
-  gap:16px;
-  flex-wrap:wrap;
+  background:#07120a;color:rgba(255,255,255,.72);padding:22px clamp(20px,3vw,52px);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
 }
 @media(max-width:1150px){
-  .hero { grid-template-columns:1fr; min-height:150vh; }
-  .left { text-align:center; }
-  .lead { margin:auto; }
-  .legend,.cta { justify-content:center; }
-  .tree-zone { order:-1; height:65vh; }
-  .panel { max-width:460px; margin:auto; }
-  .feed { position:relative; left:auto; bottom:auto; transform:none; margin:24px auto 0; }
-  .info { grid-template-columns:1fr; }
+  .hero {grid-template-columns:1fr;min-height:150vh}
+  .left {text-align:center}
+  .lead {margin:auto}
+  .legend,.cta {justify-content:center}
+  .tree-zone {order:-1;height:65vh}
+  .panel {max-width:460px;margin:auto}
+  .feed {position:relative;left:auto;bottom:auto;transform:none;margin:24px auto 0}
+  .info {grid-template-columns:1fr}
 }
 @media(max-width:650px){
-  nav { display:none; }
-  .logo { font-size:18px; }
-  h1 { font-size:42px; }
-  .hero { padding-top:76px; }
-  .tree-zone { min-height:500px; height:56vh; }
-  .feed { grid-template-columns:1fr; }
+  nav {display:none}
+  .logo {font-size:18px}
+  h1 {font-size:42px}
+  .hero {padding-top:76px}
+  .tree-zone {min-height:500px;height:56vh}
+  .feed {grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -341,7 +220,7 @@ footer {
   <section class="left">
     <div class="kicker">Tree</div>
     <h1>Claim one<br>of only <span>100</span><br>permanent<br>spots.</h1>
-    <p class="lead">Choose a real leaf on the tree. Empty leaves show price on hover. Claimed leaves show the owner forever.</p>
+    <p class="lead">Choose a real leaf on the tree. Empty leaves show price on hover. Claimed leaves show the owner in the live feed and on hover.</p>
     <div class="legend">
       <div class="legend-item"><span class="dot green"></span><span><b id="greenLeft">49</b> Green</span></div>
       <div class="legend-item"><span class="dot white"></span><span><b id="whiteLeft">42</b> White</span></div>
@@ -356,9 +235,14 @@ footer {
       <svg class="tree-svg" viewBox="0 0 1000 860" role="img" aria-label="Interactive tree with 100 claimable leaves">
         <defs>
           <radialGradient id="crownGrad" cx="50%" cy="45%" r="58%">
-            <stop offset="0%" stop-color="#9fe45a"/>
-            <stop offset="45%" stop-color="#4b9c35"/>
+            <stop offset="0%" stop-color="#b4ec62"/>
+            <stop offset="46%" stop-color="#4b9c35"/>
             <stop offset="100%" stop-color="#14501d"/>
+          </radialGradient>
+          <radialGradient id="crownLight" cx="35%" cy="25%" r="65%">
+            <stop offset="0%" stop-color="#d9ff83"/>
+            <stop offset="42%" stop-color="#6ebe38"/>
+            <stop offset="100%" stop-color="#15541f"/>
           </radialGradient>
           <linearGradient id="woodGrad" x1="0" x2="1">
             <stop offset="0%" stop-color="#3c2314"/>
@@ -367,6 +251,10 @@ footer {
           </linearGradient>
           <filter id="leafShadow" x="-80%" y="-80%" width="260%" height="260%">
             <feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".28"/>
+          </filter>
+          <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="16" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
         </defs>
 
@@ -377,12 +265,14 @@ footer {
         <path d="M492 405 C420 360 365 300 330 220" stroke="url(#woodGrad)" stroke-width="20" stroke-linecap="round" fill="none"/>
         <path d="M515 405 C590 350 640 285 675 200" stroke="url(#woodGrad)" stroke-width="20" stroke-linecap="round" fill="none"/>
 
-        <circle cx="500" cy="330" r="300" fill="url(#crownGrad)" opacity=".98"/>
-        <circle cx="310" cy="410" r="175" fill="url(#crownGrad)" opacity=".96"/>
-        <circle cx="690" cy="410" r="178" fill="url(#crownGrad)" opacity=".96"/>
-        <circle cx="405" cy="175" r="150" fill="url(#crownGrad)" opacity=".96"/>
-        <circle cx="595" cy="175" r="150" fill="url(#crownGrad)" opacity=".96"/>
-        <circle cx="500" cy="610" r="190" fill="url(#crownGrad)" opacity=".96"/>
+        <g filter="url(#softGlow)">
+          <circle cx="500" cy="330" r="300" fill="url(#crownGrad)" opacity=".98"/>
+          <circle cx="310" cy="410" r="175" fill="url(#crownLight)" opacity=".96"/>
+          <circle cx="690" cy="410" r="178" fill="url(#crownGrad)" opacity=".96"/>
+          <circle cx="405" cy="175" r="150" fill="url(#crownLight)" opacity=".96"/>
+          <circle cx="595" cy="175" r="150" fill="url(#crownGrad)" opacity=".96"/>
+          <circle cx="500" cy="610" r="190" fill="url(#crownLight)" opacity=".96"/>
+        </g>
 
         <g id="spotsLayer"></g>
       </svg>
@@ -413,7 +303,7 @@ footer {
 
 <section class="info" id="how">
   <div class="card"><h3>How it works</h3><p>Hover any empty leaf to see its type and price. Click to select the exact place you want.</p></div>
-  <div class="card" id="why"><h3>Why claim?</h3><p>Your name or brand appears on a visible permanent spot. There are only 100 places.</p></div>
+  <div class="card" id="why"><h3>Why claim?</h3><p>Your name or brand appears in the live feed and on hover. There are only 100 places.</p></div>
   <div class="card" id="faq"><h3>FAQ</h3><p>The tree has 49 Green, 42 White and 9 Golden spots. Future trees may open later.</p></div>
   <div class="card"><h3>Terms & Contact</h3><p>Inappropriate claims may be rejected. Contact: hello@growthetreetogether.com</p></div>
 </section>
@@ -424,59 +314,58 @@ footer {
 
 <script>
 const goldCoords = [
-  [500,270],
-  [455,315],
-  [545,315],
-  [485,365],
-  [525,365],
-  [440,410],
-  [560,410],
+  [500,250],
+  [455,305],
+  [545,305],
+  [485,355],
+  [525,355],
+  [445,405],
+  [555,405],
   [485,455],
   [525,455]
 ];
 const whiteCoords = [
-  [360,185],
-  [420,175],
-  [480,165],
-  [540,170],
-  [600,185],
-  [330,245],
-  [390,235],
-  [450,225],
-  [510,225],
-  [570,235],
-  [635,250],
-  [305,315],
-  [365,305],
-  [425,295],
-  [485,295],
-  [545,295],
-  [605,305],
-  [665,315],
-  [320,390],
-  [380,380],
-  [440,370],
-  [500,370],
-  [560,370],
-  [620,380],
-  [680,390],
-  [345,465],
-  [405,455],
-  [465,450],
-  [525,450],
-  [585,455],
-  [645,465],
-  [380,535],
-  [440,525],
-  [500,520],
-  [560,525],
-  [620,535],
-  [420,600],
-  [480,590],
-  [540,590],
-  [600,600],
-  [455,655],
-  [545,655]
+  [390,165],
+  [450,150],
+  [510,145],
+  [570,155],
+  [630,180],
+  [340,230],
+  [400,220],
+  [460,210],
+  [520,210],
+  [580,220],
+  [645,240],
+  [315,305],
+  [375,295],
+  [435,285],
+  [495,285],
+  [555,285],
+  [615,295],
+  [680,310],
+  [330,380],
+  [390,370],
+  [450,360],
+  [510,360],
+  [570,365],
+  [630,375],
+  [350,455],
+  [410,445],
+  [470,440],
+  [530,440],
+  [590,445],
+  [650,455],
+  [385,530],
+  [445,520],
+  [505,515],
+  [565,520],
+  [625,535],
+  [430,600],
+  [490,590],
+  [550,592],
+  [610,605],
+  [460,665],
+  [540,665]
 ];
 const greenCoords = [
   [285,120],
@@ -560,9 +449,6 @@ function spotLabel(spot) { return cap(spot.type) + " Spot #" + spot.index; }
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
 }
-function escapeSvg(str) {
-  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
-}
 
 function renderSpots() {
   const layer = document.getElementById("spotsLayer");
@@ -577,18 +463,11 @@ function renderSpots() {
     g.setAttribute("data-id", spot.id);
     g.setAttribute("transform", `translate(${spot.x} ${spot.y})`);
 
-    if(claim) {
-      const labelWidth = Math.max(90, Math.min(160, claim.name.length * 8 + 34));
-      g.innerHTML = `
-        <rect class="label-bg" x="${-labelWidth/2}" y="-18" rx="18" ry="18" width="${labelWidth}" height="36"></rect>
-        <text class="label-text" x="0" y="1">${icon(spot.type)} ${escapeSvg(claim.name)}</text>
-      `;
-    } else {
-      g.innerHTML = `
-        <path class="leaf-shape" d="M0,-24 C19,-11 20,13 0,27 C-20,13 -19,-11 0,-24 Z" fill="${color(spot.type)}" stroke="${stroke(spot.type)}" stroke-width="2.2" filter="url(#leafShadow)" opacity=".96"></path>
-        <path d="M0,-15 C1,-3 1,10 0,23" stroke="rgba(40,65,34,.62)" stroke-width="1.5" fill="none"></path>
-      `;
-    }
+    g.innerHTML = `
+      <path class="leaf-shape" d="M0,-24 C19,-11 20,13 0,27 C-20,13 -19,-11 0,-24 Z" fill="${color(spot.type)}" stroke="${stroke(spot.type)}" stroke-width="2.2" filter="url(#leafShadow)" opacity=".96"></path>
+      <path d="M0,-15 C1,-3 1,10 0,23" stroke="rgba(40,65,34,.62)" stroke-width="1.5" fill="none"></path>
+      <circle class="claim-mark" cx="0" cy="0" r="8" fill="rgba(255,255,255,.86)" stroke="${stroke(spot.type)}" stroke-width="1.5"></circle>
+    `;
 
     g.addEventListener("mousemove", (e) => {
       const claim = claims.find(c => c.spotId === spot.id);
