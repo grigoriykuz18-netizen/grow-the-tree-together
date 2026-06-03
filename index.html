@@ -19,7 +19,8 @@
 html{scroll-behavior:smooth}
 body{
   margin:0;
-  background:var(--bg);
+  min-height:100vh;
+  background:#020604;
   color:var(--text);
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
   overflow-x:hidden;
@@ -27,38 +28,40 @@ body{
 .hero{
   min-height:100vh;
   position:relative;
-  display:grid;
-  grid-template-columns:.72fr 1.42fr .74fr;
-  gap:20px;
-  align-items:center;
-  padding:86px clamp(16px,3vw,46px) 30px;
   overflow:hidden;
-  background:#020604;
+  padding:88px clamp(16px,3.2vw,54px) 32px;
 }
-.bg{
+.tree-bg{
   position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
+  inset:-3%;
+  width:106%;
+  height:106%;
   object-fit:cover;
   object-position:center;
-  opacity:.84;
-  transform:scale(1.08);
+  opacity:.76;
+  transform:scale(1.02);
   filter:saturate(1.05) contrast(1.04);
+  animation:treeBreath 9s ease-in-out infinite;
+}
+@keyframes treeBreath{
+  0%,100%{transform:scale(1.02)}
+  50%{transform:scale(1.055)}
 }
 .shade{
   position:absolute;
   inset:0;
   background:
-    radial-gradient(circle at 50% 44%, rgba(166,212,111,.04), transparent 30%),
-    linear-gradient(90deg, rgba(2,6,4,.82), rgba(2,6,4,.12) 34%, rgba(2,6,4,.12) 66%, rgba(2,6,4,.84)),
-    linear-gradient(180deg, rgba(2,6,4,.62), rgba(2,6,4,.06) 43%, rgba(2,6,4,.86));
+    radial-gradient(circle at 50% 46%, rgba(166,212,111,.02), transparent 31%),
+    linear-gradient(90deg,rgba(2,6,4,.88),rgba(2,6,4,.20) 32%,rgba(2,6,4,.20) 68%,rgba(2,6,4,.88)),
+    linear-gradient(180deg,rgba(2,6,4,.62),rgba(2,6,4,.05) 43%,rgba(2,6,4,.86));
   z-index:1;
 }
 header{
   position:absolute;
-  top:0;left:0;right:0;
-  z-index:6;
+  top:0;
+  left:0;
+  right:0;
+  z-index:20;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -77,33 +80,22 @@ header{
   text-shadow:0 0 20px rgba(245,196,91,.25);
 }
 .mark{
-  width:42px;height:42px;
-  border-radius:50%;
+  width:42px;height:42px;border-radius:50%;
   border:1px solid rgba(245,196,91,.55);
-  display:grid;
-  place-items:center;
+  display:grid;place-items:center;
 }
-nav{
-  display:flex;
-  gap:30px;
-  color:rgba(255,255,255,.75);
-  font-weight:900;
-  font-size:12px;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-}
+nav{display:flex;gap:30px;color:rgba(255,255,255,.76);font-weight:900;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
 a{color:inherit;text-decoration:none}
-.left,.tree-area,.right{position:relative;z-index:3}
-.eyebrow{
-  color:var(--gold);
-  text-transform:uppercase;
-  letter-spacing:.18em;
-  font-weight:900;
-  font-size:12px;
+.copy{
+  position:relative;
+  z-index:10;
+  width:min(410px,90vw);
+  padding-top:7vh;
 }
+.eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:.18em;font-weight:900;font-size:12px}
 h1{
   font-family:Georgia,serif;
-  font-size:clamp(42px,5.2vw,82px);
+  font-size:clamp(42px,5vw,78px);
   line-height:.88;
   letter-spacing:-.06em;
   margin:14px 0 18px;
@@ -115,7 +107,6 @@ h1 em{color:var(--green);font-style:italic}
   font-size:18px;
   line-height:1.55;
   margin:0;
-  max-width:430px;
   text-shadow:0 10px 34px rgba(0,0,0,.72);
 }
 .big-count{
@@ -129,24 +120,9 @@ h1 em{color:var(--green);font-style:italic}
   border:1px solid var(--line);
   backdrop-filter:blur(16px);
 }
-.big-count strong{
-  color:var(--gold);
-  font-size:38px;
-  line-height:1;
-}
-.big-count span{
-  color:rgba(255,255,255,.65);
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:.12em;
-  font-weight:900;
-}
-.cta-row{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-top:26px;
-}
+.big-count strong{color:var(--gold);font-size:38px;line-height:1}
+.big-count span{color:rgba(255,255,255,.65);font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:900}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
 .btn{
   min-height:52px;
   padding:0 20px;
@@ -165,258 +141,176 @@ h1 em{color:var(--green);font-style:italic}
   background:rgba(0,0,0,.34);
   cursor:pointer;
 }
-.btn-main{
-  background:linear-gradient(135deg,rgba(166,212,111,.98),rgba(91,134,47,.98));
-  color:#061006;
-  border-color:rgba(166,212,111,.35);
-  box-shadow:0 0 34px rgba(166,212,111,.25);
-}
-.tree-area{
-  height:min(82vh,800px);
-  min-height:640px;
-  display:grid;
-  place-items:center;
-}
-.tree-frame{
-  position:relative;
-  width:min(880px,105%);
-  height:100%;
-}
-.tree-frame img{
-  position:absolute;
-  inset:50% auto auto 50%;
-  transform:translate(-50%,-50%) scale(1.15);
-  width:118%;
-  height:116%;
-  object-fit:contain;
-  filter:drop-shadow(0 35px 90px rgba(0,0,0,.78));
-}
-.spot-layer{
+.btn-main{background:linear-gradient(135deg,rgba(166,212,111,.98),rgba(91,134,47,.98));color:#061006;border-color:rgba(166,212,111,.35);box-shadow:0 0 34px rgba(166,212,111,.25)}
+
+/* This is the interactive page-level tree layer, not a framed window */
+.live-tree{
   position:absolute;
   inset:0;
-  z-index:4;
+  z-index:6;
   pointer-events:none;
-}
-.empty-message{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:min(430px,88%);
-  text-align:center;
-  z-index:5;
-  padding:22px;
-  border-radius:24px;
-  background:rgba(3,8,6,.62);
-  border:1px solid var(--line);
-  backdrop-filter:blur(16px);
-  box-shadow:0 24px 80px rgba(0,0,0,.4);
-}
-.empty-message strong{
-  display:block;
-  font-family:Georgia,serif;
-  font-size:32px;
-  color:var(--green2);
-  margin-bottom:8px;
-}
-.empty-message span{
-  color:rgba(255,255,255,.68);
-  line-height:1.5;
 }
 .spot{
   position:absolute;
   transform:translate(-50%,-50%);
+  pointer-events:auto;
+  cursor:pointer;
+}
+.leaf{
+  position:relative;
   display:inline-flex;
   align-items:center;
   justify-content:center;
   text-align:center;
-  min-width:118px;
-  min-height:36px;
-  padding:8px 12px;
-  border-radius:999px;
-  border:1px solid rgba(166,212,111,.45);
-  background:rgba(7,20,10,.72);
+  min-width:105px;
+  min-height:34px;
+  padding:7px 12px;
+  border-radius:999px 999px 999px 8px;
+  background:rgba(10,28,12,.74);
+  border:1px solid rgba(166,212,111,.46);
   color:#f4ffd9;
-  font-size:13px;
-  font-weight:900;
-  letter-spacing:.01em;
-  box-shadow:0 0 24px rgba(166,212,111,.18);
-  backdrop-filter:blur(12px);
-  pointer-events:auto;
+  font-size:12px;
+  font-weight:950;
+  box-shadow:0 0 24px rgba(166,212,111,.20);
+  backdrop-filter:blur(10px);
+  transition:.18s ease;
 }
-.spot.large{
-  min-width:155px;
-  min-height:46px;
+.spot.large .leaf{
+  min-width:142px;
+  min-height:44px;
+  font-size:15px;
+  border-color:rgba(221,255,159,.56);
+  box-shadow:0 0 30px rgba(166,212,111,.28);
+}
+.spot.gold .leaf{
+  min-width:158px;
+  min-height:48px;
   font-size:16px;
-  border-color:rgba(215,255,159,.52);
-  box-shadow:0 0 30px rgba(166,212,111,.26);
+  color:#fff2ad;
+  background:rgba(63,43,7,.76);
+  border-color:rgba(246,201,90,.74);
+  box-shadow:0 0 38px rgba(246,201,90,.38);
 }
-.spot.gold{
-  min-width:170px;
-  min-height:50px;
-  font-size:17px;
-  color:#fff1ac;
-  background:rgba(62,42,7,.72);
-  border-color:rgba(246,201,90,.72);
-  box-shadow:0 0 38px rgba(246,201,90,.35);
+.spot.free .leaf{
+  min-width:auto;
+  width:12px;
+  height:12px;
+  padding:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+  border:1px dashed rgba(255,255,255,.20);
+  box-shadow:none;
+  opacity:.16;
 }
-.right{
-  display:flex;
-  flex-direction:column;
-  gap:14px;
+.spot.free:hover .leaf{
+  width:18px;height:18px;
+  opacity:.7;
+  background:rgba(166,212,111,.18);
+  border-color:rgba(166,212,111,.55);
 }
-.panel,.feed{
-  background:rgba(3,8,6,.68);
+.spot:hover .leaf{transform:translateY(-4px) scale(1.04)}
+.tooltip{
+  position:absolute;
+  left:50%;
+  top:-12px;
+  transform:translate(-50%,-100%);
+  opacity:0;
+  transition:.18s;
+  background:rgba(3,8,6,.86);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:14px;
+  padding:9px 11px;
+  white-space:nowrap;
+  backdrop-filter:blur(14px);
+  box-shadow:0 18px 40px rgba(0,0,0,.38);
+  text-align:center;
+  pointer-events:none;
+}
+.tooltip strong{display:block;color:#fff;font-size:13px}
+.tooltip span{display:block;color:var(--green2);font-size:11px;margin-top:2px}
+.spot:hover .tooltip{opacity:1;top:-18px}
+
+.claim-panel{
+  position:absolute;
+  z-index:15;
+  right:clamp(16px,3vw,46px);
+  top:120px;
+  width:min(340px,90vw);
+  background:rgba(3,8,6,.70);
   border:1px solid var(--line);
   border-radius:24px;
   padding:22px;
   backdrop-filter:blur(18px);
-  box-shadow:0 26px 80px rgba(0,0,0,.4);
+  box-shadow:0 26px 80px rgba(0,0,0,.42);
 }
-.panel h2,.feed h2{
-  margin:0 0 14px;
-  color:var(--green);
-  font-size:18px;
-  letter-spacing:.13em;
-  text-transform:uppercase;
-}
-.tier{
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:10px;
-  align-items:center;
-  padding:14px 0;
-  border-bottom:1px solid rgba(255,255,255,.09);
-}
+.claim-panel h2,.feed h2{margin:0 0 14px;color:var(--green);font-size:18px;letter-spacing:.13em;text-transform:uppercase}
+.tier{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.09)}
 .tier:last-of-type{border-bottom:0}
 .tier strong{display:block;color:#fff;font-size:16px}
 .tier span{display:block;color:rgba(255,255,255,.6);font-size:13px;margin-top:3px}
-.price{
-  color:var(--gold);
-  font-size:22px;
-  font-weight:950;
-}
-input,select{
-  width:100%;
-  height:48px;
-  border-radius:12px;
+.price{color:var(--gold);font-size:22px;font-weight:950}
+input,select{width:100%;height:48px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.36);color:var(--text);padding:0 12px;margin-top:10px}
+.small{color:rgba(255,255,255,.55);font-size:12px;line-height:1.45;margin-top:14px}
+
+.feed{
+  position:absolute;
+  z-index:15;
+  right:clamp(16px,3vw,46px);
+  bottom:28px;
+  width:min(340px,90vw);
+  background:rgba(3,8,6,.70);
   border:1px solid var(--line);
-  background:rgba(0,0,0,.36);
-  color:var(--text);
-  padding:0 12px;
-  margin-top:10px;
+  border-radius:24px;
+  padding:22px;
+  backdrop-filter:blur(18px);
+  box-shadow:0 26px 80px rgba(0,0,0,.42);
 }
-.small{
-  color:rgba(255,255,255,.55);
-  font-size:12px;
-  line-height:1.45;
-  margin-top:14px;
-}
-.feed-empty{
-  color:rgba(255,255,255,.65);
-  line-height:1.5;
-  border:1px dashed rgba(255,255,255,.16);
-  border-radius:18px;
-  padding:16px;
-  text-align:center;
-}
-.feed-item{
-  display:none;
-  padding:12px 0;
-  border-bottom:1px solid rgba(255,255,255,.09);
-}
+.feed-empty{color:rgba(255,255,255,.65);line-height:1.5;border:1px dashed rgba(255,255,255,.16);border-radius:18px;padding:16px;text-align:center}
+.feed-item{padding:12px 0;border-bottom:1px solid rgba(255,255,255,.09)}
 .feed-item:last-child{border-bottom:0}
 .feed-item strong{display:block;color:#fff}
 .feed-item span{color:var(--green2);font-size:13px}
-.packages{
-  padding:90px clamp(18px,5vw,70px);
-  background:#050907;
-}
-.section-head{
-  text-align:center;
-  max-width:820px;
-  margin:0 auto 30px;
-}
-.section-head h2{
-  font-family:Georgia,serif;
-  font-size:clamp(34px,5vw,64px);
-  line-height:1;
-  letter-spacing:-.05em;
-  margin:0 0 16px;
-}
-.section-head p{
-  color:var(--muted);
-  line-height:1.6;
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-  max-width:1000px;
-  margin:0 auto;
-}
-.card{
-  border:1px solid var(--line);
-  border-radius:24px;
-  background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.025));
-  padding:24px;
-}
-.card.featured{
-  border-color:rgba(246,201,90,.45);
-  box-shadow:0 0 60px rgba(246,201,90,.08);
-}
+
+section.info{padding:90px clamp(18px,5vw,70px);background:#050907;position:relative;z-index:20}
+.section-head{text-align:center;max-width:820px;margin:0 auto 30px}
+.section-head h2{font-family:Georgia,serif;font-size:clamp(34px,5vw,64px);line-height:1;letter-spacing:-.05em;margin:0 0 16px}
+.section-head p{color:var(--muted);line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1000px;margin:0 auto}
+.card{border:1px solid var(--line);border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.025));padding:24px}
+.card.featured{border-color:rgba(246,201,90,.45);box-shadow:0 0 60px rgba(246,201,90,.08)}
 .card .icon{font-size:32px}
-.card strong{
-  display:block;
-  font-size:38px;
-  color:var(--gold);
-  margin:10px 0;
-}
+.card strong{display:block;font-size:38px;color:var(--gold);margin:10px 0}
 .card h3{margin:0 0 8px;color:var(--green)}
 .card p{color:var(--muted);line-height:1.55;margin:0;font-size:14px}
-footer{
-  padding:28px clamp(18px,5vw,70px);
-  border-top:1px solid var(--line);
-  color:var(--muted);
-  background:#050907;
-  display:flex;
-  justify-content:space-between;
-  gap:18px;
-  flex-wrap:wrap;
-}
+footer{padding:28px clamp(18px,5vw,70px);border-top:1px solid var(--line);color:var(--muted);background:#050907;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;position:relative;z-index:20}
+
 @media(max-width:1120px){
-  .hero{
-    grid-template-columns:1fr;
-    min-height:142vh;
-  }
-  .left{text-align:center}
+  .hero{min-height:150vh}
+  .copy{text-align:center;margin:0 auto;padding-top:4vh}
   .lead{margin-left:auto;margin-right:auto}
   .big-count{margin-left:auto;margin-right:auto}
   .cta-row{justify-content:center}
-  .right{
-    max-width:460px;
-    margin:0 auto;
-    width:100%;
-  }
-  .tree-area{order:-1;height:62vh}
+  .claim-panel{top:auto;left:50%;right:auto;bottom:320px;transform:translateX(-50%)}
+  .feed{left:50%;right:auto;bottom:32px;transform:translateX(-50%)}
   .grid{grid-template-columns:1fr}
 }
 @media(max-width:620px){
   nav{display:none}
   .brand{font-size:14px}
-  .hero{padding-top:74px}
   h1{font-size:42px}
-  .tree-area{min-height:500px;height:54vh}
-  .tree-frame{width:132vw}
-  .tree-frame img{transform:translate(-50%,-50%) scale(1.08)}
-  .empty-message{padding:18px}
-  .empty-message strong{font-size:26px}
+  .hero{min-height:160vh;padding-top:76px}
+  .tree-bg{object-position:center;opacity:.70}
+  .spot .leaf{font-size:9px;min-width:72px;min-height:27px;padding:5px 8px}
+  .spot.large .leaf{font-size:10px;min-width:94px;min-height:34px}
+  .spot.gold .leaf{font-size:11px;min-width:108px;min-height:38px}
+  .spot.free .leaf{width:9px;height:9px}
+  .tooltip{display:none}
 }
 </style>
 </head>
 <body>
 <main class="hero">
-  <img class="bg" src="./tree-hero.png" alt="Tree #1">
+  <img class="tree-bg" src="./tree-hero.png" alt="Tree #1">
   <div class="shade"></div>
 
   <header>
@@ -424,177 +318,242 @@ footer{
     <nav><a href="#tree">Tree #1</a><a href="#spots">Spots</a><a href="#claim">Claim</a></nav>
   </header>
 
-  <section class="left">
+  <section class="copy">
     <div class="eyebrow">Tree #1</div>
     <h1>Claim one of only <em>100</em> permanent spots.</h1>
-    <p class="lead">Tree #1 starts empty. Every claimed spot becomes part of the tree forever. No fake claims. No infinite supply.</p>
-    <div class="big-count">
-      <strong id="claimedCount">0 / 100</strong>
-      <span>claimed</span>
-    </div>
-    <div class="cta-row">
-      <a class="btn btn-main" href="#claim">Claim your spot</a>
-      <a class="btn" href="#spots">See prices</a>
-    </div>
+    <p class="lead">The tree itself is the page. Every claimed spot becomes a visible, hoverable leaf on Tree #1.</p>
+    <div class="big-count"><strong id="claimedCount">0 / 100</strong><span>claimed</span></div>
+    <div class="cta-row"><a class="btn btn-main" href="#claim">Claim your spot</a><a class="btn" href="#spots">See prices</a></div>
   </section>
 
-  <section class="tree-area" id="tree">
-    <div class="tree-frame">
-      <img src="./tree-hero.png" alt="Large Tree #1">
-      <div class="spot-layer" id="spotLayer"></div>
-      <div class="empty-message" id="emptyMessage">
-        <strong>Be the first.</strong>
-        <span>No spots have been claimed yet. The first name on Tree #1 will be visible here.</span>
-      </div>
-    </div>
-  </section>
+  <div class="live-tree" id="tree">
+    <div id="spotLayer"></div>
+  </div>
 
-  <aside class="right">
-    <div class="panel" id="claim">
-      <h2>Claim a spot</h2>
+  <aside class="claim-panel" id="claim">
+    <h2>Claim a spot</h2>
+    <div class="tier"><div><strong>🌿 Medium Spot</strong><span><b id="mediumCount">0</b> / 50 claimed</span></div><div class="price">$50</div></div>
+    <div class="tier"><div><strong>🍀 Large Spot</strong><span><b id="largeCount">0</b> / 30 claimed</span></div><div class="price">$100</div></div>
+    <div class="tier"><div><strong>⭐ Golden Spot</strong><span><b id="goldCount">0</b> / 20 claimed</span></div><div class="price">$250</div></div>
+    <input id="nameInput" maxlength="16" placeholder="Name / brand">
+    <input id="linkInput" maxlength="48" placeholder="Website / Telegram">
+    <select id="spotType">
+      <option value="medium">Medium Spot — $50</option>
+      <option value="large">Large Spot — $100</option>
+      <option value="gold">Golden Spot — $250</option>
+    </select>
+    <button class="btn btn-main" style="width:100%;margin-top:14px" id="previewBtn">Preview claim</button>
+    <p class="small">PayPal comes next. Current button previews placement.</p>
+  </aside>
 
-      <div class="tier">
-        <div><strong>🌿 Medium Spot</strong><span><b id="mediumCount">0</b> / 50 claimed</span></div>
-        <div class="price">$50</div>
-      </div>
-
-      <div class="tier">
-        <div><strong>🍀 Large Spot</strong><span><b id="largeCount">0</b> / 30 claimed</span></div>
-        <div class="price">$100</div>
-      </div>
-
-      <div class="tier">
-        <div><strong>⭐ Golden Spot</strong><span><b id="goldCount">0</b> / 20 claimed</span></div>
-        <div class="price">$250</div>
-      </div>
-
-      <input id="nameInput" maxlength="24" placeholder="Name / brand">
-      <input id="linkInput" maxlength="48" placeholder="Website / Telegram">
-      <select id="spotType">
-        <option value="medium">Medium Spot — $50</option>
-        <option value="large">Large Spot — $100</option>
-        <option value="gold">Golden Spot — $250</option>
-      </select>
-      <button class="btn btn-main" style="width:100%;margin-top:14px" id="previewBtn">Preview claim</button>
-      <p class="small">PayPal comes next. For now this previews the real experience before payment is connected.</p>
-    </div>
-
-    <div class="feed">
-      <h2>Latest claims</h2>
-      <div class="feed-empty" id="feedEmpty">No spots claimed yet.<br><b>Be the first.</b></div>
-      <div id="feedList"></div>
-    </div>
+  <aside class="feed">
+    <h2>Latest claims</h2>
+    <div class="feed-empty" id="feedEmpty">No spots claimed yet.<br><b>Be the first.</b></div>
+    <div id="feedList"></div>
   </aside>
 </main>
 
-<section class="packages" id="spots">
+<section class="info" id="spots">
   <div class="section-head">
-    <h2>100 spots. Fixed prices. Forever.</h2>
-    <p>Tree #1 has only 50 Medium, 30 Large and 20 Golden spots. When all 100 are claimed, Tree #1 closes forever.</p>
+    <h2>100 visible spots. Fixed prices.</h2>
+    <p>Tree #1 has 50 Medium, 30 Large and 20 Golden spots. Empty places are subtle. Claimed places become bright named leaves.</p>
   </div>
   <div class="grid">
-    <div class="card">
-      <div class="icon">🌿</div>
-      <strong>$50</strong>
-      <h3>Medium Spot</h3>
-      <p>50 available. A clean visible name on Tree #1.</p>
-    </div>
-    <div class="card">
-      <div class="icon">🍀</div>
-      <strong>$100</strong>
-      <h3>Large Spot</h3>
-      <p>30 available. Larger placement and stronger visibility.</p>
-    </div>
-    <div class="card featured">
-      <div class="icon">⭐</div>
-      <strong>$250</strong>
-      <h3>Golden Spot</h3>
-      <p>20 available. Premium golden placement with the highest visual priority.</p>
-    </div>
+    <div class="card"><div class="icon">🌿</div><strong>$50</strong><h3>Medium Spot</h3><p>50 available. A visible named place.</p></div>
+    <div class="card"><div class="icon">🍀</div><strong>$100</strong><h3>Large Spot</h3><p>30 available. Larger and more noticeable.</p></div>
+    <div class="card featured"><div class="icon">⭐</div><strong>$250</strong><h3>Golden Spot</h3><p>20 available. Premium golden placement.</p></div>
   </div>
 </section>
 
-<footer>
-  <span>Grow The Tree Together</span>
-  <span>Tree #1 — 100 permanent spots.</span>
-</footer>
+<footer><span>Grow The Tree Together</span><span>Tree #1 — 100 permanent spots.</span></footer>
 
 <script>
-let claims = [];
-
-const coords = [
-  [49,24],[39,30],[59,30],[30,40],[50,41],[69,41],[36,53],[55,54],[73,56],[43,67],[62,68],
-  [25,58],[78,28],[28,25],[68,73],[52,18],[47,78],[33,70],[63,20],[74,66]
+const positions = [
+  [50,18],
+  [43,22],
+  [57,22],
+  [38,28],
+  [62,28],
+  [49,30],
+  [54,34],
+  [45,35],
+  [36,39],
+  [64,39],
+  [41,45],
+  [58,45],
+  [50,49],
+  [33,50],
+  [68,50],
+  [44,55],
+  [56,56],
+  [39,61],
+  [62,62],
+  [50,67],
+  [28,29],
+  [72,30],
+  [31,35],
+  [69,36],
+  [25,43],
+  [75,43],
+  [29,50],
+  [72,51],
+  [24,58],
+  [76,59],
+  [31,66],
+  [70,67],
+  [36,72],
+  [64,73],
+  [42,76],
+  [58,77],
+  [48,80],
+  [53,80],
+  [22,48],
+  [78,48],
+  [34,24],
+  [66,24],
+  [39,18],
+  [61,18],
+  [32,58],
+  [68,58],
+  [27,70],
+  [73,70],
+  [43,12],
+  [57,12],
+  [20,35],
+  [80,35],
+  [18,44],
+  [82,44],
+  [19,54],
+  [81,54],
+  [22,64],
+  [78,64],
+  [26,74],
+  [74,74],
+  [31,80],
+  [69,80],
+  [38,84],
+  [62,84],
+  [45,87],
+  [55,87],
+  [50,90],
+  [24,24],
+  [76,24],
+  [29,18],
+  [71,18],
+  [35,13],
+  [65,13],
+  [48,10],
+  [52,10],
+  [16,50],
+  [84,50],
+  [17,61],
+  [83,61],
+  [21,74],
+  [79,74],
+  [27,82],
+  [73,82],
+  [34,88],
+  [66,88],
+  [41,92],
+  [59,92],
+  [13,42],
+  [87,42],
+  [14,56],
+  [86,56],
+  [18,70],
+  [82,70],
+  [24,86],
+  [76,86],
+  [30,92],
+  [70,92],
+  [45,5],
+  [55,5],
+  [50,4]
 ];
+
+let claims = [];
 
 function escapeHtml(str){
   return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
 }
-
 function typeLabel(type){
   if(type === "gold") return "⭐ Golden Spot";
   if(type === "large") return "🍀 Large Spot";
   return "🌿 Medium Spot";
 }
-
+function iconFor(type){
+  if(type === "gold") return "⭐ ";
+  if(type === "large") return "🍀 ";
+  return "🌿 ";
+}
+function classFor(type){
+  return type === "gold" ? "gold" : type === "large" ? "large" : "medium";
+}
+function nextFreeIndex(type){
+  // Premium spots are placed in better zones first.
+  if(type === "gold"){
+    for(let i=0;i<20;i++) if(!claims.find(c=>c.index===i)) return i;
+  }
+  if(type === "large"){
+    for(let i=20;i<50;i++) if(!claims.find(c=>c.index===i)) return i;
+  }
+  for(let i=50;i<100;i++) if(!claims.find(c=>c.index===i)) return i;
+  for(let i=0;i<100;i++) if(!claims.find(c=>c.index===i)) return i;
+  return -1;
+}
 function render(){
   const layer = document.getElementById("spotLayer");
   layer.innerHTML = "";
 
-  claims.forEach((claim, idx) => {
-    const c = coords[idx % coords.length];
-    const spot = document.createElement("div");
-    spot.className = "spot " + (claim.type === "gold" ? "gold" : claim.type === "large" ? "large" : "");
-    spot.style.left = (c[0] + (Math.random()*4-2)) + "%";
-    spot.style.top = (c[1] + (Math.random()*4-2)) + "%";
-    spot.textContent = claim.type === "gold" ? "⭐ " + claim.name : claim.type === "large" ? "🍀 " + claim.name : "🌿 " + claim.name;
-    spot.title = claim.link ? claim.name + " — " + claim.link : claim.name;
-    layer.appendChild(spot);
+  positions.forEach((p, idx) => {
+    const claim = claims.find(c => c.index === idx);
+    const el = document.createElement("div");
+    el.className = "spot " + (claim ? classFor(claim.type) : "free");
+    el.style.left = p[0] + "%";
+    el.style.top = p[1] + "%";
+
+    if(claim){
+      el.innerHTML = '<div class="tooltip"><strong>'+escapeHtml(claim.name)+'</strong><span>'+escapeHtml(typeLabel(claim.type))+'</span></div><div class="leaf">'+escapeHtml(iconFor(claim.type)+claim.name)+'</div>';
+    } else {
+      el.innerHTML = '<div class="tooltip"><strong>Available spot #'+(idx+1)+'</strong><span>Claim this place</span></div><div class="leaf"></div>';
+    }
+    layer.appendChild(el);
   });
 
-  document.getElementById("emptyMessage").style.display = claims.length ? "none" : "block";
   document.getElementById("claimedCount").textContent = claims.length + " / 100";
-
-  const m = claims.filter(c => c.type === "medium").length;
-  const l = claims.filter(c => c.type === "large").length;
-  const g = claims.filter(c => c.type === "gold").length;
-  document.getElementById("mediumCount").textContent = m;
-  document.getElementById("largeCount").textContent = l;
-  document.getElementById("goldCount").textContent = g;
+  document.getElementById("mediumCount").textContent = claims.filter(c=>c.type==="medium").length;
+  document.getElementById("largeCount").textContent = claims.filter(c=>c.type==="large").length;
+  document.getElementById("goldCount").textContent = claims.filter(c=>c.type==="gold").length;
 
   const feedEmpty = document.getElementById("feedEmpty");
   const feedList = document.getElementById("feedList");
   feedEmpty.style.display = claims.length ? "none" : "block";
   feedList.innerHTML = "";
-
-  claims.slice().reverse().slice(0,5).forEach(claim => {
+  claims.slice().reverse().slice(0,5).forEach(c => {
     const item = document.createElement("div");
     item.className = "feed-item";
-    item.style.display = "block";
-    item.innerHTML = "<strong>" + escapeHtml(claim.name) + "</strong><span>claimed " + typeLabel(claim.type) + "</span>";
+    item.innerHTML = "<strong>"+escapeHtml(c.name)+"</strong><span>claimed "+typeLabel(c.type)+"</span>";
     feedList.appendChild(item);
   });
 }
-
 document.getElementById("previewBtn").addEventListener("click", () => {
   const name = document.getElementById("nameInput").value.trim() || "Your Brand";
   const link = document.getElementById("linkInput").value.trim() || "";
   const type = document.getElementById("spotType").value;
-
   const limits = {medium:50, large:30, gold:20};
-  if(claims.filter(c => c.type === type).length >= limits[type]){
-    alert("This spot type is sold out in the preview.");
+
+  if(claims.filter(c=>c.type===type).length >= limits[type]) {
+    alert("This spot type is sold out.");
     return;
   }
-  if(claims.length >= 100){
+  const index = nextFreeIndex(type);
+  if(index < 0) {
     alert("Tree #1 is full.");
     return;
   }
-
-  claims.push({name, link, type});
+  claims.push({name, link, type, index});
   render();
 });
-
 render();
 </script>
 </body>
