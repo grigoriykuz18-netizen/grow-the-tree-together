@@ -1,83 +1,30 @@
 // ===== DATA: 72 spots (8 gold, 28 white, 36 green) =====
-const SPOTS_DATA = [
-  // GOLD (8) — center/premium positions
-  { id: 'g1', tier: 'gold', x: 50, y: 18 },
-  { id: 'g2', tier: 'gold', x: 42, y: 24 },
-  { id: 'g3', tier: 'gold', x: 58, y: 24 },
-  { id: 'g4', tier: 'gold', x: 46, y: 30 },
-  { id: 'g5', tier: 'gold', x: 54, y: 30 },
-  { id: 'g6', tier: 'gold', x: 50, y: 36 },
-  { id: 'g7', tier: 'gold', x: 44, y: 38 },
-  { id: 'g8', tier: 'gold', x: 56, y: 38 },
+// Ring layout: wider horizontally, more distance between spots, all inside the crown.
+const SPOTS_DATA = [];
 
-  // WHITE (28) — middle layer
-  { id: 'w1', tier: 'white', x: 35, y: 20 },
-  { id: 'w2', tier: 'white', x: 65, y: 20 },
-  { id: 'w3', tier: 'white', x: 30, y: 28 },
-  { id: 'w4', tier: 'white', x: 70, y: 28 },
-  { id: 'w5', tier: 'white', x: 36, y: 34 },
-  { id: 'w6', tier: 'white', x: 64, y: 34 },
-  { id: 'w7', tier: 'white', x: 40, y: 44 },
-  { id: 'w8', tier: 'white', x: 60, y: 44 },
-  { id: 'w9', tier: 'white', x: 32, y: 42 },
-  { id: 'w10', tier: 'white', x: 68, y: 42 },
-  { id: 'w11', tier: 'white', x: 28, y: 36 },
-  { id: 'w12', tier: 'white', x: 72, y: 36 },
-  { id: 'w13', tier: 'white', x: 38, y: 26 },
-  { id: 'w14', tier: 'white', x: 62, y: 26 },
-  { id: 'w15', tier: 'white', x: 45, y: 48 },
-  { id: 'w16', tier: 'white', x: 55, y: 48 },
-  { id: 'w17', tier: 'white', x: 34, y: 50 },
-  { id: 'w18', tier: 'white', x: 66, y: 50 },
-  { id: 'w19', tier: 'white', x: 50, y: 54 },
-  { id: 'w20', tier: 'white', x: 42, y: 56 },
-  { id: 'w21', tier: 'white', x: 58, y: 56 },
-  { id: 'w22', tier: 'white', x: 26, y: 46 },
-  { id: 'w23', tier: 'white', x: 74, y: 46 },
-  { id: 'w24', tier: 'white', x: 30, y: 54 },
-  { id: 'w25', tier: 'white', x: 70, y: 54 },
-  { id: 'w26', tier: 'white', x: 38, y: 60 },
-  { id: 'w27', tier: 'white', x: 62, y: 60 },
-  { id: 'w28', tier: 'white', x: 50, y: 62 },
+function addRing(count, radiusX, radiusY, tier, prefix, centerX = 50, centerY = 46, offset = 0) {
+  for (let i = 0; i < count; i++) {
+    const angle = offset + (Math.PI * 2 * i) / count;
+    const x = centerX + Math.cos(angle) * radiusX;
+    const y = centerY + Math.sin(angle) * radiusY;
 
-  // GREEN (36) — outer layer
-  { id: 'gr1', tier: 'green', x: 22, y: 30 },
-  { id: 'gr2', tier: 'green', x: 78, y: 30 },
-  { id: 'gr3', tier: 'green', x: 18, y: 38 },
-  { id: 'gr4', tier: 'green', x: 82, y: 38 },
-  { id: 'gr5', tier: 'green', x: 20, y: 46 },
-  { id: 'gr6', tier: 'green', x: 80, y: 46 },
-  { id: 'gr7', tier: 'green', x: 16, y: 54 },
-  { id: 'gr8', tier: 'green', x: 84, y: 54 },
-  { id: 'gr9', tier: 'green', x: 22, y: 60 },
-  { id: 'gr10', tier: 'green', x: 78, y: 60 },
-  { id: 'gr11', tier: 'green', x: 26, y: 66 },
-  { id: 'gr12', tier: 'green', x: 74, y: 66 },
-  { id: 'gr13', tier: 'green', x: 32, y: 68 },
-  { id: 'gr14', tier: 'green', x: 68, y: 68 },
-  { id: 'gr15', tier: 'green', x: 40, y: 70 },
-  { id: 'gr16', tier: 'green', x: 60, y: 70 },
-  { id: 'gr17', tier: 'green', x: 50, y: 72 },
-  { id: 'gr18', tier: 'green', x: 46, y: 68 },
-  { id: 'gr19', tier: 'green', x: 54, y: 68 },
-  { id: 'gr20', tier: 'green', x: 24, y: 22 },
-  { id: 'gr21', tier: 'green', x: 76, y: 22 },
-  { id: 'gr22', tier: 'green', x: 28, y: 16 },
-  { id: 'gr23', tier: 'green', x: 72, y: 16 },
-  { id: 'gr24', tier: 'green', x: 36, y: 14 },
-  { id: 'gr25', tier: 'green', x: 64, y: 14 },
-  { id: 'gr26', tier: 'green', x: 44, y: 12 },
-  { id: 'gr27', tier: 'green', x: 56, y: 12 },
-  { id: 'gr28', tier: 'green', x: 50, y: 10 },
-  { id: 'gr29', tier: 'green', x: 14, y: 44 },
-  { id: 'gr30', tier: 'green', x: 86, y: 44 },
-  { id: 'gr31', tier: 'green', x: 12, y: 52 },
-  { id: 'gr32', tier: 'green', x: 88, y: 52 },
-  { id: 'gr33', tier: 'green', x: 18, y: 64 },
-  { id: 'gr34', tier: 'green', x: 82, y: 64 },
-  { id: 'gr35', tier: 'green', x: 34, y: 74 },
-  { id: 'gr36', tier: 'green', x: 66, y: 74 }
-];
+    SPOTS_DATA.push({
+      id: `${prefix}${i + 1}`,
+      tier,
+      x: Number(x.toFixed(1)),
+      y: Number(y.toFixed(1))
+    });
+  }
+}
+
+// Premium center ring
+addRing(8, 13, 12, 'gold', 'g', 50, 45, Math.PI / 8);
+
+// Middle crown ring
+addRing(28, 29, 25, 'white', 'w', 50, 45, Math.PI / 28);
+
+// Outer crown ring — wide, but still inside the tree silhouette
+addRing(36, 40, 33, 'green', 'gr', 50, 45, Math.PI / 36);
 
 const PRICES = { gold: 250, white: 100, green: 50 };
 const STORAGE_KEY = 'gtree_claims_v1';
@@ -135,6 +82,7 @@ function saveState() {
 // ===== RENDER SPOTS =====
 function renderSpots() {
   spotsLayer.innerHTML = '';
+
   spots.forEach(spot => {
     const el = document.createElement('button');
     el.className = `spot ${spot.tier}${spot.claimed ? ' claimed' : ''}`;
@@ -142,10 +90,26 @@ function renderSpots() {
     el.style.top = `${spot.y}%`;
     el.style.transform = 'translate(-50%, -50%)';
     el.dataset.id = spot.id;
+    el.type = 'button';
+
+    if (spot.claimed) {
+      el.innerHTML = `
+        <div class="leaf-avatar">
+          <div class="avatar">${initials(spot.name || 'A')}</div>
+        </div>
+      `;
+    }
 
     el.addEventListener('mouseenter', e => showTooltip(e, spot));
+    el.addEventListener('mousemove', e => showTooltip(e, spot));
     el.addEventListener('mouseleave', hideTooltip);
-    el.addEventListener('click', () => selectSpot(spot));
+    el.addEventListener('click', () => {
+      if (spot.claimed) {
+        openClaimLink(spot);
+      } else {
+        selectSpot(spot);
+      }
+    });
 
     spotsLayer.appendChild(el);
   });
@@ -154,11 +118,20 @@ function renderSpots() {
 // ===== TOOLTIP =====
 function showTooltip(e, spot) {
   const price = PRICES[spot.tier];
-  const text = spot.claimed
-    ? `${capitalize(spot.tier)} — ${spot.name || 'Claimed'}`
-    : `${capitalize(spot.tier)} Spot — $${price}`;
 
-  tooltip.textContent = text;
+  if (spot.claimed) {
+    tooltip.innerHTML = `
+      <strong>${escapeHtml(spot.name || 'Claimed')}</strong><br>
+      ${capitalize(spot.tier)} Spot<br>
+      ${spot.url ? `<span>${escapeHtml(spot.url)}</span>` : '<span>No link</span>'}
+    `;
+  } else {
+    tooltip.innerHTML = `
+      <strong>${capitalize(spot.tier)} Spot — $${price}</strong><br>
+      <span>Click to select this place</span>
+    `;
+  }
+
   tooltip.classList.add('visible');
 
   const rect = e.target.getBoundingClientRect();
@@ -221,7 +194,7 @@ function handleSubmit(e) {
 
   const formData = new FormData(form);
   const name = (formData.get('name') || '').trim().slice(0, 32);
-  const url = (formData.get('url') || '').trim();
+  const url = normalizeUrl((formData.get('url') || '').trim());
   const tier = formData.get('tier');
 
   if (selectedSpot.tier !== tier) {
@@ -262,6 +235,14 @@ function handleSubmit(e) {
 function updateCount() {
   const count = spots.filter(s => s.claimed).length;
   claimedCountEl.textContent = count;
+
+  const goldLeft = document.getElementById('goldLeft');
+  const whiteLeft = document.getElementById('whiteLeft');
+  const greenLeft = document.getElementById('greenLeft');
+
+  if (goldLeft) goldLeft.textContent = spots.filter(s => s.tier === 'gold' && !s.claimed).length;
+  if (whiteLeft) whiteLeft.textContent = spots.filter(s => s.tier === 'white' && !s.claimed).length;
+  if (greenLeft) greenLeft.textContent = spots.filter(s => s.tier === 'green' && !s.claimed).length;
 }
 
 // ===== RENDER LATEST =====
@@ -294,6 +275,29 @@ function escapeHtml(str) {
   const div = document.createElement('div');
   div.textContent = str;
   return div.innerHTML;
+}
+
+
+function openClaimLink(spot) {
+  if (!spot.url) return;
+  window.open(spot.url, '_blank', 'noopener');
+}
+
+function normalizeUrl(url) {
+  if (!url) return '';
+  if (url.startsWith('@')) return `https://t.me/${url.slice(1)}`;
+  if (!/^https?:\/\//i.test(url)) return `https://${url}`;
+  return url;
+}
+
+function initials(name) {
+  return String(name)
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(word => word[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase() || '?';
 }
 
 // ===== START =====
