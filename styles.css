@@ -380,17 +380,18 @@ body {
   border: 3px solid #f7f8f3;
 }
 
-.spot.gold .leaf-avatar {
-  width: 58px;
-  height: 73px;
+.spot.gold .leaf-avatar{
+  width:48px;
+  height:60px;
   border-radius: 78% 20% 78% 20%;
   background: linear-gradient(135deg,#ffe889,#d49d16);
   border: 4px solid #f4c342;
   box-shadow: 0 0 30px rgba(244,195,66,.85);
 }
 
-.leaf-avatar .avatar {
-  width: 65%;
+.leaf-avatar .avatar{
+  width:78%;
+  height:78%;
   aspect-ratio: 1;
   border-radius: 50%;
   background: #07100d;
