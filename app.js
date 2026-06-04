@@ -1,9 +1,30 @@
 
-const SPOTS_DATA=[
-['g1','gold',50,25],['g2','gold',44,34],['g3','gold',56,34],['g4','gold',49,43],['g5','gold',54,47],['g6','gold',43,51],['g7','gold',59,53],['g8','gold',51,60],
-['w1','white',39,18],['w2','white',50,16],['w3','white',61,18],['w4','white',34,27],['w5','white',45,25],['w6','white',56,25],['w7','white',67,28],['w8','white',30,39],['w9','white',41,37],['w10','white',52,37],['w11','white',63,39],['w12','white',73,42],['w13','white',33,52],['w14','white',44,50],['w15','white',55,50],['w16','white',66,52],['w17','white',38,64],['w18','white',49,62],['w19','white',60,63],['w20','white',70,66],['w21','white',43,74],['w22','white',57,75],['w23','white',28,31],['w24','white',75,33],['w25','white',29,61],['w26','white',72,62],['w27','white',37,74],['w28','white',64,74],
-['gr1','green',34,10],['gr2','green',45,8],['gr3','green',56,8],['gr4','green',67,11],['gr5','green',28,18],['gr6','green',73,20],['gr7','green',24,29],['gr8','green',77,31],['gr9','green',23,41],['gr10','green',78,42],['gr11','green',24,53],['gr12','green',77,54],['gr13','green',29,66],['gr14','green',72,67],['gr15','green',35,78],['gr16','green',66,79],['gr17','green',43,84],['gr18','green',57,84],['gr19','green',50,87],['gr20','green',32,38],['gr21','green',69,39],['gr22','green',35,49],['gr23','green',68,50],['gr24','green',39,59],['gr25','green',63,60],['gr26','green',42,69],['gr27','green',58,70],['gr28','green',30,76],['gr29','green',73,76],['gr30','green',26,48],['gr31','green',75,49],['gr32','green',31,22],['gr33','green',70,23],['gr34','green',40,13],['gr35','green',61,13],['gr36','green',50,11]
-].map(([id,tier,x,y])=>({id,tier,x,y,claimed:false}));
+const SPOTS_DATA = [];
+
+function addRing(count, radiusX, radiusY, tier, prefix) {
+  for (let i = 0; i < count; i++) {
+    const angle = (Math.PI * 2 * i) / count;
+
+    const x = 50 + Math.cos(angle) * radiusX;
+    const y = 48 + Math.sin(angle) * radiusY;
+
+    SPOTS_DATA.push([
+      `${prefix}${i + 1}`,
+      tier,
+      Number(x.toFixed(1)),
+      Number(y.toFixed(1))
+    ]);
+  }
+}
+
+// GOLD (9)
+addRing(9, 12, 10, "gold", "g");
+
+// WHITE (42)
+addRing(42, 26, 21, "white", "w");
+
+// GREEN (49)
+addRing(49, 37, 30, "green", "gr");
 const PRICES={gold:250,white:100,green:50},KEY='gtree_claims_v2';
 let spots=[],selectedSpot=null;
 const $=id=>document.getElementById(id);
