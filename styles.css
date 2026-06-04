@@ -346,3 +346,62 @@ body {
 .spots-layer {
   inset: 8% 4% 15% 4% !important;
 }
+/* Claimed spot turns into leaf-avatar */
+.spot.claimed {
+  width: auto !important;
+  height: auto !important;
+  opacity: 1 !important;
+  cursor: pointer !important;
+}
+
+.spot.claimed::before {
+  display: none !important;
+}
+
+.leaf-avatar {
+  display: grid;
+  place-items: center;
+  animation: bloom .45s ease-out;
+}
+
+.spot.green .leaf-avatar {
+  width: 34px;
+  height: 44px;
+  border-radius: 78% 20% 78% 20%;
+  background: linear-gradient(135deg,#b9eb60,#5fae24);
+  border: 3px solid #9bed4b;
+}
+
+.spot.white .leaf-avatar {
+  width: 43px;
+  height: 55px;
+  border-radius: 78% 20% 78% 20%;
+  background: linear-gradient(135deg,#fff,#cbd5e1);
+  border: 3px solid #f7f8f3;
+}
+
+.spot.gold .leaf-avatar {
+  width: 58px;
+  height: 73px;
+  border-radius: 78% 20% 78% 20%;
+  background: linear-gradient(135deg,#ffe889,#d49d16);
+  border: 4px solid #f4c342;
+  box-shadow: 0 0 30px rgba(244,195,66,.85);
+}
+
+.leaf-avatar .avatar {
+  width: 65%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #07100d;
+  color: white;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 11px;
+}
+
+@keyframes bloom {
+  from { transform: scale(.1); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
