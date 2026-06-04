@@ -1,4 +1,3 @@
-
 const SPOTS_DATA = [];
 
 function addRing(count, radiusX, radiusY, tier, prefix) {
@@ -8,22 +7,17 @@ function addRing(count, radiusX, radiusY, tier, prefix) {
     const x = 50 + Math.cos(angle) * radiusX;
     const y = 48 + Math.sin(angle) * radiusY;
 
-    SPOTS_DATA.push([
-      `${prefix}${i + 1}`,
-      tier,
-      Number(x.toFixed(1)),
-      Number(y.toFixed(1))
-    ]);
+    SPOTS_DATA.push({
+      id: `${prefix}${i + 1}`,
+      tier: tier,
+      x: Number(x.toFixed(1)),
+      y: Number(y.toFixed(1))
+    });
   }
 }
 
-// GOLD (9)
 addRing(9, 12, 10, "gold", "g");
-
-// WHITE (42)
 addRing(42, 26, 21, "white", "w");
-
-// GREEN (49)
 addRing(49, 37, 30, "green", "gr");
 const PRICES={gold:250,white:100,green:50},KEY='gtree_claims_v2';
 let spots=[],selectedSpot=null;
