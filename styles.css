@@ -342,3 +342,7 @@ body {
 .spot.claimed:hover{transform:translate(-50%,-50%) scale(1.08)!important}
 .hint.selected{border-color:rgba(244,195,66,.45);background:rgba(244,195,66,.10)}
 @keyframes bloom{0%{transform:scale(.15) rotate(-18deg);opacity:0;filter:blur(2px)}70%{transform:scale(1.12) rotate(4deg);opacity:1;filter:blur(0)}100%{transform:scale(1) rotate(0);opacity:1}}
+/* Keep all spots inside the crown area */
+.spots-layer {
+  inset: 9% 12% 16% 12% !important;
+}
