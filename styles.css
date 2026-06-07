@@ -406,3 +406,28 @@ body {
   from { transform: scale(.1); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
+/* V28 — better claimed leaves */
+.spot.green .leaf-avatar {
+  width: 30px !important;
+  height: 39px !important;
+}
+
+.spot.white .leaf-avatar {
+  width: 38px !important;
+  height: 49px !important;
+}
+
+.spot.gold .leaf-avatar {
+  width: 48px !important;
+  height: 60px !important;
+}
+
+.leaf-avatar .avatar {
+  width: 78% !important;
+  height: 78% !important;
+  font-size: 11px !important;
+}
+
+.spot.gold .avatar {
+  font-size: 13px !important;
+}
