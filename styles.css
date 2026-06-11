@@ -976,3 +976,186 @@ body {
   70% { transform: scale(1.14) rotate(4deg); opacity: 1; filter: blur(0); }
   100% { transform: scale(1) rotate(0); opacity: 1; }
 }
+/* ===== V32 ideal 42 spots: 4 Gold / 17 White / 21 Green ===== */
+.tree-container {
+  max-width: 990px !important;
+  aspect-ratio: 1.22 / 1 !important;
+}
+
+.tree-image {
+  width: 108% !important;
+  height: 108% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: translate(-4%, -3%) scale(1.05);
+}
+
+.spots-layer {
+  inset: 6% 1% 11% 1% !important;
+}
+
+.spot {
+  width: 22px !important;
+  height: 22px !important;
+  background: transparent !important;
+  border: 0 !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+.spot::before {
+  width: 13px !important;
+  height: 13px !important;
+  border: 2px solid rgba(255,255,255,.52);
+  box-shadow:
+    0 0 10px currentColor,
+    0 0 22px currentColor,
+    0 0 38px currentColor,
+    inset 0 0 10px rgba(255,255,255,.75) !important;
+}
+
+.spot.green::before { background: #8eff35 !important; }
+.spot.white::before { background: #f4f7f2 !important; }
+.spot.gold::before { background: #ffd447 !important; }
+
+.spot:hover {
+  transform: translate(-50%, -50%) scale(1.45) !important;
+}
+
+.spot.selected {
+  transform: translate(-50%, -50%) scale(1.65) !important;
+  box-shadow: none !important;
+}
+
+.spot.selected::before {
+  width: 16px !important;
+  height: 16px !important;
+  box-shadow:
+    0 0 0 5px rgba(143,226,67,.18),
+    0 0 18px currentColor,
+    0 0 42px currentColor !important;
+}
+
+.spot.claimed {
+  width: auto !important;
+  height: auto !important;
+  opacity: 1 !important;
+  cursor: pointer !important;
+}
+
+.spot.claimed::before {
+  display: none !important;
+}
+
+.leaf-avatar {
+  display: grid;
+  place-items: center;
+  position: relative;
+  animation: bloom .48s cubic-bezier(.2, 1.35, .35, 1);
+  box-shadow: 0 14px 34px rgba(0,0,0,.36);
+}
+
+.leaf-avatar::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  width: 2px;
+  height: 14px;
+  transform: translateX(-50%);
+  background: currentColor;
+  border-radius: 999px;
+  opacity: .7;
+}
+
+.spot.green .leaf-avatar {
+  width: 44px !important;
+  height: 56px !important;
+  border-radius: 78% 20% 78% 20%;
+  background: linear-gradient(135deg,#b9eb60,#5fae24);
+  border: 3px solid #9bed4b;
+  color: #9bed4b;
+}
+
+.spot.white .leaf-avatar {
+  width: 54px !important;
+  height: 68px !important;
+  border-radius: 78% 20% 78% 20%;
+  background: linear-gradient(135deg,#ffffff,#cbd5e1);
+  border: 3px solid #f7f8f3;
+  color: #f7f8f3;
+}
+
+.spot.gold .leaf-avatar {
+  width: 64px !important;
+  height: 80px !important;
+  border-radius: 78% 20% 78% 20%;
+  background: linear-gradient(135deg,#ffe889,#d49d16);
+  border: 4px solid #f4c342;
+  color: #f4c342;
+  box-shadow: 0 0 36px rgba(244,195,66,.88), 0 18px 42px rgba(0,0,0,.42);
+}
+
+.leaf-avatar .avatar {
+  width: 78% !important;
+  height: 78% !important;
+  border-radius: 50%;
+  background: #07100d;
+  color: white;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 12px !important;
+  border: 2px solid rgba(255,255,255,.75);
+}
+
+.spot.gold .avatar {
+  font-size: 14px !important;
+}
+
+.spot.claimed:hover {
+  transform: translate(-50%, -50%) scale(1.10) !important;
+  z-index: 30;
+}
+
+.tooltip {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.owner-card {
+  min-width: 180px;
+  background: rgba(8,17,13,.96);
+  border: 1px solid rgba(143,226,67,.22);
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-shadow: 0 18px 46px rgba(0,0,0,.45);
+  line-height: 1.35;
+}
+
+.owner-card strong {
+  display: block;
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.owner-card span {
+  display: block;
+  color: #a7b5ad;
+  font-size: 12px;
+}
+
+.owner-card small {
+  display: block;
+  color: #8fe243;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+@keyframes bloom {
+  0% { transform: scale(.1) rotate(-16deg); opacity: 0; filter: blur(2px); }
+  70% { transform: scale(1.14) rotate(4deg); opacity: 1; filter: blur(0); }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
