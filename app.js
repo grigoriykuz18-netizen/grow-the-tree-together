@@ -1,63 +1,99 @@
-// ===== DATA: 52 premium spots (6 gold, 18 white, 28 green) =====
+// ===== DATA: zone layout spots (8 gold, 28 white, 36 green) =====
+// Zone structure:
+// center two columns = gold
+// inner side columns = white
+// outer side columns = green
+// no bottom spots under the trunk
 const SPOTS_DATA = [
-  { id: 'g1', tier: 'gold', x: 50, y: 31 },
-  { id: 'g2', tier: 'gold', x: 43, y: 42 },
-  { id: 'g3', tier: 'gold', x: 57, y: 42 },
-  { id: 'g4', tier: 'gold', x: 50, y: 53 },
-  { id: 'g5', tier: 'gold', x: 44, y: 63 },
-  { id: 'g6', tier: 'gold', x: 56, y: 63 },
+  // GOLD — two central vertical zones
+  { id: 'g1', tier: 'gold', x: 46, y: 24 },
+  { id: 'g2', tier: 'gold', x: 54, y: 24 },
+  { id: 'g3', tier: 'gold', x: 46, y: 34 },
+  { id: 'g4', tier: 'gold', x: 54, y: 34 },
+  { id: 'g5', tier: 'gold', x: 46, y: 44 },
+  { id: 'g6', tier: 'gold', x: 54, y: 44 },
+  { id: 'g7', tier: 'gold', x: 46, y: 54 },
+  { id: 'g8', tier: 'gold', x: 54, y: 54 },
 
-  { id: 'w1', tier: 'white', x: 39, y: 20 },
-  { id: 'w2', tier: 'white', x: 50, y: 17 },
-  { id: 'w3', tier: 'white', x: 61, y: 20 },
-  { id: 'w4', tier: 'white', x: 32, y: 32 },
-  { id: 'w5', tier: 'white', x: 44, y: 30 },
-  { id: 'w6', tier: 'white', x: 56, y: 30 },
-  { id: 'w7', tier: 'white', x: 68, y: 33 },
-  { id: 'w8', tier: 'white', x: 30, y: 48 },
-  { id: 'w9', tier: 'white', x: 40, y: 50 },
-  { id: 'w10', tier: 'white', x: 60, y: 50 },
-  { id: 'w11', tier: 'white', x: 70, y: 48 },
-  { id: 'w12', tier: 'white', x: 34, y: 65 },
-  { id: 'w13', tier: 'white', x: 50, y: 71 },
-  { id: 'w14', tier: 'white', x: 66, y: 65 },
-  { id: 'w15', tier: 'white', x: 41, y: 79 },
-  { id: 'w16', tier: 'white', x: 59, y: 79 },
-  { id: 'w17', tier: 'white', x: 27, y: 58 },
-  { id: 'w18', tier: 'white', x: 73, y: 58 },
+  // WHITE — left inner zone
+  { id: 'w1', tier: 'white', x: 34, y: 18 },
+  { id: 'w2', tier: 'white', x: 39, y: 23 },
+  { id: 'w3', tier: 'white', x: 31, y: 28 },
+  { id: 'w4', tier: 'white', x: 37, y: 33 },
+  { id: 'w5', tier: 'white', x: 32, y: 39 },
+  { id: 'w6', tier: 'white', x: 39, y: 44 },
+  { id: 'w7', tier: 'white', x: 31, y: 50 },
+  { id: 'w8', tier: 'white', x: 37, y: 56 },
+  { id: 'w9', tier: 'white', x: 33, y: 63 },
+  { id: 'w10', tier: 'white', x: 40, y: 65 },
+  { id: 'w11', tier: 'white', x: 28, y: 35 },
+  { id: 'w12', tier: 'white', x: 27, y: 47 },
+  { id: 'w13', tier: 'white', x: 29, y: 59 },
+  { id: 'w14', tier: 'white', x: 36, y: 70 },
 
-  { id: 'gr1', tier: 'green', x: 34, y: 10 },
-  { id: 'gr2', tier: 'green', x: 46, y: 7 },
-  { id: 'gr3', tier: 'green', x: 58, y: 8 },
-  { id: 'gr4', tier: 'green', x: 70, y: 13 },
-  { id: 'gr5', tier: 'green', x: 25, y: 21 },
-  { id: 'gr6', tier: 'green', x: 76, y: 23 },
-  { id: 'gr7', tier: 'green', x: 20, y: 36 },
-  { id: 'gr8', tier: 'green', x: 81, y: 38 },
-  { id: 'gr9', tier: 'green', x: 19, y: 52 },
-  { id: 'gr10', tier: 'green', x: 81, y: 53 },
-  { id: 'gr11', tier: 'green', x: 24, y: 69 },
-  { id: 'gr12', tier: 'green', x: 76, y: 70 },
-  { id: 'gr13', tier: 'green', x: 34, y: 84 },
-  { id: 'gr14', tier: 'green', x: 66, y: 84 },
-  { id: 'gr15', tier: 'green', x: 50, y: 89 },
-  { id: 'gr16', tier: 'green', x: 30, y: 42 },
-  { id: 'gr17', tier: 'green', x: 70, y: 42 },
-  { id: 'gr18', tier: 'green', x: 35, y: 56 },
-  { id: 'gr19', tier: 'green', x: 65, y: 56 },
-  { id: 'gr20', tier: 'green', x: 41, y: 68 },
-  { id: 'gr21', tier: 'green', x: 59, y: 68 },
-  { id: 'gr22', tier: 'green', x: 31, y: 72 },
-  { id: 'gr23', tier: 'green', x: 69, y: 72 },
-  { id: 'gr24', tier: 'green', x: 38, y: 28 },
-  { id: 'gr25', tier: 'green', x: 62, y: 28 },
-  { id: 'gr26', tier: 'green', x: 27, y: 30 },
-  { id: 'gr27', tier: 'green', x: 74, y: 31 },
-  { id: 'gr28', tier: 'green', x: 50, y: 10 }
+  // WHITE — right inner zone
+  { id: 'w15', tier: 'white', x: 66, y: 18 },
+  { id: 'w16', tier: 'white', x: 61, y: 23 },
+  { id: 'w17', tier: 'white', x: 69, y: 28 },
+  { id: 'w18', tier: 'white', x: 63, y: 33 },
+  { id: 'w19', tier: 'white', x: 68, y: 39 },
+  { id: 'w20', tier: 'white', x: 61, y: 44 },
+  { id: 'w21', tier: 'white', x: 69, y: 50 },
+  { id: 'w22', tier: 'white', x: 63, y: 56 },
+  { id: 'w23', tier: 'white', x: 67, y: 63 },
+  { id: 'w24', tier: 'white', x: 60, y: 65 },
+  { id: 'w25', tier: 'white', x: 72, y: 35 },
+  { id: 'w26', tier: 'white', x: 73, y: 47 },
+  { id: 'w27', tier: 'white', x: 71, y: 59 },
+  { id: 'w28', tier: 'white', x: 64, y: 70 },
+
+  // GREEN — far left outer zone
+  { id: 'gr1', tier: 'green', x: 18, y: 30 },
+  { id: 'gr2', tier: 'green', x: 23, y: 25 },
+  { id: 'gr3', tier: 'green', x: 16, y: 38 },
+  { id: 'gr4', tier: 'green', x: 23, y: 43 },
+  { id: 'gr5', tier: 'green', x: 17, y: 52 },
+  { id: 'gr6', tier: 'green', x: 24, y: 57 },
+  { id: 'gr7', tier: 'green', x: 19, y: 66 },
+  { id: 'gr8', tier: 'green', x: 27, y: 69 },
+  { id: 'gr9', tier: 'green', x: 24, y: 34 },
+  { id: 'gr10', tier: 'green', x: 21, y: 48 },
+  { id: 'gr11', tier: 'green', x: 30, y: 23 },
+  { id: 'gr12', tier: 'green', x: 29, y: 72 },
+
+  // GREEN — left bridge / upper crown
+  { id: 'gr13', tier: 'green', x: 37, y: 12 },
+  { id: 'gr14', tier: 'green', x: 45, y: 10 },
+  { id: 'gr15', tier: 'green', x: 42, y: 17 },
+  { id: 'gr16', tier: 'green', x: 35, y: 75 },
+  { id: 'gr17', tier: 'green', x: 43, y: 73 },
+  { id: 'gr18', tier: 'green', x: 40, y: 82 },
+
+  // GREEN — far right outer zone
+  { id: 'gr19', tier: 'green', x: 82, y: 30 },
+  { id: 'gr20', tier: 'green', x: 77, y: 25 },
+  { id: 'gr21', tier: 'green', x: 84, y: 38 },
+  { id: 'gr22', tier: 'green', x: 77, y: 43 },
+  { id: 'gr23', tier: 'green', x: 83, y: 52 },
+  { id: 'gr24', tier: 'green', x: 76, y: 57 },
+  { id: 'gr25', tier: 'green', x: 81, y: 66 },
+  { id: 'gr26', tier: 'green', x: 73, y: 69 },
+  { id: 'gr27', tier: 'green', x: 76, y: 34 },
+  { id: 'gr28', tier: 'green', x: 79, y: 48 },
+  { id: 'gr29', tier: 'green', x: 70, y: 23 },
+  { id: 'gr30', tier: 'green', x: 71, y: 72 },
+
+  // GREEN — right bridge / upper crown
+  { id: 'gr31', tier: 'green', x: 63, y: 12 },
+  { id: 'gr32', tier: 'green', x: 55, y: 10 },
+  { id: 'gr33', tier: 'green', x: 58, y: 17 },
+  { id: 'gr34', tier: 'green', x: 65, y: 75 },
+  { id: 'gr35', tier: 'green', x: 57, y: 73 },
+  { id: 'gr36', tier: 'green', x: 60, y: 82 }
 ];
 
 const PRICES = { gold: 250, white: 100, green: 50 };
-const STORAGE_KEY = 'gtree_claims_v28';
+const STORAGE_KEY = 'gtree_claims_v29';
 
 let spots = [];
 let selectedSpot = null;
