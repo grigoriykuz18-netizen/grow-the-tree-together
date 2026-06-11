@@ -3,10 +3,10 @@
 // Fix: fewer white spots, more green spots, better spacing, closer to the approved reference.
 const SPOTS_DATA = [
   // GOLD — 4 central premium spots
-  { id: 'g1', tier: 'gold', x: 47, y: 39 },
-  { id: 'g2', tier: 'gold', x: 53, y: 39 },
-  { id: 'g3', tier: 'gold', x: 47, y: 50 },
-  { id: 'g4', tier: 'gold', x: 53, y: 50 },
+  { id: 'g1', tier: 'gold', x: 47, y: 35 },
+  { id: 'g2', tier: 'gold', x: 53, y: 35 },
+  { id: 'g3', tier: 'gold', x: 47, y: 45 },
+  { id: 'g4', tier: 'gold', x: 53, y: 45 },
 
   // WHITE — 17 middle spots around gold
   { id: 'w1', tier: 'white', x: 40, y: 19 },
@@ -28,8 +28,8 @@ const SPOTS_DATA = [
   { id: 'w14', tier: 'white', x: 58, y: 58 },
   { id: 'w15', tier: 'white', x: 66, y: 55 },
 
-  { id: 'w16', tier: 'white', x: 45, y: 69 },
-  { id: 'w17', tier: 'white', x: 55, y: 69 },
+  { id: 'w16', tier: 'white', x: 45, y: 63 },
+  { id: 'w17', tier: 'white', x: 55, y: 63 },
 
   // GREEN — 21 perimeter spots
   { id: 'gr1', tier: 'green', x: 34, y: 9 },
@@ -58,9 +58,9 @@ const SPOTS_DATA = [
   { id: 'gr18', tier: 'green', x: 64, y: 79 },
 
   // extra organic green accents, not too close to white/gold
-  { id: 'gr19', tier: 'green', x: 29, y: 39 },
-  { id: 'gr20', tier: 'green', x: 72, y: 41 },
-  { id: 'gr21', tier: 'green', x: 50, y: 25 }
+{ id: 'gr19', tier: 'green', x: 24, y: 73 },
+{ id: 'gr20', tier: 'green', x: 76, y: 73 },
+{ id: 'gr21', tier: 'green', x: 50, y: 10 }
 ];
 
 const PRICES = { gold: 250, white: 100, green: 50 };
