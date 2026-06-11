@@ -34,7 +34,7 @@ const SPOTS_DATA = [
   // GREEN — 21 perimeter
   { id: 'gr1', tier: 'green', x: 31, y: 9 },
   { id: 'gr2', tier: 'green', x: 41, y: 6 },
-  { id: 'gr3', tier: 'green', x: 50, y: 5 },
+  { id: 'gr3', tier: 'green', x: 52, y: 7 },
   { id: 'gr4', tier: 'green', x: 59, y: 6 },
   { id: 'gr5', tier: 'green', x: 69, y: 9 },
 
@@ -54,11 +54,11 @@ const SPOTS_DATA = [
   { id: 'gr15', tier: 'green', x: 75, y: 68 },
 
   { id: 'gr16', tier: 'green', x: 35, y: 78 },
-  { id: 'gr17', tier: 'green', x: 50, y: 82 },
+  { id: 'gr17', tier: 'green', x: 39, y: 74 },
   { id: 'gr18', tier: 'green', x: 65, y: 78 },
 
-  { id: 'gr19', tier: 'green', x: 28, y: 39 },
-  { id: 'gr20', tier: 'green', x: 72, y: 39 },
+  { id: 'gr19', tier: 'green', x: 22, y: 47 },
+  { id: 'gr20', tier: 'green', x: 79, y: 49 },
   { id: 'gr21', tier: 'green', x: 50, y: 10 }
 ];
 
