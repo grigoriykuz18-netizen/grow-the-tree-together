@@ -1159,3 +1159,6 @@ body {
   70% { transform: scale(1.14) rotate(4deg); opacity: 1; filter: blur(0); }
   100% { transform: scale(1) rotate(0); opacity: 1; }
 }
+.spots-layer {
+  inset: 3% -2% 8% -2% !important;
+}
