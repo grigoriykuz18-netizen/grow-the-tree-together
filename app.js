@@ -24,8 +24,6 @@ const SPOTS_DATA = [
   { id: 'w11', tier: 'white', x: 69, y: 41 },
 
   { id: 'w12', tier: 'white', x: 34, y: 53 },
-  { id: 'w13', tier: 'white', x: 41, y: 57 },
-  { id: 'w14', tier: 'white', x: 59, y: 57 },
   { id: 'w15', tier: 'white', x: 66, y: 53 },
 
   { id: 'w16', tier: 'white', x: 44, y: 67 },
