@@ -2,65 +2,64 @@
 // 4 Gold center, 17 White middle, 21 Green perimeter.
 // Fix: fewer white spots, more green spots, better spacing, closer to the approved reference.
 const SPOTS_DATA = [
-  // GOLD — 4 central premium spots
-  { id: 'g1', tier: 'gold', x: 47, y: 35 },
-  { id: 'g2', tier: 'gold', x: 53, y: 35 },
-  { id: 'g3', tier: 'gold', x: 47, y: 45 },
-  { id: 'g4', tier: 'gold', x: 53, y: 45 },
+  // GOLD — 4 center
+  { id: 'g1', tier: 'gold', x: 47, y: 38 },
+  { id: 'g2', tier: 'gold', x: 53, y: 38 },
+  { id: 'g3', tier: 'gold', x: 47, y: 49 },
+  { id: 'g4', tier: 'gold', x: 53, y: 49 },
 
-  // WHITE — 17 middle spots around gold
-  { id: 'w1', tier: 'white', x: 40, y: 19 },
-  { id: 'w2', tier: 'white', x: 50, y: 16 },
-  { id: 'w3', tier: 'white', x: 60, y: 19 },
+  // WHITE — 17 middle ring
+  { id: 'w1', tier: 'white', x: 39, y: 19 },
+  { id: 'w2', tier: 'white', x: 50, y: 17 },
+  { id: 'w3', tier: 'white', x: 61, y: 19 },
 
-  { id: 'w4', tier: 'white', x: 34, y: 30 },
+  { id: 'w4', tier: 'white', x: 34, y: 29 },
   { id: 'w5', tier: 'white', x: 44, y: 28 },
   { id: 'w6', tier: 'white', x: 56, y: 28 },
-  { id: 'w7', tier: 'white', x: 66, y: 30 },
+  { id: 'w7', tier: 'white', x: 66, y: 29 },
 
-  { id: 'w8', tier: 'white', x: 32, y: 42 },
-  { id: 'w9', tier: 'white', x: 39, y: 40 },
-  { id: 'w10', tier: 'white', x: 61, y: 40 },
-  { id: 'w11', tier: 'white', x: 68, y: 42 },
+  { id: 'w8', tier: 'white', x: 31, y: 41 },
+  { id: 'w9', tier: 'white', x: 38, y: 40 },
+  { id: 'w10', tier: 'white', x: 62, y: 40 },
+  { id: 'w11', tier: 'white', x: 69, y: 41 },
 
-  { id: 'w12', tier: 'white', x: 34, y: 55 },
-  { id: 'w13', tier: 'white', x: 42, y: 58 },
-  { id: 'w14', tier: 'white', x: 58, y: 58 },
-  { id: 'w15', tier: 'white', x: 66, y: 55 },
+  { id: 'w12', tier: 'white', x: 34, y: 53 },
+  { id: 'w13', tier: 'white', x: 41, y: 57 },
+  { id: 'w14', tier: 'white', x: 59, y: 57 },
+  { id: 'w15', tier: 'white', x: 66, y: 53 },
 
-  { id: 'w16', tier: 'white', x: 45, y: 63 },
-  { id: 'w17', tier: 'white', x: 55, y: 63 },
+  { id: 'w16', tier: 'white', x: 44, y: 67 },
+  { id: 'w17', tier: 'white', x: 56, y: 67 },
 
-  // GREEN — 21 perimeter spots
-  { id: 'gr1', tier: 'green', x: 34, y: 9 },
-  { id: 'gr2', tier: 'green', x: 43, y: 6 },
-  { id: 'gr3', tier: 'green', x: 52, y: 5 },
-  { id: 'gr4', tier: 'green', x: 62, y: 7 },
-  { id: 'gr5', tier: 'green', x: 71, y: 12 },
+  // GREEN — 21 perimeter
+  { id: 'gr1', tier: 'green', x: 31, y: 9 },
+  { id: 'gr2', tier: 'green', x: 41, y: 6 },
+  { id: 'gr3', tier: 'green', x: 50, y: 5 },
+  { id: 'gr4', tier: 'green', x: 59, y: 6 },
+  { id: 'gr5', tier: 'green', x: 69, y: 9 },
 
-  { id: 'gr6', tier: 'green', x: 26, y: 18 },
-  { id: 'gr7', tier: 'green', x: 78, y: 21 },
+  { id: 'gr6', tier: 'green', x: 24, y: 18 },
+  { id: 'gr7', tier: 'green', x: 76, y: 18 },
 
-  { id: 'gr8', tier: 'green', x: 21, y: 31 },
-  { id: 'gr9', tier: 'green', x: 82, y: 33 },
+  { id: 'gr8', tier: 'green', x: 18, y: 30 },
+  { id: 'gr9', tier: 'green', x: 82, y: 30 },
 
-  { id: 'gr10', tier: 'green', x: 18, y: 44 },
-  { id: 'gr11', tier: 'green', x: 83, y: 46 },
+  { id: 'gr10', tier: 'green', x: 15, y: 43 },
+  { id: 'gr11', tier: 'green', x: 85, y: 43 },
 
-  { id: 'gr12', tier: 'green', x: 20, y: 57 },
-  { id: 'gr13', tier: 'green', x: 80, y: 58 },
+  { id: 'gr12', tier: 'green', x: 18, y: 56 },
+  { id: 'gr13', tier: 'green', x: 82, y: 56 },
 
-  { id: 'gr14', tier: 'green', x: 27, y: 69 },
-  { id: 'gr15', tier: 'green', x: 73, y: 69 },
+  { id: 'gr14', tier: 'green', x: 25, y: 68 },
+  { id: 'gr15', tier: 'green', x: 75, y: 68 },
 
-  { id: 'gr16', tier: 'green', x: 36, y: 79 },
-  { id: 'gr17', tier: 'green', x: 50, y: 83 },
-  { id: 'gr18', tier: 'green', x: 64, y: 79 },
+  { id: 'gr16', tier: 'green', x: 35, y: 78 },
+  { id: 'gr17', tier: 'green', x: 50, y: 82 },
+  { id: 'gr18', tier: 'green', x: 65, y: 78 },
 
-  // extra organic green accents, not too close to white/gold
-{ id: 'gr19', tier: 'green', x: 24, y: 73 },
-{ id: 'gr20', tier: 'green', x: 76, y: 73 },
-{ id: 'gr21', tier: 'green', x: 50, y: 10 }
+  { id: 'gr19', tier: 'green', x: 28, y: 39 },
+  { id: 'gr20', tier: 'green', x: 72, y: 39 },
+  { id: 'gr21', tier: 'green', x: 50, y: 10 }
 ];
 
 const PRICES = { gold: 250, white: 100, green: 50 };
