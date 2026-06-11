@@ -1,39 +1,67 @@
-// ===== DATA: 72 spots (8 gold, 28 white, 36 green) =====
-// Ring layout: wider horizontally, more distance between spots, all inside the crown.
-const SPOTS_DATA = [];
+// ===== DATA: 52 premium spots (6 gold, 18 white, 28 green) =====
+const SPOTS_DATA = [
+  { id: 'g1', tier: 'gold', x: 50, y: 31 },
+  { id: 'g2', tier: 'gold', x: 43, y: 42 },
+  { id: 'g3', tier: 'gold', x: 57, y: 42 },
+  { id: 'g4', tier: 'gold', x: 50, y: 53 },
+  { id: 'g5', tier: 'gold', x: 44, y: 63 },
+  { id: 'g6', tier: 'gold', x: 56, y: 63 },
 
-function addRing(count, radiusX, radiusY, tier, prefix, centerX = 50, centerY = 46, offset = 0) {
-  for (let i = 0; i < count; i++) {
-    const angle = offset + (Math.PI * 2 * i) / count;
-    const x = centerX + Math.cos(angle) * radiusX;
-    const y = centerY + Math.sin(angle) * radiusY;
+  { id: 'w1', tier: 'white', x: 39, y: 20 },
+  { id: 'w2', tier: 'white', x: 50, y: 17 },
+  { id: 'w3', tier: 'white', x: 61, y: 20 },
+  { id: 'w4', tier: 'white', x: 32, y: 32 },
+  { id: 'w5', tier: 'white', x: 44, y: 30 },
+  { id: 'w6', tier: 'white', x: 56, y: 30 },
+  { id: 'w7', tier: 'white', x: 68, y: 33 },
+  { id: 'w8', tier: 'white', x: 30, y: 48 },
+  { id: 'w9', tier: 'white', x: 40, y: 50 },
+  { id: 'w10', tier: 'white', x: 60, y: 50 },
+  { id: 'w11', tier: 'white', x: 70, y: 48 },
+  { id: 'w12', tier: 'white', x: 34, y: 65 },
+  { id: 'w13', tier: 'white', x: 50, y: 71 },
+  { id: 'w14', tier: 'white', x: 66, y: 65 },
+  { id: 'w15', tier: 'white', x: 41, y: 79 },
+  { id: 'w16', tier: 'white', x: 59, y: 79 },
+  { id: 'w17', tier: 'white', x: 27, y: 58 },
+  { id: 'w18', tier: 'white', x: 73, y: 58 },
 
-    SPOTS_DATA.push({
-      id: `${prefix}${i + 1}`,
-      tier,
-      x: Number(x.toFixed(1)),
-      y: Number(y.toFixed(1))
-    });
-  }
-}
-
-// Premium center ring
-addRing(8, 13, 12, 'gold', 'g', 50, 45, Math.PI / 8);
-
-// Middle crown ring
-addRing(28, 29, 25, 'white', 'w', 50, 45, Math.PI / 28);
-
-// Outer crown ring — wide, but still inside the tree silhouette
-addRing(36, 40, 33, 'green', 'gr', 50, 45, Math.PI / 36);
+  { id: 'gr1', tier: 'green', x: 34, y: 10 },
+  { id: 'gr2', tier: 'green', x: 46, y: 7 },
+  { id: 'gr3', tier: 'green', x: 58, y: 8 },
+  { id: 'gr4', tier: 'green', x: 70, y: 13 },
+  { id: 'gr5', tier: 'green', x: 25, y: 21 },
+  { id: 'gr6', tier: 'green', x: 76, y: 23 },
+  { id: 'gr7', tier: 'green', x: 20, y: 36 },
+  { id: 'gr8', tier: 'green', x: 81, y: 38 },
+  { id: 'gr9', tier: 'green', x: 19, y: 52 },
+  { id: 'gr10', tier: 'green', x: 81, y: 53 },
+  { id: 'gr11', tier: 'green', x: 24, y: 69 },
+  { id: 'gr12', tier: 'green', x: 76, y: 70 },
+  { id: 'gr13', tier: 'green', x: 34, y: 84 },
+  { id: 'gr14', tier: 'green', x: 66, y: 84 },
+  { id: 'gr15', tier: 'green', x: 50, y: 89 },
+  { id: 'gr16', tier: 'green', x: 30, y: 42 },
+  { id: 'gr17', tier: 'green', x: 70, y: 42 },
+  { id: 'gr18', tier: 'green', x: 35, y: 56 },
+  { id: 'gr19', tier: 'green', x: 65, y: 56 },
+  { id: 'gr20', tier: 'green', x: 41, y: 68 },
+  { id: 'gr21', tier: 'green', x: 59, y: 68 },
+  { id: 'gr22', tier: 'green', x: 31, y: 72 },
+  { id: 'gr23', tier: 'green', x: 69, y: 72 },
+  { id: 'gr24', tier: 'green', x: 38, y: 28 },
+  { id: 'gr25', tier: 'green', x: 62, y: 28 },
+  { id: 'gr26', tier: 'green', x: 27, y: 30 },
+  { id: 'gr27', tier: 'green', x: 74, y: 31 },
+  { id: 'gr28', tier: 'green', x: 50, y: 10 }
+];
 
 const PRICES = { gold: 250, white: 100, green: 50 };
-const STORAGE_KEY = 'gtree_claims_v1';
+const STORAGE_KEY = 'gtree_claims_v28';
 
-// ===== STATE =====
 let spots = [];
 let selectedSpot = null;
 
-// ===== DOM =====
 const spotsLayer = document.getElementById('spotsLayer');
 const tooltip = document.getElementById('tooltip');
 const claimedCountEl = document.getElementById('claimedCount');
@@ -42,7 +70,10 @@ const submitBtn = document.getElementById('submitBtn');
 const spotIdInput = document.getElementById('spotIdInput');
 const latestBar = document.getElementById('latestBar');
 
-// ===== INIT =====
+const goldLeftEl = document.getElementById('goldLeft');
+const whiteLeftEl = document.getElementById('whiteLeft');
+const greenLeftEl = document.getElementById('greenLeft');
+
 function init() {
   loadState();
   renderSpots();
@@ -79,7 +110,6 @@ function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(claims));
 }
 
-// ===== RENDER SPOTS =====
 function renderSpots() {
   spotsLayer.innerHTML = '';
 
@@ -93,51 +123,33 @@ function renderSpots() {
     el.type = 'button';
 
     if (spot.claimed) {
-      el.innerHTML = `
-        <div class="leaf-avatar">
-          <div class="avatar">${initials(spot.name || 'A')}</div>
-        </div>
-      `;
+      el.innerHTML = `<div class="leaf-avatar"><div class="avatar">${initials(spot.name || 'A')}</div></div>`;
     }
 
     el.addEventListener('mouseenter', e => showTooltip(e, spot));
-    el.addEventListener('mousemove', e => showTooltip(e, spot));
+    el.addEventListener('mousemove', e => moveTooltip(e));
     el.addEventListener('mouseleave', hideTooltip);
-    el.addEventListener('click', () => {
-      if (spot.claimed) {
-        openClaimLink(spot);
-      } else {
-        selectSpot(spot);
-      }
-    });
+    el.addEventListener('click', () => spot.claimed ? openClaimLink(spot) : selectSpot(spot));
 
     spotsLayer.appendChild(el);
   });
 }
 
-// ===== TOOLTIP =====
 function showTooltip(e, spot) {
   const price = PRICES[spot.tier];
 
-  if (spot.claimed) {
-    tooltip.innerHTML = `
-      <strong>${escapeHtml(spot.name || 'Claimed')}</strong><br>
-      ${capitalize(spot.tier)} Spot<br>
-      ${spot.url ? `<span>${escapeHtml(spot.url)}</span>` : '<span>No link</span>'}
-    `;
-  } else {
-    tooltip.innerHTML = `
-      <strong>${capitalize(spot.tier)} Spot — $${price}</strong><br>
-      <span>Click to select this place</span>
-    `;
-  }
+  tooltip.innerHTML = spot.claimed
+    ? `<div class="owner-card"><strong>${escapeHtml(spot.name || 'Claimed')}</strong><span>${capitalize(spot.tier)} Spot</span>${spot.url ? `<small>${escapeHtml(spot.url)}</small>` : ''}</div>`
+    : `<div class="owner-card"><strong>${capitalize(spot.tier)} Spot — $${price}</strong><span>Click to claim this place</span></div>`;
 
   tooltip.classList.add('visible');
+  moveTooltip(e);
+}
 
-  const rect = e.target.getBoundingClientRect();
+function moveTooltip(e) {
   const container = spotsLayer.getBoundingClientRect();
-  const x = rect.left - container.left + rect.width / 2;
-  const y = rect.top - container.top - 10;
+  const x = e.clientX - container.left;
+  const y = e.clientY - container.top - 12;
 
   tooltip.style.left = `${x}px`;
   tooltip.style.top = `${y}px`;
@@ -148,14 +160,11 @@ function hideTooltip() {
   tooltip.classList.remove('visible');
 }
 
-// ===== SELECT SPOT =====
 function selectSpot(spot) {
   if (spot.claimed) return;
 
-  // Deselect previous
   document.querySelectorAll('.spot.selected').forEach(el => el.classList.remove('selected'));
 
-  // Select new
   selectedSpot = spot;
   spotIdInput.value = spot.id;
   submitBtn.disabled = false;
@@ -163,28 +172,41 @@ function selectSpot(spot) {
   const el = document.querySelector(`.spot[data-id="${spot.id}"]`);
   if (el) el.classList.add('selected');
 
-  // Sync tier radio
   const radio = document.querySelector(`input[name="tier"][value="${spot.tier}"]`);
   if (radio) radio.checked = true;
+
+  const hint = document.querySelector('.hint');
+  if (hint) {
+    hint.classList.add('selected');
+    hint.innerHTML = `Selected: <strong>${capitalize(spot.tier)} Spot</strong> — $${PRICES[spot.tier]}`;
+  }
 
   hideTooltip();
 }
 
-// ===== BIND EVENTS =====
 function bindEvents() {
   form.addEventListener('submit', handleSubmit);
 
-  // Tier radio changes
   document.querySelectorAll('input[name="tier"]').forEach(radio => {
     radio.addEventListener('change', () => {
       if (selectedSpot && selectedSpot.tier !== radio.value) {
-        document.querySelectorAll('.spot.selected').forEach(el => el.classList.remove('selected'));
-        selectedSpot = null;
-        spotIdInput.value = '';
-        submitBtn.disabled = true;
+        clearSelected();
       }
     });
   });
+}
+
+function clearSelected() {
+  document.querySelectorAll('.spot.selected').forEach(el => el.classList.remove('selected'));
+  selectedSpot = null;
+  spotIdInput.value = '';
+  submitBtn.disabled = true;
+
+  const hint = document.querySelector('.hint');
+  if (hint) {
+    hint.classList.remove('selected');
+    hint.innerHTML = '🌿 <strong>Select a glowing dot</strong> on the tree to see price and claim that spot.';
+  }
 }
 
 function handleSubmit(e) {
@@ -204,10 +226,8 @@ function handleSubmit(e) {
 
   const price = PRICES[tier];
   const confirmed = confirm(`Pay $${price} for ${tier.toUpperCase()} spot?\n\n(This is a demo — click OK to simulate payment)`);
-
   if (!confirmed) return;
 
-  // Mark as claimed
   const spot = spots.find(s => s.id === selectedSpot.id);
   if (spot) {
     spot.claimed = true;
@@ -221,31 +241,19 @@ function handleSubmit(e) {
   updateCount();
   renderLatest();
 
-  // Reset
-  selectedSpot = null;
-  spotIdInput.value = '';
-  submitBtn.disabled = true;
   form.reset();
-
-  // Scroll to latest
-  document.querySelector('.latest-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  clearSelected();
 }
 
-// ===== UPDATE COUNT =====
 function updateCount() {
   const count = spots.filter(s => s.claimed).length;
   claimedCountEl.textContent = count;
 
-  const goldLeft = document.getElementById('goldLeft');
-  const whiteLeft = document.getElementById('whiteLeft');
-  const greenLeft = document.getElementById('greenLeft');
-
-  if (goldLeft) goldLeft.textContent = spots.filter(s => s.tier === 'gold' && !s.claimed).length;
-  if (whiteLeft) whiteLeft.textContent = spots.filter(s => s.tier === 'white' && !s.claimed).length;
-  if (greenLeft) greenLeft.textContent = spots.filter(s => s.tier === 'green' && !s.claimed).length;
+  if (goldLeftEl) goldLeftEl.textContent = spots.filter(s => s.tier === 'gold' && !s.claimed).length;
+  if (whiteLeftEl) whiteLeftEl.textContent = spots.filter(s => s.tier === 'white' && !s.claimed).length;
+  if (greenLeftEl) greenLeftEl.textContent = spots.filter(s => s.tier === 'green' && !s.claimed).length;
 }
 
-// ===== RENDER LATEST =====
 function renderLatest() {
   const claimed = spots
     .filter(s => s.claimed)
@@ -258,25 +266,13 @@ function renderLatest() {
   }
 
   latestBar.innerHTML = claimed.map(s => `
-    <a class="claim-pill" href="${s.url || '#'}" target="_blank" rel="noopener">
+    <a class="claim-pill" href="${s.url || '#'}" ${s.url ? 'target="_blank" rel="noopener"' : ''}>
       <span class="pill-dot ${s.tier}"></span>
       <strong>${escapeHtml(s.name)}</strong>
       <span class="pill-tier">claimed ${capitalize(s.tier)} Spot</span>
     </a>
   `).join('');
 }
-
-// ===== HELPERS =====
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-function escapeHtml(str) {
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
-}
-
 
 function openClaimLink(spot) {
   if (!spot.url) return;
@@ -294,11 +290,20 @@ function initials(name) {
   return String(name)
     .split(/\s+/)
     .filter(Boolean)
-    .map(word => word[0])
+    .map(w => w[0])
     .join('')
     .slice(0, 2)
     .toUpperCase() || '?';
 }
 
-// ===== START =====
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
 init();
