@@ -243,8 +243,11 @@ tooltip.innerHTML = spot.claimed
     </div>
   `;
 
-  tooltip.classList.add('visible');
-  moveTooltip(e);
+tooltip.classList.add('visible');
+tooltip.style.left = '0px';
+tooltip.style.top = '0px';
+tooltip.style.marginLeft = '0';
+moveTooltip(e);
   if (pinned) {
     tooltip.classList.add('pinned');
 
@@ -294,6 +297,11 @@ function moveTooltip(e) {
 function hideTooltip() {
   tooltip.classList.remove('visible');
   tooltip.classList.remove('pinned');
+
+  tooltip.innerHTML = '';
+  tooltip.style.left = '-9999px';
+  tooltip.style.top = '-9999px';
+  tooltip.style.marginLeft = '0';
 }
 
 function selectSpot(spot) {
