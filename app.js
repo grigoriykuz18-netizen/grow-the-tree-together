@@ -225,7 +225,7 @@ tooltip.innerHTML = spot.claimed
       ${pinned ? `<button class="tooltip-close" type="button">×</button>` : ''}
       <strong>${escapeHtml(spot.name || 'Claimed')}</strong>
       <span>${capitalize(spot.tier)} Spot</span>
-      ${spot.url ? `<a class="owner-link" href="${escapeHtml(spot.url)}" target="_blank" rel="noopener">${escapeHtml(spot.url)}</a>` : ''}
+      ${spot.url ? `<a class="owner-link" href="${escapeHtml(spot.url)}" target="_blank" rel="noopener">${shortUrl(spot.url)}</a>` : ''}
     </div>
   `
   : `
@@ -521,6 +521,25 @@ async function init() {
   updateCount();
   renderLatest();
   bindEvents();
+}
+
+function shortUrl(url) {
+  try {
+    const clean = String(url).replace(/^https?:\/\//, '').replace(/^www\./, '');
+    const parts = clean.split('/');
+
+    if (parts[0].includes('instagram.com') && parts[1]) {
+      return `instagram.com/${parts[1]}`;
+    }
+
+    if (parts[0].includes('t.me') && parts[1]) {
+      return `t.me/${parts[1]}`;
+    }
+
+    return parts[0];
+  } catch {
+    return 'Open link';
+  }
 }
 
 init();
