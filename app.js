@@ -105,12 +105,13 @@ function loadState() {
 
 function saveState() {
   const claims = spots.filter(s => s.claimed).map(s => ({
-    id: s.id,
-    name: s.name,
-    url: s.url,
-    tier: s.tier,
-    when: s.when
-  }));
+  id: s.id,
+  name: s.name,
+  url: s.url,
+  avatar: s.avatar,
+  tier: s.tier,
+  when: s.when
+}));
   localStorage.setItem(STORAGE_KEY, JSON.stringify(claims));
 }
 
