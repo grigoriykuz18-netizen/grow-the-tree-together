@@ -69,14 +69,6 @@ const goldLeftEl = document.getElementById('goldLeft');
 const whiteLeftEl = document.getElementById('whiteLeft');
 const greenLeftEl = document.getElementById('greenLeft');
 
-function init() {
-  loadState();
-  renderSpots();
-  updateCount();
-  renderLatest();
-  bindEvents();
-}
-
 async function loadState() {
   spots = SPOTS_DATA.map(s => ({ ...s, claimed: false }));
 
@@ -505,3 +497,5 @@ async function init() {
   renderLatest();
   bindEvents();
 }
+
+init();
