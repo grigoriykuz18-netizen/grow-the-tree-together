@@ -4,13 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grow The Tree Together — 40 Permanent Spots</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="styles.css">
-  <link rel="preconnect" href="[fonts.googleapis.com](https://fonts.googleapis.com)">
-  <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap)" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-  <!-- Header -->
   <header class="header">
     <div class="logo">
       <span class="leaf">🌿</span>
@@ -18,16 +22,14 @@
     </div>
     <nav class="nav">
       <button class="nav-btn">?</button>
-      <a href="[twitter.com](https://twitter.com)" class="nav-btn" target="_blank">𝕏</a>
-      <a href="[t.me](https://t.me)" class="nav-btn" target="_blank">✈</a>
+      <a href="https://twitter.com" class="nav-btn" target="_blank" rel="noopener">𝕏</a>
+      <a href="https://t.me" class="nav-btn" target="_blank" rel="noopener">✈</a>
       <button class="nav-btn">🌐</button>
     </nav>
   </header>
 
-  <!-- Main Layout -->
   <main class="main">
 
-    <!-- Left Panel -->
     <aside class="panel-left">
       <h1 class="big-number">40</h1>
       <p class="label">PERMANENT SPOTS</p>
@@ -62,7 +64,6 @@
       <p class="secure">🔒 Secure payment with PayPal</p>
     </aside>
 
-    <!-- Center: Tree -->
     <section class="tree-section">
       <div class="tree-container">
         <img src="tree.png" alt="Tree" class="tree-image">
@@ -71,7 +72,6 @@
       </div>
     </section>
 
-    <!-- Right Panel: Form -->
     <aside class="panel-right" id="claim-form">
       <h2>Claim Your Spot</h2>
 
@@ -83,21 +83,29 @@
 
         <label>
           <span>Website / Telegram / X</span>
-          <input type="url" name="url" placeholder="https://...">
+          <input type="text" name="url" placeholder="t.me/name or instagram.com/name">
+        </label>
+
+        <label>
+          <span>Avatar / logo</span>
+          <input type="file" name="avatar" id="avatarInput" accept="image/*">
         </label>
 
         <fieldset class="tier-select">
           <legend>CHOOSE A SPOT TYPE</legend>
+
           <label class="tier-option green">
             <input type="radio" name="tier" value="green" checked>
             <span class="tier-label">🌿 Green Spot</span>
             <span class="tier-price">$50</span>
           </label>
+
           <label class="tier-option white">
             <input type="radio" name="tier" value="white">
             <span class="tier-label">⚪ White Spot</span>
             <span class="tier-price">$100</span>
           </label>
+
           <label class="tier-option gold">
             <input type="radio" name="tier" value="gold">
             <span class="tier-label">🏆 Golden Spot</span>
@@ -110,24 +118,23 @@
         <input type="hidden" name="spotId" id="spotIdInput">
         <button type="submit" class="submit-btn" id="submitBtn" disabled>CLAIM SELECTED SPOT</button>
 
-        <p class="note">Hover a dot to see price. Click a dot to select exact place. After claiming, it becomes a leaf-avatar.</p>
+        <p class="note">Hover a dot to see price. Click a dot to select exact place. After claiming, it becomes an avatar spot.</p>
       </form>
     </aside>
 
   </main>
 
-  <!-- Latest Claims -->
   <section class="latest-section">
     <div class="latest-header">
       <h3>🟢 LATEST CLAIMS</h3>
       <a href="#" class="view-all">View all →</a>
     </div>
+
     <div class="latest-bar" id="latestBar">
       <p class="empty-msg">No spots claimed yet. Be the first.</p>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="footer">
     © Grow The Tree Together — 40 permanent spots.
   </footer>
