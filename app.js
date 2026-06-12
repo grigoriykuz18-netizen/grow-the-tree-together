@@ -223,18 +223,36 @@ function showTooltip(e, spot) {
 
 function moveTooltip(e) {
   const container = spotsLayer.getBoundingClientRect();
+
   const x = e.clientX - container.left;
   const y = e.clientY - container.top;
 
   tooltip.style.left = `${x}px`;
 
-  if (y < 120) {
-    tooltip.style.top = `${y + 26}px`;
+  if (y < 150) {
+    tooltip.style.top = `${y + 34}px`;
     tooltip.style.transform = 'translate(-50%, 0)';
   } else {
-    tooltip.style.top = `${y - 12}px`;
+    tooltip.style.top = `${y - 16}px`;
     tooltip.style.transform = 'translate(-50%, -100%)';
   }
+
+  requestAnimationFrame(() => {
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const containerRect = spotsLayer.getBoundingClientRect();
+
+    let shiftX = 0;
+
+    if (tooltipRect.left < containerRect.left + 8) {
+      shiftX = containerRect.left + 8 - tooltipRect.left;
+    }
+
+    if (tooltipRect.right > containerRect.right - 8) {
+      shiftX = containerRect.right - 8 - tooltipRect.right;
+    }
+
+    tooltip.style.marginLeft = `${shiftX}px`;
+  });
 }
 
 function hideTooltip() {
