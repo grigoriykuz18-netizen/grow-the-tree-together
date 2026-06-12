@@ -160,17 +160,23 @@ function renderSpots() {
       `;
     }
 
-    el.addEventListener('mouseenter', e => {
-  if (!spot.claimed) showTooltip(e, spot);
-});
+    const isTouchDevice =
+  window.matchMedia('(hover: none)').matches ||
+  window.matchMedia('(pointer: coarse)').matches;
 
-el.addEventListener('mousemove', e => {
-  if (!spot.claimed) moveTooltip(e);
-});
+if (!isTouchDevice) {
+  el.addEventListener('mouseenter', e => {
+    if (!spot.claimed) showTooltip(e, spot);
+  });
 
-el.addEventListener('mouseleave', () => {
-  if (!spot.claimed) hideTooltip();
-});
+  el.addEventListener('mousemove', e => {
+    if (!spot.claimed) moveTooltip(e);
+  });
+
+  el.addEventListener('mouseleave', () => {
+    if (!spot.claimed) hideTooltip();
+  });
+}
 
 el.addEventListener('click', e => {
   e.stopPropagation();
