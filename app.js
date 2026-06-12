@@ -153,12 +153,23 @@ function renderSpots() {
       `;
     }
 
-    el.addEventListener('mouseenter', e => showTooltip(e, spot));
-    el.addEventListener('mousemove', e => moveTooltip(e));
-    el.addEventListener('mouseleave', hideTooltip);
-    el.addEventListener('click', e => {
+    el.addEventListener('mouseenter', e => {
+  if (!spot.claimed) showTooltip(e, spot);
+});
+
+el.addEventListener('mousemove', e => {
+  if (!spot.claimed) moveTooltip(e);
+});
+
+el.addEventListener('mouseleave', () => {
+  if (!spot.claimed) hideTooltip();
+});
+
+el.addEventListener('click', e => {
+  e.stopPropagation();
+
   if (spot.claimed) {
-    showTooltip(e, spot);
+    showTooltip(e, spot, true);
     return;
   }
 
@@ -169,7 +180,7 @@ function renderSpots() {
   });
 }
 
-function showTooltip(e, spot) {
+function showTooltip(e, spot, pinned = false) {
   const price = PRICES[spot.tier];
 
   const borderColor =
@@ -186,39 +197,50 @@ function showTooltip(e, spot) {
         ? 'rgba(255,255,255,.45)'
         : 'rgba(87,255,127,.45)';
 
-  tooltip.innerHTML = spot.claimed
-    ? `
-      <div
-        class="owner-card"
-        style="
-          border:1px solid ${borderColor};
-          box-shadow:
-            0 0 18px ${glowColor},
-            0 18px 46px rgba(0,0,0,.45);
-        "
-      >
-        <strong>${escapeHtml(spot.name || 'Claimed')}</strong>
-        <span>${capitalize(spot.tier)} Spot</span>
-        ${spot.url ? `<a class="owner-link" href="${escapeHtml(spot.url)}" target="_blank" rel="noopener">${escapeHtml(spot.url)}</a>` : ''}
-      </div>
-    `
-    : `
-      <div
-        class="owner-card"
-        style="
-          border:1px solid ${borderColor};
-          box-shadow:
-            0 0 18px ${glowColor},
-            0 18px 46px rgba(0,0,0,.45);
-        "
-      >
-        <strong>${capitalize(spot.tier)} Spot — $${price}</strong>
-        <span>Click to claim this place</span>
-      </div>
-    `;
+tooltip.innerHTML = spot.claimed
+  ? `
+    <div
+      class="owner-card"
+      style="
+        border:1px solid ${borderColor};
+        box-shadow:
+          0 0 18px ${glowColor},
+          0 18px 46px rgba(0,0,0,.45);
+      "
+    >
+      ${pinned ? `<button class="tooltip-close" type="button">×</button>` : ''}
+      <strong>${escapeHtml(spot.name || 'Claimed')}</strong>
+      <span>${capitalize(spot.tier)} Spot</span>
+      ${spot.url ? `<a class="owner-link" href="${escapeHtml(spot.url)}" target="_blank" rel="noopener">${escapeHtml(spot.url)}</a>` : ''}
+    </div>
+  `
+  : `
+    <div
+      class="owner-card"
+      style="
+        border:1px solid ${borderColor};
+        box-shadow:
+          0 0 18px ${glowColor},
+          0 18px 46px rgba(0,0,0,.45);
+      "
+    >
+      <strong>${capitalize(spot.tier)} Spot — $${price}</strong>
+      <span>Click to claim this place</span>
+    </div>
+  `;
 
   tooltip.classList.add('visible');
   moveTooltip(e);
+  if (pinned) {
+  tooltip.classList.add('pinned');
+
+  const closeBtn = tooltip.querySelector('.tooltip-close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', event => {
+      event.stopPropagation();
+      hideTooltip();
+    });
+  }
 }
 
 function moveTooltip(e) {
@@ -257,6 +279,7 @@ function moveTooltip(e) {
 
 function hideTooltip() {
   tooltip.classList.remove('visible');
+  tooltip.classList.remove('pinned');
 }
 
 function selectSpot(spot) {
@@ -292,6 +315,14 @@ function bindEvents() {
         clearSelected();
       }
     });
+  });
+
+  document.addEventListener('click', e => {
+    if (!tooltip.classList.contains('pinned')) return;
+
+    if (!tooltip.contains(e.target)) {
+      hideTooltip();
+    }
   });
 }
 
