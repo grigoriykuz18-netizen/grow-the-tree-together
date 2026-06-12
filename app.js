@@ -305,7 +305,10 @@ function selectSpot(spot) {
   submitBtn.disabled = false;
 
   const el = document.querySelector(`.spot[data-id="${spot.id}"]`);
-  if (el) el.classList.add('selected');
+  if (el) {
+  el.classList.add('selected');
+  el.setAttribute('data-price', `$${PRICES[spot.tier]}`);
+}
 
   const radio = document.querySelector(`input[name="tier"][value="${spot.tier}"]`);
   if (radio) radio.checked = true;
@@ -340,7 +343,10 @@ function bindEvents() {
 }
 
 function clearSelected() {
-  document.querySelectorAll('.spot.selected').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('.spot.selected').forEach(el => {
+  el.classList.remove('selected');
+  el.removeAttribute('data-price');
+});
   selectedSpot = null;
   spotIdInput.value = '';
   submitBtn.disabled = true;
