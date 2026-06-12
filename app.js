@@ -53,7 +53,7 @@ const SPOTS_DATA = [
 
   { id: 'gr16', tier: 'green', x: 35, y: 78 },
   { id: 'gr17', tier: 'green', x: 8, y: 73 },
-  { id: 'gr18', tier: 'green', x: 65, y: 84 },
+  { id: 'gr18', tier: 'green', x: 65, y: 78 },
 
   { id: 'gr19', tier: 'green', x: 8, y: 55 },
   { id: 'gr20', tier: 'green', x: 91, y: 73 },
