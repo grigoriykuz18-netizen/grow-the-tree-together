@@ -232,17 +232,17 @@ tooltip.innerHTML = spot.claimed
   tooltip.classList.add('visible');
   moveTooltip(e);
   if (pinned) {
-  tooltip.classList.add('pinned');
+    tooltip.classList.add('pinned');
 
-  const closeBtn = tooltip.querySelector('.tooltip-close');
-  if (closeBtn) {
-    closeBtn.addEventListener('click', event => {
-      event.stopPropagation();
-      hideTooltip();
-    });
+    const closeBtn = tooltip.querySelector('.tooltip-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', event => {
+        event.stopPropagation();
+        hideTooltip();
+      });
+    }
   }
 }
-
 function moveTooltip(e) {
   const container = spotsLayer.getBoundingClientRect();
 
