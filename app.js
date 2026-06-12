@@ -129,10 +129,10 @@ function renderSpots() {
 if (spot.claimed) {
   el.innerHTML = `
     <div class="claimed-avatar ${spot.tier}">
-      <div class="avatar-placeholder"></div>
+      <div class="avatar-placeholder">👤</div>
     </div>
   `;
-}                     
+}                
     el.addEventListener('mouseenter', e => showTooltip(e, spot));
     el.addEventListener('mousemove', e => moveTooltip(e));
     el.addEventListener('mouseleave', hideTooltip);
