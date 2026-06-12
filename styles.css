@@ -623,3 +623,14 @@ body {
     height: 38px !important;
   }
 }
+/* ===== MOBILE TREE SPOTS FIX ===== */
+
+@media (max-width: 768px) {
+  .spots-layer {
+    inset: 11% -4% 6% -4% !important;
+  }
+
+  .tree-image {
+    transform: translate(-6%, 0%) scale(1.03) !important;
+  }
+}
