@@ -13,21 +13,21 @@ const SPOTS_DATA = [
   { id: 'w2', tier: 'white', x: 50, y: 17 },
   { id: 'w3', tier: 'white', x: 61, y: 19 },
 
-  { id: 'w4', tier: 'white', x: 34, y: 29 },
+  { id: 'w4', tier: 'white', x: 31, y: 29 },
   { id: 'w5', tier: 'white', x: 44, y: 28 },
   { id: 'w6', tier: 'white', x: 56, y: 28 },
-  { id: 'w7', tier: 'white', x: 66, y: 29 },
+  { id: 'w7', tier: 'white', x: 69, y: 29 },
 
-  { id: 'w8', tier: 'white', x: 31, y: 41 },
+  { id: 'w8', tier: 'white', x: 28, y: 41 },
   { id: 'w9', tier: 'white', x: 38, y: 40 },
   { id: 'w10', tier: 'white', x: 62, y: 40 },
-  { id: 'w11', tier: 'white', x: 69, y: 41 },
+  { id: 'w11', tier: 'white', x: 72, y: 41 },
 
-  { id: 'w12', tier: 'white', x: 34, y: 53 },
-  { id: 'w15', tier: 'white', x: 66, y: 53 },
+  { id: 'w12', tier: 'white', x: 31, y: 53 },
+  { id: 'w15', tier: 'white', x: 69, y: 53 },
 
-  { id: 'w16', tier: 'white', x: 44, y: 67 },
-  { id: 'w17', tier: 'white', x: 56, y: 67 },
+  { id: 'w16', tier: 'white', x: 41, y: 67 },
+  { id: 'w17', tier: 'white', x: 59, y: 67 },
 
   // GREEN — 21 perimeter
   { id: 'gr1', tier: 'green', x: 31, y: 9 },
