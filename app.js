@@ -156,7 +156,14 @@ function renderSpots() {
     el.addEventListener('mouseenter', e => showTooltip(e, spot));
     el.addEventListener('mousemove', e => moveTooltip(e));
     el.addEventListener('mouseleave', hideTooltip);
-    el.addEventListener('click', () => spot.claimed ? openClaimLink(spot) : selectSpot(spot));
+    el.addEventListener('click', e => {
+  if (spot.claimed) {
+    showTooltip(e, spot);
+    return;
+  }
+
+  selectSpot(spot);
+});
 
     spotsLayer.appendChild(el);
   });
@@ -192,7 +199,7 @@ function showTooltip(e, spot) {
       >
         <strong>${escapeHtml(spot.name || 'Claimed')}</strong>
         <span>${capitalize(spot.tier)} Spot</span>
-        ${spot.url ? `<small>${escapeHtml(spot.url)}</small>` : ''}
+        ${spot.url ? `<a class="owner-link" href="${escapeHtml(spot.url)}" target="_blank" rel="noopener">${escapeHtml(spot.url)}</a>` : ''}
       </div>
     `
     : `
