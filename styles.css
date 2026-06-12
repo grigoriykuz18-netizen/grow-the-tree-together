@@ -431,7 +431,19 @@ body {
   backdrop-filter: none !important;
   box-shadow: 0 0 14px currentColor !important;
 }
+/* Tier sizes */
 
+.leaf-avatar.white .leaf-shape,
+.leaf-shape.white{
+  width: 32px !important;
+  height: 42px !important;
+}
+
+.leaf-avatar.gold .leaf-shape,
+.leaf-shape.gold{
+  width: 38px !important;
+  height: 50px !important;
+}
 /* Remove old internal leaf outlines/stems */
 .leaf-shape::before,
 .leaf-shape::after,
