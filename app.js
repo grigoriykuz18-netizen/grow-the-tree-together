@@ -1,7 +1,10 @@
 // ===== CLOUDINARY CONFIG =====
 const CLOUDINARY_CLOUD_NAME = 'dikcvnots';
 const CLOUDINARY_UPLOAD_PRESET = 'grow-tree-avatars';
+const SUPABASE_URL = 'https://tiraskewlhpvrhwmvwgg.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_i14EF0J8VPaO65vetnFRMw_9Gu6Lc9C';
 
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // ===== DATA: V32 ideal layout — 42 spots =====
 const SPOTS_DATA = [
   { id: 'g1', tier: 'gold', x: 44, y: 38 },
@@ -74,22 +77,34 @@ function init() {
   bindEvents();
 }
 
-function loadState() {
-  const saved = localStorage.getItem(STORAGE_KEY);
+async function loadState() {
+  spots = SPOTS_DATA.map(s => ({ ...s, claimed: false }));
 
-  if (saved) {
-    try {
-      const claims = JSON.parse(saved);
-      spots = SPOTS_DATA.map(s => {
-        const claim = claims.find(c => c.id === s.id);
-        return claim ? { ...s, ...claim, claimed: true } : { ...s, claimed: false };
-      });
-    } catch {
-      spots = SPOTS_DATA.map(s => ({ ...s, claimed: false }));
-    }
-  } else {
-    spots = SPOTS_DATA.map(s => ({ ...s, claimed: false }));
+  const { data, error } = await supabaseClient
+    .from('claims')
+    .select('*');
+
+  if (error) {
+    console.error(error);
+    alert('Could not load claims from Supabase.');
+    return;
   }
+
+  spots = SPOTS_DATA.map(s => {
+    const claim = data.find(c => c.id === s.id);
+
+    return claim
+      ? {
+          ...s,
+          claimed: true,
+          name: claim.name,
+          url: claim.url,
+          avatar: claim.avatar_url,
+          tier: claim.tier,
+          when: claim.created_at ? new Date(claim.created_at).getTime() : Date.now()
+        }
+      : { ...s, claimed: false };
+  });
 }
 
 function saveState() {
@@ -375,19 +390,34 @@ async function handleSubmit(e) {
     return;
   }
 
-  const spot = spots.find(s => s.id === selectedSpot.id);
-  if (spot) {
-    spot.claimed = true;
-    spot.name = name || 'Anonymous';
-    spot.url = url;
-    spot.avatar = avatarUrl;
-    spot.when = Date.now();
+const { error } = await supabaseClient
+  .from('claims')
+  .insert({
+    id: selectedSpot.id,
+    tier,
+    name: name || 'Anonymous',
+    url,
+    avatar_url: avatarUrl || null
+  });
+
+if (error) {
+  console.error(error);
+
+  if (error.code === '23505') {
+    alert('This spot is already claimed.');
+  } else {
+    alert('Could not save claim to Supabase.');
   }
 
-  saveState();
-  renderSpots();
-  updateCount();
-  renderLatest();
+  submitBtn.textContent = 'CLAIM SELECTED SPOT';
+  submitBtn.disabled = false;
+  return;
+}
+
+await loadState();
+renderSpots();
+updateCount();
+renderLatest();
 
   form.reset();
   clearSelected();
@@ -468,4 +498,10 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-init();
+async function init() {
+  await loadState();
+  renderSpots();
+  updateCount();
+  renderLatest();
+  bindEvents();
+}
