@@ -910,3 +910,21 @@ body {
 .tooltip.pinned{
   pointer-events:auto !important;
 }
+function shortUrl(url) {
+  try {
+    const clean = String(url).replace(/^https?:\/\//, '').replace(/^www\./, '');
+    const parts = clean.split('/');
+
+    if (parts[0].includes('instagram.com') && parts[1]) {
+      return `instagram.com/${parts[1]}`;
+    }
+
+    if (parts[0].includes('t.me') && parts[1]) {
+      return `t.me/${parts[1]}`;
+    }
+
+    return parts[0];
+  } catch {
+    return 'Open link';
+  }
+}
