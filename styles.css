@@ -610,3 +610,8 @@ body {
     font-size: 6px !important;
   }
 }
+.leaf-avatar.gold .leaf-shape,
+.leaf-shape.gold{
+  width: 42px !important;
+  height: 56px !important;
+}
