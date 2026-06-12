@@ -1218,3 +1218,33 @@ body {
   background:#ffd54a;
   box-shadow:0 0 25px #ffd54a;
 }
+/* ===== FIX LEAF SIZE ===== */
+
+.leaf-shape{
+  width:28px !important;
+  height:36px !important;
+}
+
+.leaf-shape .avatar{
+  width:18px !important;
+  height:18px !important;
+  font-size:8px !important;
+}
+
+/* Mobile: ещё меньше */
+@media (max-width: 768px){
+  .leaf-shape{
+    width:22px !important;
+    height:29px !important;
+  }
+
+  .leaf-shape .avatar{
+    width:14px !important;
+    height:14px !important;
+    font-size:7px !important;
+  }
+
+  .leaf-avatar{
+    transform:scale(.9);
+  }
+}
