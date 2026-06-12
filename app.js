@@ -348,7 +348,7 @@ function clearSelected() {
   const hint = document.querySelector('.hint');
   if (hint) {
     hint.classList.remove('selected');
-    hint.innerHTML = '🌿 <strong>Select a glowing dot</strong> on the tree to see price and claim that spot.';
+    hint.innerHTML = '🌿 Choose an available spot on the tree and become part of its history.';
   }
 }
 
@@ -369,8 +369,11 @@ async function handleSubmit(e) {
   }
 
   const price = PRICES[tier];
-  const confirmed = confirm(`Pay $${price} for ${tier.toUpperCase()} spot?\n\n(This is a demo — click OK to simulate payment)`);
-  if (!confirmed) return;
+const confirmed = confirm(
+  `Claim ${tier.toUpperCase()} Spot for $${price}?`
+);
+
+if (!confirmed) return;
 
   let avatarUrl = '';
 
@@ -416,6 +419,7 @@ await loadState();
 renderSpots();
 updateCount();
 renderLatest();
+alert('🌿 Your spot has been successfully claimed!');
 
   form.reset();
   clearSelected();
