@@ -3,9 +3,9 @@
 // Fix: fewer white spots, more green spots, better spacing, closer to the approved reference.
 const SPOTS_DATA = [
   // GOLD — 4 center
-  { id: 'g1', tier: 'gold', x: 50, y: 38 },
+  { id: 'g1', tier: 'gold', x: 44, y: 38 },
   { id: 'g2', tier: 'gold', x: 56, y: 38 },
-  { id: 'g3', tier: 'gold', x: 50, y: 49 },
+  { id: 'g3', tier: 'gold', x: 44, y: 49 },
   { id: 'g4', tier: 'gold', x: 56, y: 49 },
 
   // WHITE — 17 middle ring
