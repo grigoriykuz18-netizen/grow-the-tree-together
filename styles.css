@@ -1350,3 +1350,116 @@ body {
     font-size:7px;
   }
 }
+/* ===== FINAL PREMIUM LEAF DESIGN ===== */
+
+.leaf-avatar{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  z-index:20;
+}
+
+.leaf-shape{
+  position:relative;
+  width:26px;
+  height:34px;
+  border-radius:60% 0 60% 0;
+  transform:rotate(-30deg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all .25s ease;
+}
+
+.leaf-shape::before{
+  content:"";
+  position:absolute;
+  inset:2px;
+  border-radius:60% 0 60% 0;
+  border:1.5px solid rgba(255,255,255,.75);
+  opacity:.85;
+}
+
+.leaf-shape::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-7px;
+  width:2px;
+  height:11px;
+  border-radius:999px;
+  background:currentColor;
+  transform:translateX(-50%) rotate(25deg);
+  opacity:.75;
+}
+
+.leaf-inner{
+  width:17px;
+  height:17px;
+  border-radius:50%;
+  background:#07100d;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:2;
+  transform:rotate(30deg);
+  border:1.5px solid rgba(255,255,255,.9);
+}
+
+.leaf-person{
+  color:#fff;
+  font-size:8px;
+  font-weight:900;
+  line-height:1;
+}
+
+/* colors */
+
+.leaf-shape.green{
+  color:#22c55e;
+  background:linear-gradient(135deg,#4cff7a 0%,#129a3c 100%);
+  box-shadow:
+    0 0 12px rgba(34,197,94,.65),
+    0 0 24px rgba(34,197,94,.35);
+}
+
+.leaf-shape.white{
+  color:#f3f4f6;
+  background:linear-gradient(135deg,#ffffff 0%,#cfd5dc 100%);
+  box-shadow:
+    0 0 12px rgba(255,255,255,.65),
+    0 0 24px rgba(255,255,255,.28);
+}
+
+.leaf-shape.gold{
+  color:#fbbf24;
+  background:linear-gradient(135deg,#ffe27a 0%,#d99a12 100%);
+  box-shadow:
+    0 0 14px rgba(251,191,36,.8),
+    0 0 28px rgba(251,191,36,.42);
+}
+
+/* hover */
+
+.spot.claimed:hover .leaf-shape{
+  transform:rotate(-30deg) scale(1.12);
+}
+
+/* mobile */
+
+@media (max-width:768px){
+  .leaf-shape{
+    width:22px;
+    height:29px;
+  }
+
+  .leaf-inner{
+    width:14px;
+    height:14px;
+  }
+
+  .leaf-person{
+    font-size:7px;
+  }
+}
