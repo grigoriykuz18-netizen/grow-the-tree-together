@@ -928,3 +928,28 @@ function shortUrl(url) {
     return 'Open link';
   }
 }
+/* ===== OWNER CARD MOBILE LINK FIX ===== */
+
+.owner-card{
+  max-width: min(300px, calc(100vw - 56px)) !important;
+  width: max-content !important;
+  overflow: hidden !important;
+}
+
+.owner-link{
+  display: block !important;
+  max-width: 240px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 768px){
+  .owner-card{
+    max-width: calc(100vw - 56px) !important;
+  }
+
+  .owner-link{
+    max-width: calc(100vw - 120px) !important;
+  }
+}
