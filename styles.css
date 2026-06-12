@@ -841,3 +841,19 @@ body {
 .owner-link:hover {
   text-decoration: underline;
 }
+.spot.selected:not(.claimed)::after{
+  content: attr(data-price);
+  position: absolute;
+  left: 50%;
+  top: -24px;
+  transform: translateX(-50%);
+
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+
+  color: currentColor;
+  text-shadow:
+    0 0 8px currentColor,
+    0 0 18px currentColor;
+}
