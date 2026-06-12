@@ -715,3 +715,29 @@ body {
     max-height: 20px !important;
   }
 }
+/* ===== HARD MOBILE CLAIMED SIZE FIX ===== */
+@media (max-width: 768px) {
+  .spots-layer .spot.claimed .claimed-avatar,
+  .spots-layer .spot.claimed .claimed-avatar.gold,
+  .spots-layer .spot.claimed .claimed-avatar.white,
+  .spots-layer .spot.claimed .claimed-avatar.green {
+    box-sizing: border-box !important;
+    flex: 0 0 auto !important;
+  }
+
+  .spots-layer .spot.claimed .claimed-avatar.gold {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    max-width: 28px !important;
+    max-height: 28px !important;
+  }
+
+  .spots-layer .spot.claimed .claimed-avatar.gold .avatar {
+    width: 100% !important;
+    height: 100% !important;
+    font-size: 7px !important;
+    line-height: 1 !important;
+  }
+}
