@@ -320,292 +320,16 @@ body {
   font-size: 14px;
 }
 
-/* ===== V26 clean mechanics patch ===== */
-.tree-container{max-width:880px;aspect-ratio:1.18/1;border-radius:24px;overflow:hidden;background:radial-gradient(ellipse at 50% 70%,#132116 0%,#050807 72%);box-shadow:0 28px 80px rgba(0,0,0,.32)}
-.tree-image{width:100%;height:100%;object-fit:contain;object-position:center;display:block;pointer-events:none;user-select:none}
-.spot{width:18px!important;height:18px!important;background:transparent!important;border:0!important;transform:translate(-50%,-50%)!important}
-.spot::before{width:6px!important;height:6px!important;box-shadow:0 0 8px currentColor,0 0 18px currentColor,0 0 30px currentColor!important}
-.spot:hover{transform:translate(-50%,-50%) scale(1.55)!important}
-.spot.selected{transform:translate(-50%,-50%) scale(1.75)!important;box-shadow:none!important}
-.spot.selected::before{width:8px!important;height:8px!important;box-shadow:0 0 0 4px rgba(143,226,67,.20),0 0 16px currentColor,0 0 34px currentColor!important}
-.spot.claimed{width:auto!important;height:auto!important;opacity:1!important;cursor:pointer!important}
-.spot.claimed::before{display:none!important}
-.leaf-avatar{display:grid;place-items:center;position:relative;animation:bloom .45s cubic-bezier(.2,1.35,.35,1);box-shadow:0 12px 28px rgba(0,0,0,.32)}
-.leaf-avatar::after{content:'';position:absolute;left:50%;bottom:-8px;width:2px;height:14px;transform:translateX(-50%);background:currentColor;border-radius:999px;opacity:.75}
-.leaf-avatar .avatar{border-radius:50%;background:#07100d;color:white;display:grid;place-items:center;font-weight:900;border:2px solid rgba(255,255,255,.72)}
-.spot.green .leaf-avatar{width:34px;height:44px;border-radius:78% 20% 78% 20%;background:linear-gradient(135deg,#b9eb60,#5fae24);border:3px solid #9bed4b;color:#9bed4b}
-.spot.green .avatar{width:21px;height:21px;font-size:9px}
-.spot.white .leaf-avatar{width:43px;height:55px;border-radius:78% 20% 78% 20%;background:linear-gradient(135deg,#fff,#cbd5e1);border:3px solid #f7f8f3;color:#f7f8f3}
-.spot.white .avatar{width:27px;height:27px;font-size:10px}
-.spot.gold .leaf-avatar{width:58px;height:73px;border-radius:78% 20% 78% 20%;background:linear-gradient(135deg,#ffe889,#d49d16);border:4px solid #f4c342;color:#f4c342;box-shadow:0 0 30px rgba(244,195,66,.85),0 14px 34px rgba(0,0,0,.36)}
-.spot.gold .avatar{width:36px;height:36px;font-size:12px}
-.spot.claimed:hover{transform:translate(-50%,-50%) scale(1.08)!important}
-.hint.selected{border-color:rgba(244,195,66,.45);background:rgba(244,195,66,.10)}
-@keyframes bloom{0%{transform:scale(.15) rotate(-18deg);opacity:0;filter:blur(2px)}70%{transform:scale(1.12) rotate(4deg);opacity:1;filter:blur(0)}100%{transform:scale(1) rotate(0);opacity:1}}
-/* Keep all spots inside the crown area */
-.spots-layer {
-  inset: 8% 4% 15% 4% !important;
-}
-/* Claimed spot turns into leaf-avatar */
-.spot.claimed {
-  width: auto !important;
-  height: auto !important;
-  opacity: 1 !important;
-  cursor: pointer !important;
-}
+/* ===== FINAL TREE / SPOTS / CLEAN CLAIMED LEAVES ===== */
 
-.spot.claimed::before {
-  display: none !important;
-}
-
-.leaf-avatar {
-  display: grid;
-  place-items: center;
-  animation: bloom .45s ease-out;
-}
-
-.spot.green .leaf-avatar {
-  width: 34px;
-  height: 44px;
-  border-radius: 78% 20% 78% 20%;
-  background: linear-gradient(135deg,#b9eb60,#5fae24);
-  border: 3px solid #9bed4b;
-}
-
-.spot.white .leaf-avatar {
-  width: 43px;
-  height: 55px;
-  border-radius: 78% 20% 78% 20%;
-  background: linear-gradient(135deg,#fff,#cbd5e1);
-  border: 3px solid #f7f8f3;
-}
-
-.spot.gold .leaf-avatar{
-  width:48px;
-  height:60px;
-  border-radius: 78% 20% 78% 20%;
-  background: linear-gradient(135deg,#ffe889,#d49d16);
-  border: 4px solid #f4c342;
-  box-shadow: 0 0 30px rgba(244,195,66,.85);
-}
-
-.leaf-avatar .avatar{
-  width:78%;
-  height:78%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #07100d;
-  color: white;
-  display: grid;
-  place-items: center;
-  font-weight: 900;
-  font-size: 11px;
-}
-
-@keyframes bloom {
-  from { transform: scale(.1); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-/* V28 — better claimed leaves */
-.spot.green .leaf-avatar {
-  width: 30px !important;
-  height: 39px !important;
-}
-
-.spot.white .leaf-avatar {
-  width: 38px !important;
-  height: 49px !important;
-}
-
-.spot.gold .leaf-avatar {
-  width: 48px !important;
-  height: 60px !important;
-}
-
-.leaf-avatar .avatar {
-  width: 78% !important;
-  height: 78% !important;
-  font-size: 11px !important;
-}
-
-.spot.gold .avatar {
-  font-size: 13px !important;
-}
-/* ===== V28 premium layout: bigger tree, fewer spots, bigger leaves ===== */
-.tree-container {
-  max-width: 980px !important;
-  aspect-ratio: 1.22 / 1 !important;
-}
-
-.tree-image {
-  width: 108% !important;
-  height: 108% !important;
-  object-fit: contain !important;
-  object-position: center !important;
-  transform: translate(-4%, -3%) scale(1.05);
-}
-
-.spots-layer {
-  inset: 6% 2% 10% 2% !important;
-}
-
-.spot {
-  width: 16px !important;
-  height: 16px !important;
-  background: transparent !important;
-  border: 0 !important;
-  transform: translate(-50%, -50%) !important;
-}
-
-.spot::before {
-  width: 6px !important;
-  height: 6px !important;
-  box-shadow: 0 0 8px currentColor, 0 0 18px currentColor, 0 0 32px currentColor !important;
-}
-
-.spot:hover {
-  transform: translate(-50%, -50%) scale(1.65) !important;
-}
-
-.spot.selected {
-  transform: translate(-50%, -50%) scale(1.85) !important;
-  box-shadow: none !important;
-}
-
-.spot.selected::before {
-  width: 8px !important;
-  height: 8px !important;
-  box-shadow: 0 0 0 4px rgba(143,226,67,.22), 0 0 18px currentColor, 0 0 38px currentColor !important;
-}
-
-.spot.claimed {
-  width: auto !important;
-  height: auto !important;
-  opacity: 1 !important;
-  cursor: pointer !important;
-}
-
-.spot.claimed::before {
-  display: none !important;
-}
-
-.leaf-avatar {
-  display: grid;
-  place-items: center;
-  position: relative;
-  animation: bloom .48s cubic-bezier(.2, 1.35, .35, 1);
-  box-shadow: 0 14px 34px rgba(0,0,0,.36);
-}
-
-.leaf-avatar::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -8px;
-  width: 2px;
-  height: 14px;
-  transform: translateX(-50%);
-  background: currentColor;
-  border-radius: 999px;
-  opacity: .7;
-}
-
-.spot.green .leaf-avatar {
-  width: 40px !important;
-  height: 52px !important;
-  border-radius: 78% 20% 78% 20%;
-  background: linear-gradient(135deg,#b9eb60,#5fae24);
-  border: 3px solid #9bed4b;
-  color: #9bed4b;
-}
-
-.spot.white .leaf-avatar {
-  width: 52px !important;
-  height: 66px !important;
-  border-radius: 78% 20% 78% 20%;
-  background: linear-gradient(135deg,#ffffff,#cbd5e1);
-  border: 3px solid #f7f8f3;
-  color: #f7f8f3;
-}
-
-.spot.gold .leaf-avatar {
-  width: 70px !important;
-  height: 88px !important;
-  border-radius: 78% 20% 78% 20%;
-  background: linear-gradient(135deg,#ffe889,#d49d16);
-  border: 4px solid #f4c342;
-  color: #f4c342;
-  box-shadow: 0 0 36px rgba(244,195,66,.88), 0 18px 42px rgba(0,0,0,.42);
-}
-
-.leaf-avatar .avatar {
-  width: 78% !important;
-  height: 78% !important;
-  border-radius: 50%;
-  background: #07100d;
-  color: white;
-  display: grid;
-  place-items: center;
-  font-weight: 900;
-  font-size: 12px !important;
-  border: 2px solid rgba(255,255,255,.75);
-}
-
-.spot.gold .avatar {
-  font-size: 15px !important;
-}
-
-.spot.claimed:hover {
-  transform: translate(-50%, -50%) scale(1.10) !important;
-  z-index: 30;
-}
-
-.tooltip {
-  background: transparent !important;
-  border: 0 !important;
-  padding: 0 !important;
-  box-shadow: none !important;
-}
-
-.owner-card {
-  min-width: 180px;
-  background: rgba(8,17,13,.96);
-  border: 1px solid rgba(143,226,67,.22);
-  border-radius: 14px;
-  padding: 12px 14px;
-  box-shadow: 0 18px 46px rgba(0,0,0,.45);
-  line-height: 1.35;
-}
-
-.owner-card strong {
-  display: block;
-  color: #fff;
-  font-size: 14px;
-  margin-bottom: 4px;
-}
-
-.owner-card span {
-  display: block;
-  color: #a7b5ad;
-  font-size: 12px;
-}
-
-.owner-card small {
-  display: block;
-  color: #8fe243;
-  font-size: 12px;
-  margin-top: 6px;
-}
-
-@keyframes bloom {
-  0% { transform: scale(.1) rotate(-16deg); opacity: 0; filter: blur(2px); }
-  70% { transform: scale(1.14) rotate(4deg); opacity: 1; filter: blur(0); }
-  100% { transform: scale(1) rotate(0); opacity: 1; }
-}
-/* ===== V29 zone layout: center gold, side white, outer green ===== */
+/* Tree area */
 .tree-container {
   max-width: 990px !important;
   aspect-ratio: 1.22 / 1 !important;
+  border-radius: 24px !important;
+  overflow: hidden !important;
+  background: radial-gradient(ellipse at 50% 70%, #132116 0%, #050807 72%) !important;
+  box-shadow: 0 28px 80px rgba(0,0,0,.32) !important;
 }
 
 .tree-image {
@@ -613,894 +337,264 @@ body {
   height: 108% !important;
   object-fit: contain !important;
   object-position: center !important;
-  transform: translate(-4%, -3%) scale(1.05);
+  transform: translate(-4%, -3%) scale(1.05) !important;
+  display: block !important;
+  pointer-events: none !important;
+  user-select: none !important;
 }
 
-.spots-layer {
-  inset: 6% 1% 11% 1% !important;
-}
-
-.spot {
-  width: 22px !important;
-  height: 22px !important;
-  background: transparent !important;
-  border: 0 !important;
-  transform: translate(-50%, -50%) !important;
-}
-
-.spot::before {
-  width: 13px !important;
-  height: 13px !important;
-  border: 2px solid rgba(255,255,255,.52);
-  box-shadow:
-    0 0 10px currentColor,
-    0 0 22px currentColor,
-    0 0 38px currentColor,
-    inset 0 0 10px rgba(255,255,255,.75) !important;
-}
-
-.spot.green::before {
-  background: #8eff35 !important;
-}
-
-.spot.white::before {
-  background: #f4f7f2 !important;
-}
-
-.spot.gold::before {
-  background: #ffd447 !important;
-}
-
-.spot:hover {
-  transform: translate(-50%, -50%) scale(1.45) !important;
-}
-
-.spot.selected {
-  transform: translate(-50%, -50%) scale(1.65) !important;
-  box-shadow: none !important;
-}
-
-.spot.selected::before {
-  width: 16px !important;
-  height: 16px !important;
-  box-shadow:
-    0 0 0 5px rgba(143,226,67,.18),
-    0 0 18px currentColor,
-    0 0 42px currentColor !important;
-}
-
-.spot.claimed {
-  width: auto !important;
-  height: auto !important;
-  opacity: 1 !important;
-  cursor: pointer !important;
-}
-
-.spot.claimed::before {
-  display: none !important;
-}
-
-.leaf-avatar {
-  display: grid;
-  place-items: center;
-  position: relative;
-  animation: bloom .48s cubic-bezier(.2, 1.35, .35, 1);
-  box-shadow: 0 14px 34px rgba(0,0,0,.36);
-}
-
-.leaf-avatar::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -8px;
-  width: 2px;
-  height: 14px;
-  transform: translateX(-50%);
-  background: currentColor;
-  border-radius: 999px;
-  opacity: .7;
-}
-
-.spot.green .leaf-avatar {
-  width: 44px !important;
-  height: 56px !important;
-  border-radius: 78% 20% 78% 20%;
-  background: linear-gradient(135deg,#b9eb60,#5fae24);
-  border: 3px solid #9bed4b;
-  color: #9bed4b;
-}
-
-.spot.white .leaf-avatar {
-  width: 54px !important;
-  height: 68px !important;
-  border-radius: 78% 20% 78% 20%;
-  background: linear-gradient(135deg,#ffffff,#cbd5e1);
-  border: 3px solid #f7f8f3;
-  color: #f7f8f3;
-}
-
-.spot.gold .leaf-avatar {
-  width: 64px !important;
-  height: 80px !important;
-  border-radius: 78% 20% 78% 20%;
-  background: linear-gradient(135deg,#ffe889,#d49d16);
-  border: 4px solid #f4c342;
-  color: #f4c342;
-  box-shadow: 0 0 36px rgba(244,195,66,.88), 0 18px 42px rgba(0,0,0,.42);
-}
-
-.leaf-avatar .avatar {
-  width: 78% !important;
-  height: 78% !important;
-  border-radius: 50%;
-  background: #07100d;
-  color: white;
-  display: grid;
-  place-items: center;
-  font-weight: 900;
-  font-size: 12px !important;
-  border: 2px solid rgba(255,255,255,.75);
-}
-
-.spot.gold .avatar {
-  font-size: 14px !important;
-}
-
-.spot.claimed:hover {
-  transform: translate(-50%, -50%) scale(1.10) !important;
-  z-index: 30;
-}
-
-.tooltip {
-  background: transparent !important;
-  border: 0 !important;
-  padding: 0 !important;
-  box-shadow: none !important;
-}
-
-.owner-card {
-  min-width: 180px;
-  background: rgba(8,17,13,.96);
-  border: 1px solid rgba(143,226,67,.22);
-  border-radius: 14px;
-  padding: 12px 14px;
-  box-shadow: 0 18px 46px rgba(0,0,0,.45);
-  line-height: 1.35;
-}
-
-.owner-card strong {
-  display: block;
-  color: #fff;
-  font-size: 14px;
-  margin-bottom: 4px;
-}
-
-.owner-card span {
-  display: block;
-  color: #a7b5ad;
-  font-size: 12px;
-}
-
-.owner-card small {
-  display: block;
-  color: #8fe243;
-  font-size: 12px;
-  margin-top: 6px;
-}
-
-@keyframes bloom {
-  0% { transform: scale(.1) rotate(-16deg); opacity: 0; filter: blur(2px); }
-  70% { transform: scale(1.14) rotate(4deg); opacity: 1; filter: blur(0); }
-  100% { transform: scale(1) rotate(0); opacity: 1; }
-}
-/* ===== V31 ideal 42 spots layout ===== */
-.tree-container {
-  max-width: 990px !important;
-  aspect-ratio: 1.22 / 1 !important;
-}
-
-.tree-image {
-  width: 108% !important;
-  height: 108% !important;
-  object-fit: contain !important;
-  object-position: center !important;
-  transform: translate(-4%, -3%) scale(1.05);
-}
-
-.spots-layer {
-  inset: 6% 1% 11% 1% !important;
-}
-
-.spot {
-  width: 22px !important;
-  height: 22px !important;
-  background: transparent !important;
-  border: 0 !important;
-  transform: translate(-50%, -50%) !important;
-}
-
-.spot::before {
-  width: 13px !important;
-  height: 13px !important;
-  border: 2px solid rgba(255,255,255,.52);
-  box-shadow:
-    0 0 10px currentColor,
-    0 0 22px currentColor,
-    0 0 38px currentColor,
-    inset 0 0 10px rgba(255,255,255,.75) !important;
-}
-
-.spot.green::before { background: #8eff35 !important; }
-.spot.white::before { background: #f4f7f2 !important; }
-.spot.gold::before { background: #ffd447 !important; }
-
-.spot:hover {
-  transform: translate(-50%, -50%) scale(1.45) !important;
-}
-
-.spot.selected {
-  transform: translate(-50%, -50%) scale(1.65) !important;
-  box-shadow: none !important;
-}
-
-.spot.selected::before {
-  width: 16px !important;
-  height: 16px !important;
-  box-shadow:
-    0 0 0 5px rgba(143,226,67,.18),
-    0 0 18px currentColor,
-    0 0 42px currentColor !important;
-}
-
-.spot.claimed {
-  width: auto !important;
-  height: auto !important;
-  opacity: 1 !important;
-  cursor: pointer !important;
-}
-
-.spot.claimed::before {
-  display: none !important;
-}
-
-.leaf-avatar {
-  display: grid;
-  place-items: center;
-  position: relative;
-  animation: bloom .48s cubic-bezier(.2, 1.35, .35, 1);
-  box-shadow: 0 14px 34px rgba(0,0,0,.36);
-}
-
-.leaf-avatar::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -8px;
-  width: 2px;
-  height: 14px;
-  transform: translateX(-50%);
-  background: currentColor;
-  border-radius: 999px;
-  opacity: .7;
-}
-
-.spot.green .leaf-avatar {
-  width: 44px !important;
-  height: 56px !important;
-  border-radius: 78% 20% 78% 20%;
-  background: linear-gradient(135deg,#b9eb60,#5fae24);
-  border: 3px solid #9bed4b;
-  color: #9bed4b;
-}
-
-.spot.white .leaf-avatar {
-  width: 54px !important;
-  height: 68px !important;
-  border-radius: 78% 20% 78% 20%;
-  background: linear-gradient(135deg,#ffffff,#cbd5e1);
-  border: 3px solid #f7f8f3;
-  color: #f7f8f3;
-}
-
-.spot.gold .leaf-avatar {
-  width: 64px !important;
-  height: 80px !important;
-  border-radius: 78% 20% 78% 20%;
-  background: linear-gradient(135deg,#ffe889,#d49d16);
-  border: 4px solid #f4c342;
-  color: #f4c342;
-  box-shadow: 0 0 36px rgba(244,195,66,.88), 0 18px 42px rgba(0,0,0,.42);
-}
-
-.leaf-avatar .avatar {
-  width: 78% !important;
-  height: 78% !important;
-  border-radius: 50%;
-  background: #07100d;
-  color: white;
-  display: grid;
-  place-items: center;
-  font-weight: 900;
-  font-size: 12px !important;
-  border: 2px solid rgba(255,255,255,.75);
-}
-
-.spot.gold .avatar {
-  font-size: 14px !important;
-}
-
-.spot.claimed:hover {
-  transform: translate(-50%, -50%) scale(1.10) !important;
-  z-index: 30;
-}
-
-.tooltip {
-  background: transparent !important;
-  border: 0 !important;
-  padding: 0 !important;
-  box-shadow: none !important;
-}
-
-.owner-card {
-  min-width: 180px;
-  background: rgba(8,17,13,.96);
-  border: 1px solid rgba(143,226,67,.22);
-  border-radius: 14px;
-  padding: 12px 14px;
-  box-shadow: 0 18px 46px rgba(0,0,0,.45);
-  line-height: 1.35;
-}
-
-.owner-card strong {
-  display: block;
-  color: #fff;
-  font-size: 14px;
-  margin-bottom: 4px;
-}
-
-.owner-card span {
-  display: block;
-  color: #a7b5ad;
-  font-size: 12px;
-}
-
-.owner-card small {
-  display: block;
-  color: #8fe243;
-  font-size: 12px;
-  margin-top: 6px;
-}
-
-@keyframes bloom {
-  0% { transform: scale(.1) rotate(-16deg); opacity: 0; filter: blur(2px); }
-  70% { transform: scale(1.14) rotate(4deg); opacity: 1; filter: blur(0); }
-  100% { transform: scale(1) rotate(0); opacity: 1; }
-}
-/* ===== V32 ideal 42 spots: 4 Gold / 17 White / 21 Green ===== */
-.tree-container {
-  max-width: 990px !important;
-  aspect-ratio: 1.22 / 1 !important;
-}
-
-.tree-image {
-  width: 108% !important;
-  height: 108% !important;
-  object-fit: contain !important;
-  object-position: center !important;
-  transform: translate(-4%, -3%) scale(1.05);
-}
-
-.spots-layer {
-  inset: 6% 1% 11% 1% !important;
-}
-
-.spot {
-  width: 22px !important;
-  height: 22px !important;
-  background: transparent !important;
-  border: 0 !important;
-  transform: translate(-50%, -50%) !important;
-}
-
-.spot::before {
-  width: 13px !important;
-  height: 13px !important;
-  border: 2px solid rgba(255,255,255,.52);
-  box-shadow:
-    0 0 10px currentColor,
-    0 0 22px currentColor,
-    0 0 38px currentColor,
-    inset 0 0 10px rgba(255,255,255,.75) !important;
-}
-
-.spot.green::before { background: #8eff35 !important; }
-.spot.white::before { background: #f4f7f2 !important; }
-.spot.gold::before { background: #ffd447 !important; }
-
-.spot:hover {
-  transform: translate(-50%, -50%) scale(1.45) !important;
-}
-
-.spot.selected {
-  transform: translate(-50%, -50%) scale(1.65) !important;
-  box-shadow: none !important;
-}
-
-.spot.selected::before {
-  width: 16px !important;
-  height: 16px !important;
-  box-shadow:
-    0 0 0 5px rgba(143,226,67,.18),
-    0 0 18px currentColor,
-    0 0 42px currentColor !important;
-}
-
-.spot.claimed {
-  width: auto !important;
-  height: auto !important;
-  opacity: 1 !important;
-  cursor: pointer !important;
-}
-
-.spot.claimed::before {
-  display: none !important;
-}
-
-.leaf-avatar {
-  display: grid;
-  place-items: center;
-  position: relative;
-  animation: bloom .48s cubic-bezier(.2, 1.35, .35, 1);
-  box-shadow: 0 14px 34px rgba(0,0,0,.36);
-}
-
-.leaf-avatar::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -8px;
-  width: 2px;
-  height: 14px;
-  transform: translateX(-50%);
-  background: currentColor;
-  border-radius: 999px;
-  opacity: .7;
-}
-
-.spot.green .leaf-avatar {
-  width: 44px !important;
-  height: 56px !important;
-  border-radius: 78% 20% 78% 20%;
-  background: linear-gradient(135deg,#b9eb60,#5fae24);
-  border: 3px solid #9bed4b;
-  color: #9bed4b;
-}
-
-.spot.white .leaf-avatar {
-  width: 54px !important;
-  height: 68px !important;
-  border-radius: 78% 20% 78% 20%;
-  background: linear-gradient(135deg,#ffffff,#cbd5e1);
-  border: 3px solid #f7f8f3;
-  color: #f7f8f3;
-}
-
-.spot.gold .leaf-avatar {
-  width: 64px !important;
-  height: 80px !important;
-  border-radius: 78% 20% 78% 20%;
-  background: linear-gradient(135deg,#ffe889,#d49d16);
-  border: 4px solid #f4c342;
-  color: #f4c342;
-  box-shadow: 0 0 36px rgba(244,195,66,.88), 0 18px 42px rgba(0,0,0,.42);
-}
-
-.leaf-avatar .avatar {
-  width: 78% !important;
-  height: 78% !important;
-  border-radius: 50%;
-  background: #07100d;
-  color: white;
-  display: grid;
-  place-items: center;
-  font-weight: 900;
-  font-size: 12px !important;
-  border: 2px solid rgba(255,255,255,.75);
-}
-
-.spot.gold .avatar {
-  font-size: 14px !important;
-}
-
-.spot.claimed:hover {
-  transform: translate(-50%, -50%) scale(1.10) !important;
-  z-index: 30;
-}
-
-.tooltip {
-  background: transparent !important;
-  border: 0 !important;
-  padding: 0 !important;
-  box-shadow: none !important;
-}
-
-.owner-card {
-  min-width: 180px;
-  background: rgba(8,17,13,.96);
-  border: 1px solid rgba(143,226,67,.22);
-  border-radius: 14px;
-  padding: 12px 14px;
-  box-shadow: 0 18px 46px rgba(0,0,0,.45);
-  line-height: 1.35;
-}
-
-.owner-card strong {
-  display: block;
-  color: #fff;
-  font-size: 14px;
-  margin-bottom: 4px;
-}
-
-.owner-card span {
-  display: block;
-  color: #a7b5ad;
-  font-size: 12px;
-}
-
-.owner-card small {
-  display: block;
-  color: #8fe243;
-  font-size: 12px;
-  margin-top: 6px;
-}
-
-@keyframes bloom {
-  0% { transform: scale(.1) rotate(-16deg); opacity: 0; filter: blur(2px); }
-  70% { transform: scale(1.14) rotate(4deg); opacity: 1; filter: blur(0); }
-  100% { transform: scale(1) rotate(0); opacity: 1; }
-}
 .spots-layer {
   inset: 3% -2% 8% -2% !important;
 }
-.leaf-avatar{
-  display:flex;
-  align-items:center;
-  justify-content:center;
+
+/* Empty glowing spots */
+.spot {
+  width: 22px !important;
+  height: 22px !important;
+  background: transparent !important;
+  border: 0 !important;
+  transform: translate(-50%, -50%) !important;
+  opacity: 1 !important;
 }
 
-.leaf-shape{
-  width:42px;
-  height:54px;
-
-  border-radius:70% 0 70% 0;
-  transform:rotate(45deg);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  backdrop-filter:blur(4px);
-
+.spot::before {
+  width: 13px !important;
+  height: 13px !important;
+  border: 2px solid rgba(255,255,255,.52) !important;
   box-shadow:
-    0 0 10px rgba(255,255,255,.15),
-    inset 0 0 8px rgba(255,255,255,.15);
+    0 0 10px currentColor,
+    0 0 22px currentColor,
+    0 0 38px currentColor,
+    inset 0 0 10px rgba(255,255,255,.75) !important;
 }
 
-.leaf-shape .avatar{
-  transform:rotate(-45deg);
+.spot.green::before { background: #8eff35 !important; }
+.spot.white::before { background: #f4f7f2 !important; }
+.spot.gold::before { background: #ffd447 !important; }
 
-  width:26px;
-  height:26px;
-
-  border-radius:50%;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-size:11px;
-  font-weight:800;
-
-  background:#111;
-  color:white;
-}
-.leaf-avatar.green .leaf-shape{
-  background:#57ff7f;
-  box-shadow:0 0 20px #57ff7f;
+.spot:hover {
+  transform: translate(-50%, -50%) scale(1.45) !important;
 }
 
-.leaf-avatar.white .leaf-shape{
-  background:white;
-  box-shadow:0 0 20px white;
+.spot.selected {
+  transform: translate(-50%, -50%) scale(1.65) !important;
+  box-shadow: none !important;
 }
 
-.leaf-avatar.gold .leaf-shape{
-  background:#ffd54a;
-  box-shadow:0 0 25px #ffd54a;
-}
-/* ===== FIX LEAF SIZE ===== */
-
-.leaf-shape{
-  width:28px !important;
-  height:36px !important;
-}
-
-.leaf-shape .avatar{
-  width:18px !important;
-  height:18px !important;
-  font-size:8px !important;
-}
-
-/* Mobile: ещё меньше */
-@media (max-width: 768px){
-  .leaf-shape{
-    width:22px !important;
-    height:29px !important;
-  }
-
-  .leaf-shape .avatar{
-    width:14px !important;
-    height:14px !important;
-    font-size:7px !important;
-  }
-
-  .leaf-avatar{
-    transform:scale(.9);
-  }
-}
-/* ===== PREMIUM BRAND LEAVES ===== */
-
-.brand-leaf{
-  position:relative;
-  display:grid;
-  place-items:center;
-  transform:translate(-50%, -50%) rotate(-22deg);
-  transform-origin:center;
-  z-index:20;
-}
-
-.brand-leaf-inner{
-  position:relative;
-  display:grid;
-  place-items:center;
-  width:30px;
-  height:42px;
-  border-radius:80% 18% 80% 18%;
+.spot.selected::before {
+  width: 16px !important;
+  height: 16px !important;
   box-shadow:
-    0 0 14px currentColor,
-    0 0 28px color-mix(in srgb, currentColor 55%, transparent),
-    inset 0 2px 8px rgba(255,255,255,.45);
+    0 0 0 5px rgba(143,226,67,.18),
+    0 0 18px currentColor,
+    0 0 42px currentColor !important;
 }
 
-.brand-leaf-inner::before{
-  content:"";
-  position:absolute;
-  inset:4px;
-  border-radius:80% 18% 80% 18%;
-  border:1px solid rgba(255,255,255,.55);
+/* Claimed state */
+.spot.claimed {
+  width: auto !important;
+  height: auto !important;
+  opacity: 1 !important;
+  cursor: pointer !important;
 }
 
-.brand-leaf-inner::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  bottom:-6px;
-  width:2px;
-  height:12px;
-  background:currentColor;
-  border-radius:999px;
-  transform:translateX(-50%) rotate(18deg);
-  opacity:.85;
+.spot.claimed::before {
+  display: none !important;
 }
 
-.brand-avatar{
-  width:17px;
-  height:17px;
-  border-radius:50%;
-  background:#07100d;
-  color:#fff;
-  display:grid;
-  place-items:center;
-  font-size:8px;
-  font-weight:900;
-  line-height:1;
-  border:1.5px solid rgba(255,255,255,.85);
-  z-index:2;
-  transform:rotate(22deg);
+/* Clean premium leaf: no inner contours, no extra outlines */
+.leaf-avatar {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 20 !important;
+  box-shadow: none !important;
+  animation: leafBloom .35s ease-out !important;
 }
 
-.brand-leaf.green{
-  color:#46ff73;
+/* Supports both app.js variants */
+.leaf-shape {
+  width: 28px !important;
+  height: 36px !important;
+  border-radius: 70% 0 70% 0 !important;
+  transform: rotate(-30deg) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  border: none !important;
+  outline: none !important;
+  backdrop-filter: none !important;
+  box-shadow: 0 0 14px currentColor !important;
 }
 
-.brand-leaf.green .brand-leaf-inner{
-  background:linear-gradient(135deg,#78ff91 0%,#21b94c 100%);
+/* Remove old internal leaf outlines/stems */
+.leaf-shape::before,
+.leaf-shape::after,
+.leaf-avatar::after,
+.leaf-inner::before,
+.leaf-inner::after {
+  display: none !important;
+  content: none !important;
 }
 
-.brand-leaf.white{
-  color:#ffffff;
+/* Keep old HTML leaf-inner from breaking layout, but make it invisible as a wrapper */
+.leaf-inner {
+  all: unset !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transform: rotate(30deg) !important;
+  z-index: 2 !important;
 }
 
-.brand-leaf.white .brand-leaf-inner{
-  background:linear-gradient(135deg,#ffffff 0%,#d8dde3 100%);
+/* Name/photo area inside leaf */
+.leaf-person,
+.leaf-shape .avatar,
+.leaf-avatar .avatar {
+  width: 15px !important;
+  height: 15px !important;
+  border-radius: 50% !important;
+  background: rgba(7,16,13,.92) !important;
+  color: #fff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 7px !important;
+  line-height: 1 !important;
+  font-weight: 900 !important;
+  border: none !important;
+  outline: none !important;
+  transform: rotate(30deg) !important;
+  overflow: hidden !important;
 }
 
-.brand-leaf.gold{
-  color:#ffd24a;
+/* If an img is added later */
+.leaf-person img,
+.leaf-shape .avatar img,
+.leaf-avatar .avatar img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
 }
 
-.brand-leaf.gold .brand-leaf-inner{
-  background:linear-gradient(135deg,#ffe98a 0%,#d49a12 100%);
-  box-shadow:
-    0 0 18px rgba(255,210,74,.9),
-    0 0 34px rgba(255,210,74,.45),
-    inset 0 2px 8px rgba(255,255,255,.45);
+/* Leaf colors */
+.leaf-avatar.green .leaf-shape,
+.leaf-shape.green {
+  color: #57ff7f !important;
+  background: linear-gradient(135deg, #74ff91 0%, #19a846 100%) !important;
+  box-shadow: 0 0 14px rgba(87,255,127,.78), 0 0 24px rgba(87,255,127,.34) !important;
 }
 
-/* Mobile: чуть компактнее */
-@media (max-width:768px){
-  .brand-leaf-inner{
-    width:24px;
-    height:34px;
+.leaf-avatar.white .leaf-shape,
+.leaf-shape.white {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #ffffff 0%, #cfd5dc 100%) !important;
+  box-shadow: 0 0 14px rgba(255,255,255,.72), 0 0 24px rgba(255,255,255,.28) !important;
+}
+
+.leaf-avatar.gold .leaf-shape,
+.leaf-shape.gold {
+  color: #ffd54a !important;
+  background: linear-gradient(135deg, #ffe98a 0%, #d49a12 100%) !important;
+  box-shadow: 0 0 16px rgba(255,213,74,.85), 0 0 28px rgba(255,213,74,.38) !important;
+}
+
+.spot.claimed:hover .leaf-avatar {
+  transform: translate(-50%, -50%) scale(1.08) !important;
+  z-index: 30 !important;
+}
+
+/* Tooltip / owner card */
+.tooltip {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.owner-card {
+  min-width: 180px;
+  background: rgba(8,17,13,.96);
+  border: 1px solid rgba(143,226,67,.22);
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-shadow: 0 18px 46px rgba(0,0,0,.45);
+  line-height: 1.35;
+}
+
+.owner-card strong {
+  display: block;
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.owner-card span {
+  display: block;
+  color: #a7b5ad;
+  font-size: 12px;
+}
+
+.owner-card small {
+  display: block;
+  color: #8fe243;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+@keyframes leafBloom {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(.25) rotate(-8deg); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0); }
+}
+
+/* Mobile tuning */
+@media (max-width: 768px) {
+  .tree-container {
+    max-width: 100% !important;
+    aspect-ratio: 1.05 / 1 !important;
   }
 
-  .brand-avatar{
-    width:14px;
-    height:14px;
-    font-size:7px;
-  }
-}
-/* ===== FINAL PREMIUM LEAF DESIGN ===== */
-
-.leaf-avatar{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%, -50%);
-  z-index:20;
-}
-
-.leaf-shape{
-  position:relative;
-  width:26px;
-  height:34px;
-  border-radius:60% 0 60% 0;
-  transform:rotate(-30deg);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:all .25s ease;
-}
-
-.leaf-shape::before{
-  content:"";
-  position:absolute;
-  inset:2px;
-  border-radius:60% 0 60% 0;
-  border:1.5px solid rgba(255,255,255,.75);
-  opacity:.85;
-}
-
-.leaf-shape::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  bottom:-7px;
-  width:2px;
-  height:11px;
-  border-radius:999px;
-  background:currentColor;
-  transform:translateX(-50%) rotate(25deg);
-  opacity:.75;
-}
-
-.leaf-inner{
-  width:17px;
-  height:17px;
-  border-radius:50%;
-  background:#07100d;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:2;
-  transform:rotate(30deg);
-  border:1.5px solid rgba(255,255,255,.9);
-}
-
-.leaf-person{
-  color:#fff;
-  font-size:8px;
-  font-weight:900;
-  line-height:1;
-}
-
-/* colors */
-
-.leaf-shape.green{
-  color:#22c55e;
-  background:linear-gradient(135deg,#4cff7a 0%,#129a3c 100%);
-  box-shadow:
-    0 0 12px rgba(34,197,94,.65),
-    0 0 24px rgba(34,197,94,.35);
-}
-
-.leaf-shape.white{
-  color:#f3f4f6;
-  background:linear-gradient(135deg,#ffffff 0%,#cfd5dc 100%);
-  box-shadow:
-    0 0 12px rgba(255,255,255,.65),
-    0 0 24px rgba(255,255,255,.28);
-}
-
-.leaf-shape.gold{
-  color:#fbbf24;
-  background:linear-gradient(135deg,#ffe27a 0%,#d99a12 100%);
-  box-shadow:
-    0 0 14px rgba(251,191,36,.8),
-    0 0 28px rgba(251,191,36,.42);
-}
-
-/* hover */
-
-.spot.claimed:hover .leaf-shape{
-  transform:rotate(-30deg) scale(1.12);
-}
-
-/* mobile */
-
-@media (max-width:768px){
-  .leaf-shape{
-    width:22px;
-    height:29px;
+  .tree-image {
+    width: 112% !important;
+    height: 112% !important;
+    transform: translate(-6%, -4%) scale(1.03) !important;
   }
 
-  .leaf-inner{
-    width:14px;
-    height:14px;
+  .spots-layer {
+    inset: 5% -4% 10% -4% !important;
   }
 
-  .leaf-person{
-    font-size:7px;
+  .spot {
+    width: 18px !important;
+    height: 18px !important;
   }
-}
-.claimed-avatar{
-  width:42px;
-  height:42px;
 
-  border-radius:50%;
-  overflow:hidden;
+  .spot::before {
+    width: 10px !important;
+    height: 10px !important;
+  }
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  .spot.selected::before {
+    width: 12px !important;
+    height: 12px !important;
+  }
 
-  background:#111;
-}
+  .leaf-shape {
+    width: 20px !important;
+    height: 26px !important;
+  }
 
-.claimed-avatar .avatar{
-  width:100%;
-  height:100%;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-size:14px;
-  font-weight:800;
-  color:#fff;
-}
-
-.claimed-avatar.green{
-  border:3px solid #57ff7f;
-  box-shadow:0 0 15px #57ff7f;
-}
-
-.claimed-avatar.white{
-  border:3px solid #fff;
-  box-shadow:0 0 15px #fff;
-}
-
-.claimed-avatar.gold{
-  border:3px solid #ffd54a;
-  box-shadow:0 0 20px #ffd54a;
+  .leaf-person,
+  .leaf-shape .avatar,
+  .leaf-avatar .avatar {
+    width: 11px !important;
+    height: 11px !important;
+    font-size: 6px !important;
+  }
 }
