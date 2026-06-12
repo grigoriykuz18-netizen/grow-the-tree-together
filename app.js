@@ -181,10 +181,11 @@ if (!isTouchDevice) {
 el.addEventListener('click', e => {
   e.stopPropagation();
 
-  if (spot.claimed) {
-    showTooltip(e, spot, true);
-    return;
-  }
+if (spot.claimed) {
+  clearSelected();
+  showTooltip(e, spot, true);
+  return;
+}
 
   selectSpot(spot);
 });
