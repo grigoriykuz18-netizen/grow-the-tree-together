@@ -126,11 +126,11 @@ function renderSpots() {
     el.dataset.id = spot.id;
     el.type = 'button';
 
-   if (spot.claimed) {
+if (spot.claimed) {
   el.innerHTML = `
-    <div class="leaf-avatar ${spot.tier}">
-      <div class="leaf-shape">
-        <div class="avatar">${initials(spot.name || 'A')}</div>
+    <div class="brand-leaf ${spot.tier}">
+      <div class="brand-leaf-inner">
+        <div class="brand-avatar">${initials(spot.name || 'A')}</div>
       </div>
     </div>
   `;
