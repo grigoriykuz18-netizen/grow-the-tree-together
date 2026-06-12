@@ -145,9 +145,50 @@ if (spot.claimed) {
 function showTooltip(e, spot) {
   const price = PRICES[spot.tier];
 
+  const borderColor =
+    spot.tier === 'gold'
+      ? '#ffd54a'
+      : spot.tier === 'white'
+        ? '#ffffff'
+        : '#57ff7f';
+
+  const glowColor =
+    spot.tier === 'gold'
+      ? 'rgba(255,213,74,.55)'
+      : spot.tier === 'white'
+        ? 'rgba(255,255,255,.45)'
+        : 'rgba(87,255,127,.45)';
+
   tooltip.innerHTML = spot.claimed
-    ? `<div class="owner-card"><strong>${escapeHtml(spot.name || 'Claimed')}</strong><span>${capitalize(spot.tier)} Spot</span>${spot.url ? `<small>${escapeHtml(spot.url)}</small>` : ''}</div>`
-    : `<div class="owner-card"><strong>${capitalize(spot.tier)} Spot — $${price}</strong><span>Click to claim this place</span></div>`;
+    ? `
+      <div
+        class="owner-card"
+        style="
+          border:1px solid ${borderColor};
+          box-shadow:
+            0 0 18px ${glowColor},
+            0 18px 46px rgba(0,0,0,.45);
+        "
+      >
+        <strong>${escapeHtml(spot.name || 'Claimed')}</strong>
+        <span>${capitalize(spot.tier)} Spot</span>
+        ${spot.url ? `<small>${escapeHtml(spot.url)}</small>` : ''}
+      </div>
+    `
+    : `
+      <div
+        class="owner-card"
+        style="
+          border:1px solid ${borderColor};
+          box-shadow:
+            0 0 18px ${glowColor},
+            0 18px 46px rgba(0,0,0,.45);
+        "
+      >
+        <strong>${capitalize(spot.tier)} Spot — $${price}</strong>
+        <span>Click to claim this place</span>
+      </div>
+    `;
 
   tooltip.classList.add('visible');
   moveTooltip(e);
