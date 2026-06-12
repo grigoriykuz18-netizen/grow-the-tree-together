@@ -320,7 +320,7 @@ body {
   font-size: 14px;
 }
 
-/* ===== FINAL TREE / SPOTS / CLEAN CLAIMED LEAVES ===== */
+/* ===== FINAL TREE / SPOTS / ROUND CLAIMED AVATARS ===== */
 
 /* Tree area */
 .tree-container {
@@ -402,124 +402,83 @@ body {
   display: none !important;
 }
 
-/* Clean premium leaf: no inner contours, no extra outlines */
-.leaf-avatar {
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  z-index: 20 !important;
-  box-shadow: none !important;
-  animation: leafBloom .35s ease-out !important;
-}
-
-/* Supports both app.js variants */
-.leaf-shape {
-  width: 28px !important;
-  height: 36px !important;
-  border-radius: 70% 0 70% 0 !important;
-  transform: rotate(-30deg) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  position: relative !important;
-  border: none !important;
-  outline: none !important;
-  backdrop-filter: none !important;
-  box-shadow: 0 0 14px currentColor !important;
-}
-/* Tier sizes */
-
-.leaf-avatar.white .leaf-shape,
-.leaf-shape.white{
-  width: 32px !important;
-  height: 42px !important;
-}
-
-.leaf-avatar.gold .leaf-shape,
-.leaf-shape.gold{
-  width: 38px !important;
-  height: 50px !important;
-}
-/* Remove old internal leaf outlines/stems */
-.leaf-shape::before,
-.leaf-shape::after,
-.leaf-avatar::after,
-.leaf-inner::before,
-.leaf-inner::after {
-  display: none !important;
-  content: none !important;
-}
-
-/* Keep old HTML leaf-inner from breaking layout, but make it invisible as a wrapper */
-.leaf-inner {
-  all: unset !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  transform: rotate(30deg) !important;
-  z-index: 2 !important;
-}
-
-/* Name/photo area inside leaf */
-.leaf-person,
-.leaf-shape .avatar,
-.leaf-avatar .avatar {
-  width: 15px !important;
-  height: 15px !important;
+/* Round claimed avatars */
+.claimed-avatar {
+  width: 34px !important;
+  height: 34px !important;
   border-radius: 50% !important;
-  background: rgba(7,16,13,.92) !important;
-  color: #fff !important;
+  overflow: hidden !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  font-size: 7px !important;
+  background: #07100d !important;
+  color: #fff !important;
+  transition: transform .18s ease, box-shadow .18s ease !important;
+}
+
+.claimed-avatar .avatar {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #fff !important;
+  font-size: 11px !important;
   line-height: 1 !important;
   font-weight: 900 !important;
-  border: none !important;
-  outline: none !important;
-  transform: rotate(30deg) !important;
-  overflow: hidden !important;
+  letter-spacing: -.3px !important;
 }
 
-/* If an img is added later */
-.leaf-person img,
-.leaf-shape .avatar img,
-.leaf-avatar .avatar img {
+.claimed-avatar img,
+.claimed-avatar .avatar img {
   width: 100% !important;
   height: 100% !important;
   object-fit: cover !important;
   border-radius: 50% !important;
 }
 
-/* Leaf colors */
-.leaf-avatar.green .leaf-shape,
-.leaf-shape.green {
-  color: #57ff7f !important;
-  background: linear-gradient(135deg, #74ff91 0%, #19a846 100%) !important;
-  box-shadow: 0 0 14px rgba(87,255,127,.78), 0 0 24px rgba(87,255,127,.34) !important;
+/* Tier sizes and glow */
+.claimed-avatar.green {
+  width: 34px !important;
+  height: 34px !important;
+  border: 2px solid #57ff7f !important;
+  box-shadow:
+    0 0 12px #57ff7f,
+    0 0 22px rgba(87,255,127,.42) !important;
 }
 
-.leaf-avatar.white .leaf-shape,
-.leaf-shape.white {
-  color: #ffffff !important;
-  background: linear-gradient(135deg, #ffffff 0%, #cfd5dc 100%) !important;
-  box-shadow: 0 0 14px rgba(255,255,255,.72), 0 0 24px rgba(255,255,255,.28) !important;
+.claimed-avatar.white {
+  width: 40px !important;
+  height: 40px !important;
+  border: 2px solid #ffffff !important;
+  box-shadow:
+    0 0 12px #ffffff,
+    0 0 22px rgba(255,255,255,.42) !important;
 }
 
-.leaf-avatar.gold .leaf-shape,
-.leaf-shape.gold {
-  color: #ffd54a !important;
-  background: linear-gradient(135deg, #ffe98a 0%, #d49a12 100%) !important;
-  box-shadow: 0 0 16px rgba(255,213,74,.85), 0 0 28px rgba(255,213,74,.38) !important;
+.claimed-avatar.gold {
+  width: 48px !important;
+  height: 48px !important;
+  border: 3px solid #ffd54a !important;
+  box-shadow:
+    0 0 16px #ffd54a,
+    0 0 30px rgba(255,213,74,.48) !important;
 }
 
-.spot.claimed:hover .leaf-avatar {
-  transform: translate(-50%, -50%) scale(1.08) !important;
+.spot.claimed:hover .claimed-avatar {
+  transform: scale(1.08) !important;
   z-index: 30 !important;
+}
+
+/* Kill old leaf classes if app.js still contains them somewhere */
+.leaf-avatar,
+.leaf-shape,
+.leaf-inner,
+.leaf-person,
+.brand-leaf,
+.brand-leaf-inner,
+.brand-avatar {
+  all: unset;
 }
 
 /* Tooltip / owner card */
@@ -560,11 +519,6 @@ body {
   margin-top: 6px;
 }
 
-@keyframes leafBloom {
-  from { opacity: 0; transform: translate(-50%, -50%) scale(.25) rotate(-8deg); }
-  to { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0); }
-}
-
 /* Mobile tuning */
 @media (max-width: 768px) {
   .tree-container {
@@ -597,21 +551,25 @@ body {
     height: 12px !important;
   }
 
-  .leaf-shape {
-    width: 20px !important;
+  .claimed-avatar.green {
+    width: 26px !important;
     height: 26px !important;
+    border-width: 2px !important;
   }
 
-  .leaf-person,
-  .leaf-shape .avatar,
-  .leaf-avatar .avatar {
-    width: 11px !important;
-    height: 11px !important;
-    font-size: 6px !important;
+  .claimed-avatar.white {
+    width: 30px !important;
+    height: 30px !important;
+    border-width: 2px !important;
   }
-}
-.leaf-avatar.gold .leaf-shape,
-.leaf-shape.gold{
-  width: 42px !important;
-  height: 56px !important;
+
+  .claimed-avatar.gold {
+    width: 36px !important;
+    height: 36px !important;
+    border-width: 2px !important;
+  }
+
+  .claimed-avatar .avatar {
+    font-size: 8px !important;
+  }
 }
