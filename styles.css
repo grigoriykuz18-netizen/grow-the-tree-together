@@ -741,3 +741,9 @@ body {
     line-height: 1 !important;
   }
 }
+.avatar-placeholder{
+  width:60%;
+  height:60%;
+  border-radius:50%;
+  background:rgba(255,255,255,.18);
+}
