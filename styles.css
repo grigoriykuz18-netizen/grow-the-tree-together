@@ -647,3 +647,17 @@ body {
     transform: translate(-4%, -2%) scale(1.02) !important;
   }
 }
+@media (max-width: 768px) {
+
+  /* левые белые */
+  .spot.white:nth-child(n) {
+    /* ничего не трогаем глобально */
+  }
+
+  /* купленные белые аватарки чуть уменьшаем */
+  .claimed-avatar.white{
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+}
