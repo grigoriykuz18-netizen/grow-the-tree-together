@@ -671,14 +671,14 @@ body {
   }
 
   .claimed-avatar.gold {
-    width: 30px !important;
-    height: 30px !important;
+    width: 28px !important;
+    height: 28px !important;
     border-width: 2px !important;
   }
 
   .claimed-avatar.green {
-    width: 22px !important;
-    height: 22px !important;
+    width: 20px !important;
+    height: 20px !important;
     border-width: 2px !important;
   }
 
