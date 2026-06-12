@@ -844,16 +844,41 @@ body {
 .spot.selected:not(.claimed)::after{
   content: attr(data-price);
   position: absolute;
+
   left: 50%;
-  top: -24px;
+  top: -30px;
   transform: translateX(-50%);
 
-  font-size: 12px;
-  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
   white-space: nowrap;
 
-  color: currentColor;
-  text-shadow:
-    0 0 8px currentColor,
-    0 0 18px currentColor;
+  color: #07100d;
+  background: currentColor;
+
+  box-shadow:
+    0 0 10px currentColor,
+    0 0 22px currentColor;
+
+  z-index: 9999;
+}
+
+.spot.selected:not(.claimed)::after{
+  color: #07100d !important;
+}
+
+.spot.selected.gold:not(.claimed)::after{
+  background: #ffd54a !important;
+}
+
+.spot.selected.white:not(.claimed)::after{
+  background: #ffffff !important;
+}
+
+.spot.selected.green:not(.claimed)::after{
+  background: #57ff7f !important;
 }
