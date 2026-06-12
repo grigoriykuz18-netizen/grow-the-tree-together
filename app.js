@@ -128,11 +128,9 @@ function renderSpots() {
 
 if (spot.claimed) {
   el.innerHTML = `
-    <div class="leaf-avatar ${spot.tier}">
-      <div class="leaf-shape">
-        <div class="leaf-person">
-          ${initials(spot.name || 'A')}
-        </div>
+    <div class="claimed-avatar ${spot.tier}">
+      <div class="avatar">
+        ${initials(spot.name || 'A')}
       </div>
     </div>
   `;
