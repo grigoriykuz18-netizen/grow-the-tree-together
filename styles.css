@@ -844,6 +844,7 @@ body {
 .spot.selected:not(.claimed)::after{
   content: attr(data-price);
   position: absolute;
+  pointer-events: none !important;
 
   left: 50%;
   top: -30px;
@@ -881,4 +882,19 @@ body {
 
 .spot.selected.green:not(.claimed)::after{
   background: #57ff7f !important;
+}
+.tooltip{
+  pointer-events: none;
+}
+
+.tooltip.pinned{
+  pointer-events: auto !important;
+}
+
+.owner-card{
+  pointer-events: auto !important;
+}
+
+.owner-link{
+  pointer-events: auto !important;
 }
