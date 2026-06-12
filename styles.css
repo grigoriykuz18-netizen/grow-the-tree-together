@@ -573,3 +573,53 @@ body {
     font-size: 8px !important;
   }
 }
+/* ===== FINAL AVATAR TUNING ===== */
+
+/* Купленный кружок всегда выше обычных точек */
+.spot.claimed {
+  z-index: 20 !important;
+}
+
+/* При наведении/выборе купленный кружок поверх всех */
+.spot.claimed:hover,
+.spot.claimed:focus,
+.spot.claimed.selected {
+  z-index: 999 !important;
+}
+
+/* Сам аватар тоже поверх */
+.spot.claimed:hover .claimed-avatar {
+  position: relative !important;
+  z-index: 1000 !important;
+  transform: scale(1.12) !important;
+}
+
+/* Белые чуть меньше */
+.claimed-avatar.white {
+  width: 34px !important;
+  height: 34px !important;
+  border-width: 2px !important;
+}
+
+/* Золотые остаются премиальными и крупными */
+.claimed-avatar.gold {
+  width: 50px !important;
+  height: 50px !important;
+  border-width: 3px !important;
+  box-shadow:
+    0 0 18px #ffd54a,
+    0 0 34px rgba(255,213,74,.55) !important;
+}
+
+/* На мобильных тоже белые меньше */
+@media (max-width: 768px) {
+  .claimed-avatar.white {
+    width: 26px !important;
+    height: 26px !important;
+  }
+
+  .claimed-avatar.gold {
+    width: 38px !important;
+    height: 38px !important;
+  }
+}
