@@ -671,8 +671,8 @@ body {
   }
 
   .claimed-avatar.gold {
-    width: 34px !important;
-    height: 34px !important;
+    width: 30px !important;
+    height: 30px !important;
     border-width: 2px !important;
   }
 
