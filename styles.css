@@ -898,3 +898,15 @@ body {
 .owner-link{
   pointer-events: auto !important;
 }
+.tooltip{
+  display:none !important;
+  pointer-events:none !important;
+}
+
+.tooltip.visible{
+  display:block !important;
+}
+
+.tooltip.pinned{
+  pointer-events:auto !important;
+}
