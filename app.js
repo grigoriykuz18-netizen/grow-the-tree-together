@@ -156,11 +156,17 @@ function showTooltip(e, spot) {
 function moveTooltip(e) {
   const container = spotsLayer.getBoundingClientRect();
   const x = e.clientX - container.left;
-  const y = e.clientY - container.top - 12;
+  const y = e.clientY - container.top;
 
   tooltip.style.left = `${x}px`;
-  tooltip.style.top = `${y}px`;
-  tooltip.style.transform = 'translate(-50%, -100%)';
+
+  if (y < 120) {
+    tooltip.style.top = `${y + 26}px`;
+    tooltip.style.transform = 'translate(-50%, 0)';
+  } else {
+    tooltip.style.top = `${y - 12}px`;
+    tooltip.style.transform = 'translate(-50%, -100%)';
+  }
 }
 
 function hideTooltip() {
