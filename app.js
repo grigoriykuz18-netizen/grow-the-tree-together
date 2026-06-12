@@ -126,10 +126,15 @@ function renderSpots() {
     el.dataset.id = spot.id;
     el.type = 'button';
 
-    if (spot.claimed) {
-      el.innerHTML = `<div class="leaf-avatar"><div class="avatar">${initials(spot.name || 'A')}</div></div>`;
-    }
-
+   if (spot.claimed) {
+  el.innerHTML = `
+    <div class="leaf-avatar ${spot.tier}">
+      <div class="leaf-shape">
+        <div class="avatar">${initials(spot.name || 'A')}</div>
+      </div>
+    </div>
+  `;
+}
     el.addEventListener('mouseenter', e => showTooltip(e, spot));
     el.addEventListener('mousemove', e => moveTooltip(e));
     el.addEventListener('mouseleave', hideTooltip);
