@@ -57,7 +57,7 @@ const SPOTS_DATA = [
 
   { id: 'gr19', tier: 'green', x: 8, y: 55 },
   { id: 'gr20', tier: 'green', x: 91, y: 73 },
-  { id: 'gr21', tier: 'green', x: 50, y: 10 }
+  { id: 'gr21', tier: 'green', x: 50, y: 7 }
 ];
 
 const PRICES = { gold: 250, white: 100, green: 50 };
