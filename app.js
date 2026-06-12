@@ -1,60 +1,48 @@
+// ===== CLOUDINARY CONFIG =====
+const CLOUDINARY_CLOUD_NAME = 'dikcvnots';
+const CLOUDINARY_UPLOAD_PRESET = 'grow-tree-avatars';
+
 // ===== DATA: V32 ideal layout — 42 spots =====
-// 4 Gold center, 17 White middle, 21 Green perimeter.
-// Fix: fewer white spots, more green spots, better spacing, closer to the approved reference.
 const SPOTS_DATA = [
-  // GOLD — 4 center
   { id: 'g1', tier: 'gold', x: 44, y: 38 },
   { id: 'g2', tier: 'gold', x: 56, y: 38 },
   { id: 'g3', tier: 'gold', x: 44, y: 49 },
   { id: 'g4', tier: 'gold', x: 56, y: 49 },
 
-  // WHITE — 17 middle ring
   { id: 'w1', tier: 'white', x: 39, y: 19 },
   { id: 'w2', tier: 'white', x: 50, y: 17 },
   { id: 'w3', tier: 'white', x: 61, y: 19 },
-
   { id: 'w4', tier: 'white', x: 31, y: 29 },
   { id: 'w5', tier: 'white', x: 44, y: 28 },
   { id: 'w6', tier: 'white', x: 56, y: 28 },
   { id: 'w7', tier: 'white', x: 69, y: 29 },
-
   { id: 'w8', tier: 'white', x: 28, y: 41 },
   { id: 'w9', tier: 'white', x: 38, y: 40 },
   { id: 'w10', tier: 'white', x: 62, y: 40 },
   { id: 'w11', tier: 'white', x: 72, y: 41 },
-
   { id: 'w12', tier: 'white', x: 31, y: 53 },
   { id: 'w15', tier: 'white', x: 69, y: 53 },
-
   { id: 'w16', tier: 'white', x: 41, y: 67 },
   { id: 'w17', tier: 'white', x: 59, y: 67 },
 
-  // GREEN — 21 perimeter
   { id: 'gr1', tier: 'green', x: 31, y: 9 },
   { id: 'gr2', tier: 'green', x: 41, y: 6 },
   { id: 'gr3', tier: 'green', x: 91, y: 55 },
   { id: 'gr4', tier: 'green', x: 59, y: 6 },
   { id: 'gr5', tier: 'green', x: 69, y: 9 },
-
   { id: 'gr6', tier: 'green', x: 24, y: 18 },
   { id: 'gr7', tier: 'green', x: 76, y: 18 },
-
   { id: 'gr8', tier: 'green', x: 18, y: 30 },
   { id: 'gr9', tier: 'green', x: 82, y: 30 },
-
   { id: 'gr10', tier: 'green', x: 15, y: 43 },
   { id: 'gr11', tier: 'green', x: 85, y: 43 },
-
   { id: 'gr12', tier: 'green', x: 18, y: 56 },
   { id: 'gr13', tier: 'green', x: 82, y: 56 },
-
   { id: 'gr14', tier: 'green', x: 25, y: 68 },
   { id: 'gr15', tier: 'green', x: 75, y: 68 },
-
   { id: 'gr16', tier: 'green', x: 35, y: 78 },
   { id: 'gr17', tier: 'green', x: 8, y: 73 },
   { id: 'gr18', tier: 'green', x: 65, y: 78 },
-
   { id: 'gr19', tier: 'green', x: 8, y: 55 },
   { id: 'gr20', tier: 'green', x: 91, y: 73 },
   { id: 'gr21', tier: 'green', x: 50, y: 4 }
@@ -88,6 +76,7 @@ function init() {
 
 function loadState() {
   const saved = localStorage.getItem(STORAGE_KEY);
+
   if (saved) {
     try {
       const claims = JSON.parse(saved);
@@ -105,14 +94,39 @@ function loadState() {
 
 function saveState() {
   const claims = spots.filter(s => s.claimed).map(s => ({
-  id: s.id,
-  name: s.name,
-  url: s.url,
-  avatar: s.avatar,
-  tier: s.tier,
-  when: s.when
-}));
+    id: s.id,
+    name: s.name,
+    url: s.url,
+    avatar: s.avatar,
+    tier: s.tier,
+    when: s.when
+  }));
+
   localStorage.setItem(STORAGE_KEY, JSON.stringify(claims));
+}
+
+async function uploadAvatar(file) {
+  if (!file || file.size === 0) return '';
+
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+  formData.append('folder', 'grow-tree-avatars');
+
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+    {
+      method: 'POST',
+      body: formData
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Avatar upload failed');
+  }
+
+  const data = await response.json();
+  return data.secure_url || '';
 }
 
 function renderSpots() {
@@ -127,17 +141,18 @@ function renderSpots() {
     el.dataset.id = spot.id;
     el.type = 'button';
 
-if (spot.claimed) {
-  el.innerHTML = `
-    <div class="claimed-avatar ${spot.tier}">
-      ${
-        spot.avatar
-          ? `<img src="${spot.avatar}" class="avatar-img" alt="">`
-          : `<div class="avatar-placeholder">👤</div>`
-      }
-    </div>
-  `;
-}            
+    if (spot.claimed) {
+      el.innerHTML = `
+        <div class="claimed-avatar ${spot.tier}">
+          ${
+            spot.avatar
+              ? `<img src="${spot.avatar}" class="avatar-img" alt="">`
+              : `<div class="avatar-placeholder">👤</div>`
+          }
+        </div>
+      `;
+    }
+
     el.addEventListener('mouseenter', e => showTooltip(e, spot));
     el.addEventListener('mousemove', e => moveTooltip(e));
     el.addEventListener('mouseleave', hideTooltip);
@@ -268,7 +283,7 @@ function clearSelected() {
   }
 }
 
-function handleSubmit(e) {
+async function handleSubmit(e) {
   e.preventDefault();
 
   if (!selectedSpot) return;
@@ -277,6 +292,7 @@ function handleSubmit(e) {
   const name = (formData.get('name') || '').trim().slice(0, 32);
   const url = normalizeUrl((formData.get('url') || '').trim());
   const tier = formData.get('tier');
+  const avatarFile = formData.get('avatar');
 
   if (selectedSpot.tier !== tier) {
     alert('Selected spot tier does not match. Please select a matching spot.');
@@ -287,11 +303,28 @@ function handleSubmit(e) {
   const confirmed = confirm(`Pay $${price} for ${tier.toUpperCase()} spot?\n\n(This is a demo — click OK to simulate payment)`);
   if (!confirmed) return;
 
+  let avatarUrl = '';
+
+  try {
+    if (avatarFile && avatarFile.size > 0) {
+      submitBtn.textContent = 'UPLOADING PHOTO...';
+      submitBtn.disabled = true;
+      avatarUrl = await uploadAvatar(avatarFile);
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Could not upload photo. Try another image or claim without photo.');
+    submitBtn.textContent = 'CLAIM SELECTED SPOT';
+    submitBtn.disabled = false;
+    return;
+  }
+
   const spot = spots.find(s => s.id === selectedSpot.id);
   if (spot) {
     spot.claimed = true;
     spot.name = name || 'Anonymous';
     spot.url = url;
+    spot.avatar = avatarUrl;
     spot.when = Date.now();
   }
 
@@ -302,6 +335,7 @@ function handleSubmit(e) {
 
   form.reset();
   clearSelected();
+  submitBtn.textContent = 'CLAIM SELECTED SPOT';
 }
 
 function updateCount() {
@@ -340,9 +374,22 @@ function openClaimLink(spot) {
 
 function normalizeUrl(url) {
   if (!url) return '';
-  if (url.startsWith('@')) return `https://t.me/${url.slice(1)}`;
-  if (!/^https?:\/\//i.test(url)) return `https://${url}`;
-  return url;
+
+  const clean = url.trim();
+
+  if (clean.startsWith('@')) {
+    return `https://t.me/${clean.slice(1)}`;
+  }
+
+  if (/^(t\.me|telegram\.me|instagram\.com|x\.com|twitter\.com|linkedin\.com|youtube\.com)\//i.test(clean)) {
+    return `https://${clean}`;
+  }
+
+  if (!/^https?:\/\//i.test(clean)) {
+    return `https://${clean}`;
+  }
+
+  return clean;
 }
 
 function initials(name) {
