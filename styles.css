@@ -1162,3 +1162,59 @@ body {
 .spots-layer {
   inset: 3% -2% 8% -2% !important;
 }
+.leaf-avatar{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.leaf-shape{
+  width:42px;
+  height:54px;
+
+  border-radius:70% 0 70% 0;
+  transform:rotate(45deg);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  backdrop-filter:blur(4px);
+
+  box-shadow:
+    0 0 10px rgba(255,255,255,.15),
+    inset 0 0 8px rgba(255,255,255,.15);
+}
+
+.leaf-shape .avatar{
+  transform:rotate(-45deg);
+
+  width:26px;
+  height:26px;
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:11px;
+  font-weight:800;
+
+  background:#111;
+  color:white;
+}
+.leaf-avatar.green .leaf-shape{
+  background:#57ff7f;
+  box-shadow:0 0 20px #57ff7f;
+}
+
+.leaf-avatar.white .leaf-shape{
+  background:white;
+  box-shadow:0 0 20px white;
+}
+
+.leaf-avatar.gold .leaf-shape{
+  background:#ffd54a;
+  box-shadow:0 0 25px #ffd54a;
+}
