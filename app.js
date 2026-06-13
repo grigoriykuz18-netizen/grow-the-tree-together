@@ -13,6 +13,7 @@ const membersModal = document.getElementById('membersModal');
 const membersModalClose = document.getElementById('membersModalClose');
 const membersGrid = document.getElementById('membersGrid');
 const latestMemberCard = document.getElementById('latestMemberCard');
+const raisedAmount = document.getElementById('raisedAmount');
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // ===== DATA: V32 ideal layout — 42 spots =====
 const SPOTS_DATA = [
@@ -240,8 +241,7 @@ tooltip.innerHTML = spot.claimed
       "
     >
       ${pinned ? `<button class="tooltip-close" type="button">×</button>` : ''}
-      <strong>${escapeHtml(spot.name || 'Claimed')}</strong>
-      <span>${capitalize(spot.tier)} Spot</span>
+<strong>${escapeHtml(spot.name || 'Claimed')}</strong>
       ${spot.about ? `<p class="owner-about">${escapeHtml(spot.about)}</p>` : ''}
       ${spot.url ? `<a class="owner-link" href="${escapeHtml(spot.url)}" target="_blank" rel="noopener">${escapeHtml(shortUrl(spot.url))}</a>` : ''}
     </div>
@@ -503,7 +503,13 @@ showShareMessage(name || 'Anonymous', tier);
 
 function updateCount() {
   const claimedTotal = spots.filter(s => s.claimed).length;
-
+const raised =
+  goldClaimed * 250 +
+  whiteClaimed * 100 +
+  greenClaimed * 50;
+  if (raisedAmount) {
+  raisedAmount.textContent = `$${raised}`;
+}
   const goldClaimed = spots.filter(s => s.tier === 'gold' && s.claimed).length;
   const whiteClaimed = spots.filter(s => s.tier === 'white' && s.claimed).length;
   const greenClaimed = spots.filter(s => s.tier === 'green' && s.claimed).length;
@@ -606,7 +612,6 @@ const claimed = spots
 
       <div class="founder-info">
         <strong>${escapeHtml(s.name || 'Anonymous')}</strong>
-        <span>${capitalize(s.tier)} Founder</span>
         ${s.about ? `<small>${escapeHtml(s.about)}</small>` : ''}
       </div>
 
@@ -740,7 +745,6 @@ const claimed = spots
 
       <div class="founder-info">
         <strong>${escapeHtml(s.name || 'Anonymous')}</strong>
-        <span>${capitalize(s.tier)} Founder</span>
         ${s.about ? `<small>${escapeHtml(s.about)}</small>` : ''}
       </div>
 
