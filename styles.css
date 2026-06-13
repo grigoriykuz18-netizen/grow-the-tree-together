@@ -1008,3 +1008,8 @@ function shortUrl(url) {
     display:none !important;
   }
 }
+@media (max-width:768px){
+  .panel-left .tiers{
+    display:none !important;
+  }
+}
