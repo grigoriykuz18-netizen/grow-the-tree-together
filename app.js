@@ -512,7 +512,7 @@ if (progressText) {
 
 function updateTierUI(tier, claimed) {
   const total = TOTALS[tier];
-  const left = total - claimed;
+  const left = Math.max(total - claimed, 0);
 
   const option = document.querySelector(`.tier-option.${tier}`);
   const input = document.querySelector(`input[name="tier"][value="${tier}"]`);
@@ -520,15 +520,17 @@ function updateTierUI(tier, claimed) {
 
   if (!option || !input || !priceEl) return;
 
-  if (claimed >= total) {
-    priceEl.textContent = 'SOLD OUT';
+  if (left <= 0) {
+    priceEl.textContent = `0 left · SOLD OUT`;
     input.disabled = true;
     option.classList.add('sold-out');
-  } else {
-    priceEl.textContent = `${left} left · $${PRICES[tier]}`;
-    input.disabled = false;
-    option.classList.remove('sold-out');
+    return;
   }
+
+  priceEl.textContent = `${left} left · $${PRICES[tier]}`;
+  input.disabled = false;
+  option.classList.remove('sold-out');
+}
 }
 
 function renderLatest() {
