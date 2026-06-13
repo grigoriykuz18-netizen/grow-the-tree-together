@@ -85,16 +85,19 @@ async function loadState() {
   spots = SPOTS_DATA.map(s => {
     const claim = data.find(c => c.id === s.id);
 
-    return claim
-      ? {
-          ...s,
-          claimed: true,
-          name: claim.name,
-          url: claim.url,
-          avatar: claim.avatar_url,
-          tier: claim.tier,
-          when: claim.created_at ? new Date(claim.created_at).getTime() : Date.now()
-        }
+return claim
+  ? {
+      ...s,
+      claimed: true,
+      name: claim.name,
+      url: claim.url,
+      about: claim.about,
+      avatar: claim.avatar_url,
+      tier: claim.tier,
+      when: claim.created_at
+        ? new Date(claim.created_at).getTime()
+        : Date.now()
+    }
       : { ...s, claimed: false };
   });
 }
@@ -225,6 +228,7 @@ tooltip.innerHTML = spot.claimed
       ${pinned ? `<button class="tooltip-close" type="button">×</button>` : ''}
       <strong>${escapeHtml(spot.name || 'Claimed')}</strong>
       <span>${capitalize(spot.tier)} Spot</span>
+      ${spot.about ? `<p class="owner-about">${escapeHtml(spot.about)}</p>` : ''}
       ${spot.url ? `<a class="owner-link" href="${escapeHtml(spot.url)}" target="_blank" rel="noopener">${escapeHtml(shortUrl(spot.url))}</a>` : ''}
     </div>
   `
@@ -374,6 +378,7 @@ async function handleSubmit(e) {
 
   const formData = new FormData(form);
   const name = (formData.get('name') || '').trim().slice(0, 32);
+  const about = (formData.get('about') || '').trim().slice(0, 100);
   const url = normalizeUrl((formData.get('url') || '').trim());
   const tier = formData.get('tier');
   const avatarFile = formData.get('avatar');
@@ -408,13 +413,14 @@ if (!confirmed) return;
 
 const { error } = await supabaseClient
   .from('claims')
-  .insert({
-    id: selectedSpot.id,
-    tier,
-    name: name || 'Anonymous',
-    url,
-    avatar_url: avatarUrl || null
-  });
+.insert({
+  id: selectedSpot.id,
+  tier,
+  name: name || 'Anonymous',
+  url,
+  about,
+  avatar_url: avatarUrl || null
+});
 
 if (error) {
   console.error(error);
