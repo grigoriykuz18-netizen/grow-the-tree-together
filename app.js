@@ -6,9 +6,6 @@ const SUPABASE_ANON_KEY = 'sb_publishable_i14EF0J8VPaO65vetnFRMw_9Gu6Lc9C';
 const progressFill = document.getElementById('progressFill');
 const progressText = document.getElementById('progressText');
 const viewAllMembersBtn = document.getElementById('viewAllMembersBtn');
-const aboutBtn = document.getElementById('aboutBtn');
-const aboutModal = document.getElementById('aboutModal');
-const aboutClose = document.getElementById('aboutClose');
 const membersModal = document.getElementById('membersModal');
 const membersModalClose = document.getElementById('membersModalClose');
 const membersGrid = document.getElementById('membersGrid');
@@ -372,27 +369,6 @@ if (viewAllMembersBtn) {
   viewAllMembersBtn.addEventListener('click', () => {
     renderMembersGrid();
     membersModal.classList.add('visible');
-  });
-}
-if (aboutBtn && aboutModal) {
-  aboutBtn.addEventListener('click', e => {
-    e.preventDefault();
-    e.stopPropagation();
-    aboutModal.classList.add('visible');
-  });
-}
-
-if (aboutClose) {
-  aboutClose.addEventListener('click', () => {
-    aboutModal.classList.remove('visible');
-  });
-}
-
-if (aboutModal) {
-  aboutModal.addEventListener('click', e => {
-    if (e.target === aboutModal) {
-      aboutModal.classList.remove('visible');
-    }
   });
 }
   
