@@ -441,7 +441,7 @@ await loadState();
 renderSpots();
 updateCount();
 renderLatest();
-alert('🌿 Your spot has been successfully claimed!');
+showShareMessage(name || 'Anonymous', tier);
 
   form.reset();
   clearSelected();
@@ -581,6 +581,23 @@ function shortUrl(url) {
   }
 
   return host;
+}
+function showShareMessage(name, tier) {
+  const text = `🌿 ${name} just claimed a ${capitalize(tier)} Spot on Grow The Tree Together.`;
+  const url = 'https://growthetreetogether.com';
+
+  const shareText = `${text}\n${url}`;
+
+  if (navigator.share) {
+    navigator.share({
+      title: 'Grow The Tree Together',
+      text,
+      url
+    }).catch(() => {});
+  } else {
+    navigator.clipboard?.writeText(shareText);
+    alert('🌿 Your spot has been claimed! Share text copied.');
+  }
 }
 
 init();
