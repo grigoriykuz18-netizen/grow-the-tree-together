@@ -1122,3 +1122,96 @@ function shortUrl(url) {
   background:#ffd54a;
   box-shadow:0 0 12px rgba(255,213,74,.7);
 }
+.founders-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:16px;
+}
+
+#latestBar{
+  display:flex;
+  gap:14px;
+  overflow-x:auto;
+  padding-bottom:8px;
+}
+
+#latestBar::-webkit-scrollbar{
+  display:none;
+}
+
+.founder-card{
+  min-width:380px;
+  height:90px;
+
+  display:flex;
+  align-items:center;
+  gap:16px;
+
+  padding:16px 20px;
+
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:999px;
+
+  background:rgba(7,14,10,.9);
+
+  text-decoration:none;
+}
+
+.founder-avatar{
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.founder-placeholder{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#111;
+}
+
+.founder-dot{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+}
+
+.founder-dot.green{
+  background:#57ff7f;
+}
+
+.founder-dot.white{
+  background:white;
+}
+
+.founder-dot.gold{
+  background:#ffd54a;
+}
+
+.founder-text{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.founder-text strong{
+  color:white;
+  font-size:18px;
+}
+
+.founder-text span{
+  color:#9ea6a0;
+}
+.limited-badge{
+  margin-left:auto;
+  padding:8px 14px;
+  border-radius:12px;
+
+  border:1px solid rgba(255,213,74,.4);
+
+  color:#ffd54a;
+  font-size:12px;
+  font-weight:700;
+}
