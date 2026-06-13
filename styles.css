@@ -1513,3 +1513,31 @@ function shortUrl(url) {
   inset:0 !important;
   z-index:2 !important;
 }
+/* Founder tier polish */
+
+/* WHITE — stronger soft glow */
+.founder-card.white{
+  border-color:#ffffff !important;
+  box-shadow:
+    0 0 14px rgba(255,255,255,.28),
+    0 0 34px rgba(255,255,255,.12) !important;
+}
+
+/* GOLD — crown badge */
+.founder-card.gold::before{
+  content:"👑";
+  position:absolute;
+  top:10px;
+  right:12px;
+  font-size:17px;
+  filter:drop-shadow(0 0 8px rgba(255,213,74,.8));
+  z-index:3;
+}
+
+.founder-card.gold{
+  position:relative;
+  border-color:#ffd54a !important;
+  box-shadow:
+    0 0 16px rgba(255,213,74,.45),
+    0 0 42px rgba(255,213,74,.18) !important;
+}
