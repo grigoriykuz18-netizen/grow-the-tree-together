@@ -645,5 +645,37 @@ function showShareMessage(name, tier) {
     alert('🌿 Your spot has been claimed! Share text copied.');
   }
 }
+function renderMembersGrid() {
+  const claimed = spots
+    .filter(s => s.claimed)
+    .sort((a, b) => (b.when || 0) - (a.when || 0));
+
+  if (!membersGrid) return;
+
+  if (claimed.length === 0) {
+    membersGrid.innerHTML = '<p class="empty-msg">No founding members yet.</p>';
+    return;
+  }
+
+  membersGrid.innerHTML = claimed.map(s => `
+    <a class="founder-card ${s.tier}" href="${s.url || '#'}" ${s.url ? 'target="_blank" rel="noopener"' : ''}>
+      <div class="founder-avatar ${s.tier}">
+        ${
+          s.avatar
+            ? `<img src="${s.avatar}" alt="">`
+            : `<span>👤</span>`
+        }
+      </div>
+
+      <div class="founder-info">
+        <strong>${escapeHtml(s.name || 'Anonymous')}</strong>
+        <span>${capitalize(s.tier)} Founder</span>
+        ${s.about ? `<small>${escapeHtml(s.about)}</small>` : ''}
+      </div>
+
+      <span class="founder-open">↗</span>
+    </a>
+  `).join('');
+}
 
 init();
