@@ -1541,3 +1541,75 @@ function shortUrl(url) {
     0 0 16px rgba(255,213,74,.45),
     0 0 42px rgba(255,213,74,.18) !important;
 }
+.nav-icon{
+  width:18px;
+  height:18px;
+  fill:currentColor;
+}
+
+.about-modal{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:none;
+  padding:20px;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(12px);
+}
+
+.about-modal.visible{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.about-card{
+  width:min(460px,100%);
+  padding:26px;
+  border-radius:24px;
+  background:#06100c;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 30px 90px rgba(0,0,0,.55);
+  position:relative;
+}
+
+.about-card h2{
+  margin:0 0 14px;
+}
+
+.about-card p{
+  color:#b9c8bf;
+  line-height:1.55;
+}
+
+.about-tiers{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin:18px 0;
+}
+
+.about-tiers span{
+  padding:12px 14px;
+  border-radius:14px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.about-small{
+  font-size:13px;
+}
+
+.about-close{
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+  color:white;
+  font-size:22px;
+  cursor:pointer;
+}
