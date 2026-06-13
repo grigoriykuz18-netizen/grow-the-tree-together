@@ -477,7 +477,7 @@ function updateTierUI(tier, claimed) {
     input.disabled = true;
     option.classList.add('sold-out');
   } else {
-    priceEl.textContent = `${claimed}/${total}`;
+    priceEl.textContent = `${claimed}/${total} claimed · $${PRICES[tier]}`;
     input.disabled = false;
     option.classList.remove('sold-out');
   }
