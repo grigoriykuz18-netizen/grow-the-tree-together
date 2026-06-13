@@ -460,7 +460,16 @@ function updateCount() {
   if (claimedCountEl) {
     claimedCountEl.textContent = claimedTotal;
   }
+const percent = Math.round((claimedTotal / SPOTS_DATA.length) * 100);
 
+if (progressFill) {
+  progressFill.style.width = `${percent}%`;
+}
+
+if (progressText) {
+  progressText.textContent = `${percent}% of the tree is growing`;
+}
+  
   updateTierUI('gold', goldClaimed);
   updateTierUI('white', whiteClaimed);
   updateTierUI('green', greenClaimed);
@@ -488,6 +497,30 @@ function updateTierUI(tier, claimed) {
 }
 
 function renderLatest() {
+  const latest = spots
+    .filter(s => s.claimed)
+    .sort((a, b) => (b.when || 0) - (a.when || 0))[0];
+
+  if (latestMemberCard) {
+    if (latest) {
+      latestMemberCard.innerHTML = `
+        <span class="latest-dot ${latest.tier}"></span>
+        <div>
+          <strong>Latest member</strong>
+          <p>${escapeHtml(latest.name || 'Anonymous')} claimed ${capitalize(latest.tier)} Spot</p>
+        </div>
+      `;
+    } else {
+      latestMemberCard.innerHTML = `
+        <span class="latest-dot green"></span>
+        <div>
+          <strong>Latest member</strong>
+          <p>No members yet</p>
+        </div>
+      `;
+    }
+  }
+
   const claimed = spots
     .filter(s => s.claimed)
     .sort((a, b) => (b.when || 0) - (a.when || 0))
