@@ -1003,3 +1003,8 @@ function shortUrl(url) {
   font-size:13px;
   letter-spacing:1px;
 }
+@media (max-width: 768px){
+  .panel-left .tiers{
+    display:none !important;
+  }
+}
