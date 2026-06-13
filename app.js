@@ -12,6 +12,16 @@ const membersGrid = document.getElementById('membersGrid');
 const latestMemberCard = document.getElementById('latestMemberCard');
 const raisedAmount = document.getElementById('raisedAmount');
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const shareModal = document.getElementById('shareModal');
+const shareClose = document.getElementById('shareClose');
+const shareTitle = document.getElementById('shareTitle');
+const shareTextEl = document.getElementById('shareText');
+const downloadStoryBtn = document.getElementById('downloadStoryBtn');
+const shareXBtn = document.getElementById('shareXBtn');
+const copyPostBtn = document.getElementById('copyPostBtn');
+const copyLinkBtn = document.getElementById('copyLinkBtn');
+
+let lastShareData = null;
 // ===== DATA: V32 ideal layout — 42 spots =====
 const SPOTS_DATA = [
   { id: 'g1', tier: 'gold', x: 44, y: 38 },
@@ -385,6 +395,57 @@ if (membersModal) {
     }
   });
 }
+  if (shareClose) {
+  shareClose.addEventListener('click', () => {
+    shareModal.classList.remove('visible');
+  });
+}
+
+if (shareModal) {
+  shareModal.addEventListener('click', e => {
+    if (e.target === shareModal) {
+      shareModal.classList.remove('visible');
+    }
+  });
+}
+
+if (shareXBtn) {
+  shareXBtn.addEventListener('click', () => {
+    if (!lastShareData) return;
+
+    window.open(
+      `https://x.com/intent/tweet?text=${encodeURIComponent(lastShareData.text)}`,
+      '_blank',
+      'noopener'
+    );
+  });
+}
+
+if (copyPostBtn) {
+  copyPostBtn.addEventListener('click', async () => {
+    if (!lastShareData) return;
+
+    await navigator.clipboard.writeText(lastShareData.text);
+    alert('Post text copied.');
+  });
+}
+
+if (copyLinkBtn) {
+  copyLinkBtn.addEventListener('click', async () => {
+    if (!lastShareData) return;
+
+    await navigator.clipboard.writeText(lastShareData.url);
+    alert('Link copied.');
+  });
+}
+
+if (downloadStoryBtn) {
+  downloadStoryBtn.addEventListener('click', () => {
+    if (!lastShareData) return;
+
+    downloadStoryImage(lastShareData);
+  });
+}
 }
 
 function clearSelected() {
@@ -676,20 +737,47 @@ function shortUrl(url) {
   return host;
 }
 function showShareMessage(name, tier) {
-  const text = `🌿 ${name} just claimed a ${capitalize(tier)} Spot on Grow The Tree Together.`;
+  const emoji = {
+    gold: '🏆',
+    white: '⚪',
+    green: '🌿'
+  };
+
+  const label = {
+    gold: 'Gold Founder',
+    white: 'White Founder',
+    green: 'Green Founder'
+  };
+
   const url = 'https://growthetreetogether.com';
 
-  const shareText = `${text}\n${url}`;
+  const text =
+`${emoji[tier]} I just claimed a ${label[tier]} Spot on Grow The Tree Together.
 
-  if (navigator.share) {
-    navigator.share({
-      title: 'Grow The Tree Together',
-      text,
-      url
-    }).catch(() => {});
-  } else {
-    navigator.clipboard?.writeText(shareText);
-    alert('🌿 Your spot has been claimed! Share text copied.');
+Only 40 permanent spots exist on the tree.
+
+🌳 Join the tree:
+${url}`;
+
+  lastShareData = {
+    name,
+    tier,
+    emoji: emoji[tier],
+    label: label[tier],
+    url,
+    text
+  };
+
+  if (shareTitle) {
+    shareTitle.textContent = `${emoji[tier]} Spot claimed!`;
+  }
+
+  if (shareTextEl) {
+    shareTextEl.textContent = `${name} claimed a ${label[tier]} Spot.`;
+  }
+
+  if (shareModal) {
+    shareModal.classList.add('visible');
   }
 }
 function renderMembersGrid() {
@@ -734,6 +822,65 @@ const claimed = spots
       <span class="founder-open">↗</span>
     </a>
   `).join('');
+}
+function downloadStoryImage(data) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 1080;
+  canvas.height = 1920;
+
+  const ctx = canvas.getContext('2d');
+
+  const gradient = ctx.createLinearGradient(0, 0, 0, 1920);
+  gradient.addColorStop(0, '#07100d');
+  gradient.addColorStop(1, '#000000');
+
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, 1080, 1920);
+
+  ctx.fillStyle = 'rgba(87,255,127,.12)';
+  ctx.beginPath();
+  ctx.arc(540, 680, 360, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.textAlign = 'center';
+
+  ctx.font = '900 76px Inter, Arial';
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText('Grow The Tree', 540, 260);
+
+  ctx.font = 'italic 700 58px Inter, Arial';
+  ctx.fillStyle = '#57ff7f';
+  ctx.fillText('together', 540, 330);
+
+  ctx.font = '900 110px Inter, Arial';
+  ctx.fillStyle = data.tier === 'gold' ? '#ffd54a' : data.tier === 'white' ? '#ffffff' : '#57ff7f';
+  ctx.fillText(data.emoji, 540, 570);
+
+  ctx.font = '900 72px Inter, Arial';
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText(data.label.toUpperCase(), 540, 720);
+
+  ctx.font = '700 54px Inter, Arial';
+  ctx.fillStyle = '#dce8e1';
+  ctx.fillText(data.name, 540, 820);
+
+  ctx.font = '500 42px Inter, Arial';
+  ctx.fillStyle = '#9aa9a1';
+  ctx.fillText('claimed a permanent spot', 540, 910);
+  ctx.fillText('on the founding tree', 540, 970);
+
+  ctx.font = '800 46px Inter, Arial';
+  ctx.fillStyle = '#57ff7f';
+  ctx.fillText('Only 40 spots exist', 540, 1170);
+
+  ctx.font = '700 42px Inter, Arial';
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText('growthetreetogether.com', 540, 1580);
+
+  const link = document.createElement('a');
+  link.download = `grow-the-tree-${data.tier}-story.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
 }
 
 init();
