@@ -1381,3 +1381,30 @@ function shortUrl(url) {
   grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
   gap:14px;
 }
+/* FIX AVATARS ON MOBILE */
+.claimed-avatar,
+.founder-avatar{
+  background:#07100d !important;
+  overflow:hidden !important;
+}
+
+.claimed-avatar img,
+.avatar-img,
+.founder-avatar img{
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  border-radius:50% !important;
+}
+
+.avatar-placeholder,
+.founder-avatar span{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:100% !important;
+  height:100% !important;
+  color:#b8c7bf !important;
+  font-size:20px !important;
+}
