@@ -5,6 +5,10 @@ const SUPABASE_URL = 'https://tiraskewlhpvrhwmvwgg.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_i14EF0J8VPaO65vetnFRMw_9Gu6Lc9C';
 const progressFill = document.getElementById('progressFill');
 const progressText = document.getElementById('progressText');
+const viewAllMembersBtn = document.getElementById('viewAllMembersBtn');
+const membersModal = document.getElementById('membersModal');
+const membersModalClose = document.getElementById('membersModalClose');
+const membersGrid = document.getElementById('membersGrid');
 const latestMemberCard = document.getElementById('latestMemberCard');
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // ===== DATA: V32 ideal layout — 42 spots =====
