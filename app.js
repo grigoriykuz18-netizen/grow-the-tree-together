@@ -375,12 +375,10 @@ if (viewAllMembersBtn) {
   });
 }
 if (aboutBtn && aboutModal) {
-  ['click', 'touchend'].forEach(eventName => {
-    aboutBtn.addEventListener(eventName, e => {
-      e.preventDefault();
-      e.stopPropagation();
-      aboutModal.classList.add('visible');
-    });
+  aboutBtn.addEventListener('click', e => {
+    e.preventDefault();
+    e.stopPropagation();
+    aboutModal.classList.add('visible');
   });
 }
 
