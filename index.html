@@ -154,22 +154,33 @@
   </main>
 
   <section class="latest-section">
-    <div class="latest-header">
-      <div class="founders-header">
-  <h3>🌿 FOUNDING MEMBERS</h3>
+  <div class="latest-header">
+    <h3>🌿 FOUNDING MEMBERS</h3>
+
+    <button class="view-all" id="viewAllMembersBtn" type="button">
+      View all →
+    </button>
+  </div>
+
+  <div class="latest-bar" id="latestBar">
+    <p class="empty-msg">No founding members yet. Be the first.</p>
+  </div>
+</section>
+
+<footer class="footer">
+  © Grow The Tree Together — 40 permanent spots.
+</footer>
+
+<div class="members-modal" id="membersModal">
+  <div class="members-modal-card">
+    <button class="members-modal-close" id="membersModalClose" type="button">×</button>
+
+    <h2>🌿 Founding Members</h2>
+
+    <div class="members-grid" id="membersGrid"></div>
+  </div>
 </div>
-      <a href="#" class="view-all">View all →</a>
-    </div>
 
-    <div class="latest-bar" id="latestBar">
-      <p class="empty-msg">No spots claimed yet. Be the first.</p>
-    </div>
-  </section>
-
-  <footer class="footer">
-    © Grow The Tree Together — 40 permanent spots.
-  </footer>
-
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
