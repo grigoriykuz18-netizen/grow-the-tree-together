@@ -3,7 +3,9 @@ const CLOUDINARY_CLOUD_NAME = 'dikcvnots';
 const CLOUDINARY_UPLOAD_PRESET = 'grow-tree-avatars';
 const SUPABASE_URL = 'https://tiraskewlhpvrhwmvwgg.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_i14EF0J8VPaO65vetnFRMw_9Gu6Lc9C';
-
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
+const latestMemberCard = document.getElementById('latestMemberCard');
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // ===== DATA: V32 ideal layout — 42 spots =====
 const SPOTS_DATA = [
