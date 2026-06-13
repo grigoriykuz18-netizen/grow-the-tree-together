@@ -1292,16 +1292,49 @@ function shortUrl(url) {
   position:relative;
 }
 
-.founder-card.gold{
-  border-color:rgba(255,213,74,.35);
-}
-
-.founder-card.white{
-  border-color:rgba(255,255,255,.25);
-}
-
+/* GREEN */
 .founder-card.green{
-  border-color:rgba(87,255,127,.28);
+  border-color:#39ff88;
+  box-shadow:none;
+}
+
+/* WHITE */
+.founder-card.white{
+  border-color:#ffffff;
+  box-shadow:
+    0 0 10px rgba(255,255,255,.12),
+    0 0 20px rgba(255,255,255,.06);
+}
+
+/* GOLD */
+.founder-card.gold{
+  border-color:#ffd54a;
+
+  box-shadow:
+    0 0 12px rgba(255,213,74,.25),
+    0 0 30px rgba(255,213,74,.12);
+
+  animation: founderGoldPulse 3s infinite;
+}
+
+@keyframes founderGoldPulse{
+  0%{
+    box-shadow:
+      0 0 10px rgba(255,213,74,.20),
+      0 0 24px rgba(255,213,74,.10);
+  }
+
+  50%{
+    box-shadow:
+      0 0 20px rgba(255,213,74,.55),
+      0 0 50px rgba(255,213,74,.25);
+  }
+
+  100%{
+    box-shadow:
+      0 0 10px rgba(255,213,74,.20),
+      0 0 24px rgba(255,213,74,.10);
+  }
 }
 
 .founder-avatar{
