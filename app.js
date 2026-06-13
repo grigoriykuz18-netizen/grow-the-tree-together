@@ -466,6 +466,8 @@ function updateCount() {
 
 function updateTierUI(tier, claimed) {
   const total = TOTALS[tier];
+  const left = total - claimed;
+
   const option = document.querySelector(`.tier-option.${tier}`);
   const input = document.querySelector(`input[name="tier"][value="${tier}"]`);
   const priceEl = option?.querySelector('.tier-price');
@@ -477,7 +479,7 @@ function updateTierUI(tier, claimed) {
     input.disabled = true;
     option.classList.add('sold-out');
   } else {
-    priceEl.textContent = `${claimed}/${total} claimed · $${PRICES[tier]}`;
+    priceEl.textContent = `${left} left · $${PRICES[tier]}`;
     input.disabled = false;
     option.classList.remove('sold-out');
   }
