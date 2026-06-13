@@ -10,7 +10,30 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
+  
+<div class="about-modal" id="aboutModal">
+  <div class="about-card">
+    <button class="about-close" id="aboutClose" type="button">×</button>
 
+    <h2>🌳 Grow The Tree Together</h2>
+
+    <p>
+      A digital tree with only <strong>40 permanent spots</strong>.
+      Claim a place, upload your avatar, and become part of the founding tree forever.
+    </p>
+
+    <div class="about-tiers">
+      <span>🏆 Gold — $250</span>
+      <span>⚪ White — $100</span>
+      <span>🌿 Green — $50</span>
+    </div>
+
+    <p class="about-small">
+      Click any claimed spot to discover its founder, project, or brand.
+    </p>
+  </div>
+</div>
+  
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -21,22 +44,31 @@
       <span class="brand">GROW THE TREE <em>together</em></span>
     </div>
     <nav class="nav">
-<button class="nav-btn" id="aboutBtn">?</button>
+  <button class="nav-btn" id="aboutBtn" type="button" aria-label="About">
+    ?
+  </button>
 
-<a href="https://x.com/growthetreetog?s=11"
-   class="nav-btn"
-   target="_blank"
-   rel="noopener">
-  𝕏
-</a>
+  <a href="https://x.com/growthetreetog?s=11"
+     class="nav-btn"
+     target="_blank"
+     rel="noopener"
+     aria-label="X">
+    <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.4l-5-7.3L5.9 22H2.8l7.3-8.4L2.4 2h6.5l4.5 6.6L18.9 2Zm-1.1 17.8h1.7L8 4.1H6.2l11.6 15.7Z"/>
+    </svg>
+  </a>
 
-<a href="https://www.instagram.com/growthetreetogether?igsh=Y3EzYjhqZnFiazM3&utm_source=qr"
-   class="nav-btn"
-   target="_blank"
-   rel="noopener">
-   📷
-</a>
-
+  <a href="https://www.instagram.com/growthetreetogether?igsh=Y3EzYjhqZnFiazM3&utm_source=qr"
+     class="nav-btn"
+     target="_blank"
+     rel="noopener"
+     aria-label="Instagram">
+    <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm0 2A3.8 3.8 0 0 0 4 7.8v8.4A3.8 3.8 0 0 0 7.8 20h8.4a3.8 3.8 0 0 0 3.8-3.8V7.8A3.8 3.8 0 0 0 16.2 4H7.8Zm4.2 3.4A4.6 4.6 0 1 1 7.4 12 4.6 4.6 0 0 1 12 7.4Zm0 2A2.6 2.6 0 1 0 14.6 12 2.6 2.6 0 0 0 12 9.4Zm5-2.2a1.1 1.1 0 1 1-1.1 1.1A1.1 1.1 0 0 1 17 7.2Z"/>
+    </svg>
+  </a>
+</nav>
+    
   <main class="main">
 
     <aside class="panel-left">
