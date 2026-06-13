@@ -353,13 +353,34 @@ function bindEvents() {
     });
   });
 
-  document.addEventListener('click', e => {
-    if (!tooltip.classList.contains('pinned')) return;
+document.addEventListener('click', e => {
+  if (!tooltip.classList.contains('pinned')) return;
 
-    if (!tooltip.contains(e.target)) {
-      hideTooltip();
+  if (!tooltip.contains(e.target)) {
+    hideTooltip();
+  }
+});
+
+if (viewAllMembersBtn) {
+  viewAllMembersBtn.addEventListener('click', () => {
+    renderMembersGrid();
+    membersModal.classList.add('visible');
+  });
+}
+
+if (membersModalClose) {
+  membersModalClose.addEventListener('click', () => {
+    membersModal.classList.remove('visible');
+  });
+}
+
+if (membersModal) {
+  membersModal.addEventListener('click', e => {
+    if (e.target === membersModal) {
+      membersModal.classList.remove('visible');
     }
   });
+}
 }
 
 function clearSelected() {
