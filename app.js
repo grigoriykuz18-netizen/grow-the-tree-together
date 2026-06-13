@@ -524,32 +524,32 @@ function renderLatest() {
   const claimed = spots
     .filter(s => s.claimed)
     .sort((a, b) => (b.when || 0) - (a.when || 0))
-    .slice(0, 8);
+    .slice(0, 12);
 
   if (claimed.length === 0) {
-    latestBar.innerHTML = '<p class="empty-msg">No spots claimed yet. Be the first.</p>';
+    latestBar.innerHTML = '<p class="empty-msg">No founding members yet. Be the first.</p>';
     return;
   }
 
-latestBar.innerHTML = claimed.map(s => `
-  <a class="founder-card" href="${s.url || '#'}"
-     ${s.url ? 'target="_blank" rel="noopener"' : ''}>
-
-      ${
-        s.avatar
-          ? `<img src="${s.avatar}" class="founder-avatar">`
-          : `<div class="founder-avatar founder-placeholder">👤</div>`
-      }
-
-      <span class="founder-dot ${s.tier}"></span>
-
-      <div class="founder-text">
-        <strong>${escapeHtml(s.name)}</strong>
-        <span>claimed ${capitalize(s.tier)} Spot</span>
+  latestBar.innerHTML = claimed.map(s => `
+    <a class="founder-card ${s.tier}" href="${s.url || '#'}" ${s.url ? 'target="_blank" rel="noopener"' : ''}>
+      <div class="founder-avatar ${s.tier}">
+        ${
+          s.avatar
+            ? `<img src="${s.avatar}" alt="">`
+            : `<span>👤</span>`
+        }
       </div>
 
-  </a>
-`).join('');
+      <div class="founder-info">
+        <strong>${escapeHtml(s.name || 'Anonymous')}</strong>
+        <span>${capitalize(s.tier)} Founder</span>
+        ${s.about ? `<small>${escapeHtml(s.about)}</small>` : ''}
+      </div>
+
+      <span class="founder-open">↗</span>
+    </a>
+  `).join('');
 }
 
 function openClaimLink(spot) {
