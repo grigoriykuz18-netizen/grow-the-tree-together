@@ -319,8 +319,21 @@ body {
 }
 .latest-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .latest-header h3 { font-size: 14px; letter-spacing: 1px; }
-.view-all { color: var(--muted); text-decoration: none; font-size: 14px; }
-.view-all:hover { color: var(--text); }
+.view-all{
+  background:#07100d;
+  border:1px solid rgba(255,255,255,.08);
+  color:#fff;
+
+  padding:10px 18px;
+  border-radius:999px;
+
+  font-weight:700;
+}
+
+.view-all:hover{
+  border-color:#57ff7f;
+  color:#57ff7f;
+}
 
 .latest-bar {
   background: var(--bg-panel);
