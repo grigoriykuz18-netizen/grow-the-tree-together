@@ -374,9 +374,13 @@ if (viewAllMembersBtn) {
     membersModal.classList.add('visible');
   });
 }
-if (aboutBtn) {
-  aboutBtn.addEventListener('click', () => {
-    aboutModal.classList.add('visible');
+if (aboutBtn && aboutModal) {
+  ['click', 'touchend'].forEach(eventName => {
+    aboutBtn.addEventListener(eventName, e => {
+      e.preventDefault();
+      e.stopPropagation();
+      aboutModal.classList.add('visible');
+    });
   });
 }
 
