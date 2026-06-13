@@ -140,65 +140,59 @@ async function uploadAvatar(file) {
   return data.secure_url || '';
 }
 
-function renderLatest() {
-  const claimed = spots
-    .filter(s => s.claimed)
-    .sort((a, b) => (b.when || 0) - (a.when || 0))
-    .slice(0, 12);
+function renderSpots() {
+  spotsLayer.innerHTML = '';
 
-  if (claimed.length === 0) {
-    latestBar.innerHTML = '<p class="empty-msg">No founding members yet. Be the first.</p>';
-    return;
-  }
+  spots.forEach(spot => {
+    const el = document.createElement('button');
+    el.className = `spot ${spot.tier}${spot.claimed ? ' claimed' : ''}`;
+    el.style.left = `${spot.x}%`;
+    el.style.top = `${spot.y}%`;
+    el.style.transform = 'translate(-50%, -50%)';
+    el.dataset.id = spot.id;
+    el.type = 'button';
 
-  latestBar.innerHTML = claimed.map(s => `
-    <a class="member-card ${s.tier}" href="${s.url || '#'}" ${s.url ? 'target="_blank" rel="noopener"' : ''}>
-      <div class="member-avatar ${s.tier}">
-        ${
-          s.avatar
-            ? `<img src="${s.avatar}" alt="">`
-            : `<span>👤</span>`
-        }
-      </div>
-
-      <div class="member-info">
-        <strong>${escapeHtml(s.name || 'Anonymous')}</strong>
-        <span>${capitalize(s.tier)} Founder</span>
-        ${s.about ? `<small>${escapeHtml(s.about)}</small>` : ''}
-      </div>
-    </a>
-  `).join('');
-}
+    if (spot.claimed) {
+      el.innerHTML = `
+        <div class="claimed-avatar ${spot.tier}">
+          ${
+            spot.avatar
+              ? `<img src="${spot.avatar}" class="avatar-img" alt="">`
+              : `<div class="avatar-placeholder">👤</div>`
+          }
+        </div>
+      `;
+    }
 
     const isTouchDevice =
-  window.matchMedia('(hover: none)').matches ||
-  window.matchMedia('(pointer: coarse)').matches;
+      window.matchMedia('(hover: none)').matches ||
+      window.matchMedia('(pointer: coarse)').matches;
 
-if (!isTouchDevice) {
-  el.addEventListener('mouseenter', e => {
-    if (!spot.claimed) showTooltip(e, spot);
-  });
+    if (!isTouchDevice) {
+      el.addEventListener('mouseenter', e => {
+        if (!spot.claimed) showTooltip(e, spot);
+      });
 
-  el.addEventListener('mousemove', e => {
-    if (!spot.claimed) moveTooltip(e);
-  });
+      el.addEventListener('mousemove', e => {
+        if (!spot.claimed) moveTooltip(e);
+      });
 
-  el.addEventListener('mouseleave', () => {
-    if (!spot.claimed) hideTooltip();
-  });
-}
+      el.addEventListener('mouseleave', () => {
+        if (!spot.claimed) hideTooltip();
+      });
+    }
 
-el.addEventListener('click', e => {
-  e.stopPropagation();
+    el.addEventListener('click', e => {
+      e.stopPropagation();
 
-if (spot.claimed) {
-  clearSelected();
-  showTooltip(e, spot, true);
-  return;
-}
+      if (spot.claimed) {
+        clearSelected();
+        showTooltip(e, spot, true);
+        return;
+      }
 
-  selectSpot(spot);
-});
+      selectSpot(spot);
+    });
 
     spotsLayer.appendChild(el);
   });
