@@ -1013,3 +1013,38 @@ function shortUrl(url) {
     display:none !important;
   }
 }
+.member-card.gold{
+  border-color:rgba(255,213,74,.25);
+}
+
+.member-card.white{
+  border-color:rgba(255,255,255,.18);
+}
+
+.member-card.green{
+  border-color:rgba(87,255,127,.2);
+}
+
+.member-info small{
+  margin-top:3px;
+  font-size:11px;
+  color:#6f8178;
+  max-width:130px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+@media (max-width:768px){
+  .latest-section{
+    padding-bottom:24px;
+  }
+
+  .member-card{
+    min-width:220px;
+  }
+
+  .member-info strong{
+    max-width:140px;
+  }
+}
