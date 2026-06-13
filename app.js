@@ -168,7 +168,7 @@ function renderSpots() {
         <div class="claimed-avatar ${spot.tier}">
           ${
             spot.avatar
-              ? `<img src="${spot.avatar}" class="avatar-img" alt="">`
+              ? `<img src="${spot.avatar}" class="avatar-img" alt="" loading="eager" decoding="sync">`
               : `<div class="avatar-placeholder">👤</div>`
           }
         </div>
@@ -588,7 +588,7 @@ const claimed = spots
       <div class="founder-avatar ${s.tier}">
         ${
           s.avatar
-            ? `<img src="${s.avatar}" alt="">`
+            ? `<img src="${s.avatar}" alt="" loading="eager" decoding="sync">`
             : `<span>👤</span>`
         }
       </div>
@@ -721,7 +721,7 @@ const claimed = spots
       <div class="founder-avatar ${s.tier}">
         ${
           s.avatar
-            ? `<img src="${s.avatar}" alt="">`
+            ? `<img src="${s.avatar}" alt="" loading="eager" decoding="sync">`
             : `<span>👤</span>`
         }
       </div>
