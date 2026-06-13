@@ -481,30 +481,34 @@ showShareMessage(name || 'Anonymous', tier);
 
 function updateCount() {
   const claimedTotal = spots.filter(s => s.claimed).length;
-const raised =
-  goldClaimed * 250 +
-  whiteClaimed * 100 +
-  greenClaimed * 50;
-  if (raisedAmount) {
-  raisedAmount.textContent = `$${raised}`;
-}
+
   const goldClaimed = spots.filter(s => s.tier === 'gold' && s.claimed).length;
   const whiteClaimed = spots.filter(s => s.tier === 'white' && s.claimed).length;
   const greenClaimed = spots.filter(s => s.tier === 'green' && s.claimed).length;
 
+  const raised =
+    goldClaimed * PRICES.gold +
+    whiteClaimed * PRICES.white +
+    greenClaimed * PRICES.green;
+
+  if (raisedAmount) {
+    raisedAmount.textContent = `$${raised}`;
+  }
+
   if (claimedCountEl) {
     claimedCountEl.textContent = claimedTotal;
   }
-const percent = Math.round((claimedTotal / SPOTS_DATA.length) * 100);
 
-if (progressFill) {
-  progressFill.style.width = `${percent}%`;
-}
+  const percent = Math.round((claimedTotal / SPOTS_DATA.length) * 100);
 
-if (progressText) {
-  progressText.textContent = `${percent}% of the tree is growing`;
-}
-  
+  if (progressFill) {
+    progressFill.style.width = `${percent}%`;
+  }
+
+  if (progressText) {
+    progressText.textContent = `${percent}% of the tree is growing`;
+  }
+
   updateTierUI('gold', goldClaimed);
   updateTierUI('white', whiteClaimed);
   updateTierUI('green', greenClaimed);
@@ -530,7 +534,6 @@ function updateTierUI(tier, claimed) {
   priceEl.textContent = `${left} left · $${PRICES[tier]}`;
   input.disabled = false;
   option.classList.remove('sold-out');
-}
 }
 
 function renderLatest() {
