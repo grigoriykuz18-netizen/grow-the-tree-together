@@ -150,8 +150,12 @@ async function uploadAvatar(file) {
 }
 
 function renderSpots() {
-  spotsLayer.innerHTML = '';
+  if (!spotsLayer) {
+    console.error('spotsLayer not found');
+    return;
+  }
 
+  spotsLayer.innerHTML = '';
   spots.forEach(spot => {
     const el = document.createElement('button');
     el.className = `spot ${spot.tier}${spot.claimed ? ' claimed' : ''}`;
