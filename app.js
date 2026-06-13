@@ -532,15 +532,22 @@ function renderLatest() {
   }
 
 latestBar.innerHTML = claimed.map(s => `
-  <a class="claim-pill" href="${s.url || '#'}" ${s.url ? 'target="_blank" rel="noopener"' : ''}>
-    ${
-      s.avatar
-        ? `<img src="${s.avatar}" class="member-avatar" alt="">`
-        : `<span class="member-placeholder">👤</span>`
-    }
-    <span class="pill-dot ${s.tier}"></span>
-    <strong>${escapeHtml(s.name)}</strong>
-    <span class="pill-tier">claimed ${capitalize(s.tier)} Spot</span>
+  <a class="founder-card" href="${s.url || '#'}"
+     ${s.url ? 'target="_blank" rel="noopener"' : ''}>
+
+      ${
+        s.avatar
+          ? `<img src="${s.avatar}" class="founder-avatar">`
+          : `<div class="founder-avatar founder-placeholder">👤</div>`
+      }
+
+      <span class="founder-dot ${s.tier}"></span>
+
+      <div class="founder-text">
+        <strong>${escapeHtml(s.name)}</strong>
+        <span>claimed ${capitalize(s.tier)} Spot</span>
+      </div>
+
   </a>
 `).join('');
 }
