@@ -546,10 +546,22 @@ function renderLatest() {
     }
   }
 
-  const claimed = spots
-    .filter(s => s.claimed)
-    .sort((a, b) => (b.when || 0) - (a.when || 0))
-    .slice(0, 12);
+const tierOrder = {
+  gold: 0,
+  white: 1,
+  green: 2
+};
+
+const claimed = spots
+  .filter(s => s.claimed)
+  .sort((a, b) => {
+    if (tierOrder[a.tier] !== tierOrder[b.tier]) {
+      return tierOrder[a.tier] - tierOrder[b.tier];
+    }
+
+    return (b.when || 0) - (a.when || 0);
+  })
+  .slice(0, 12);
 
   if (claimed.length === 0) {
     latestBar.innerHTML = '<p class="empty-msg">No founding members yet. Be the first.</p>';
