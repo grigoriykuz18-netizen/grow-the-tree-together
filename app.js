@@ -52,6 +52,7 @@ const SPOTS_DATA = [
 ];
 
 const PRICES = { gold: 250, white: 100, green: 50 };
+const TOTALS = { gold: 4, white: 15, green: 21 };
 const STORAGE_KEY = 'gtree_claims_v32';
 
 let spots = [];
@@ -448,12 +449,38 @@ alert('🌿 Your spot has been successfully claimed!');
 }
 
 function updateCount() {
-  const count = spots.filter(s => s.claimed).length;
-  if (claimedCountEl) claimedCountEl.textContent = count;
+  const claimedTotal = spots.filter(s => s.claimed).length;
 
-  if (goldLeftEl) goldLeftEl.textContent = spots.filter(s => s.tier === 'gold' && !s.claimed).length;
-  if (whiteLeftEl) whiteLeftEl.textContent = spots.filter(s => s.tier === 'white' && !s.claimed).length;
-  if (greenLeftEl) greenLeftEl.textContent = spots.filter(s => s.tier === 'green' && !s.claimed).length;
+  const goldClaimed = spots.filter(s => s.tier === 'gold' && s.claimed).length;
+  const whiteClaimed = spots.filter(s => s.tier === 'white' && s.claimed).length;
+  const greenClaimed = spots.filter(s => s.tier === 'green' && s.claimed).length;
+
+  if (claimedCountEl) {
+    claimedCountEl.textContent = claimedTotal;
+  }
+
+  updateTierUI('gold', goldClaimed);
+  updateTierUI('white', whiteClaimed);
+  updateTierUI('green', greenClaimed);
+}
+
+function updateTierUI(tier, claimed) {
+  const total = TOTALS[tier];
+  const option = document.querySelector(`.tier-option.${tier}`);
+  const input = document.querySelector(`input[name="tier"][value="${tier}"]`);
+  const priceEl = option?.querySelector('.tier-price');
+
+  if (!option || !input || !priceEl) return;
+
+  if (claimed >= total) {
+    priceEl.textContent = 'SOLD OUT';
+    input.disabled = true;
+    option.classList.add('sold-out');
+  } else {
+    priceEl.textContent = `${claimed}/${total}`;
+    input.disabled = false;
+    option.classList.remove('sold-out');
+  }
 }
 
 function renderLatest() {
