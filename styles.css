@@ -552,60 +552,6 @@ body {
   margin-top: 6px;
 }
 
-/* Mobile tuning */
-@media (max-width: 768px) {
-  .tree-container {
-    max-width: 100% !important;
-    aspect-ratio: 1.05 / 1 !important;
-  }
-
-  .tree-image {
-    width: 112% !important;
-    height: 112% !important;
-    transform: translate(-6%, -4%) scale(1.03) !important;
-  }
-
-  .spots-layer {
-    inset: 5% -4% 10% -4% !important;
-  }
-
-  .spot {
-    width: 18px !important;
-    height: 18px !important;
-  }
-
-  .spot::before {
-    width: 10px !important;
-    height: 10px !important;
-  }
-
-  .spot.selected::before {
-    width: 12px !important;
-    height: 12px !important;
-  }
-
-  .claimed-avatar.green {
-    width: 24px !important;
-    height: 24px !important;
-    border-width: 2px !important;
-  }
-
-  .claimed-avatar.white {
-    width: 30px !important;
-    height: 30px !important;
-    border-width: 2px !important;
-  }
-
-  .claimed-avatar.gold {
-    width: 36px !important;
-    height: 36px !important;
-    border-width: 2px !important;
-  }
-
-  .claimed-avatar .avatar {
-    font-size: 8px !important;
-  }
-}
 /* ===== FINAL AVATAR TUNING ===== */
 
 /* Купленный кружок всегда выше обычных точек */
@@ -656,17 +602,7 @@ body {
     height: 38px !important;
   }
 }
-/* ===== MOBILE TREE SPOTS FIX ===== */
 
-@media (max-width: 768px) {
-  .spots-layer {
-    inset: 11% -4% 6% -4% !important;
-  }
-
-  .tree-image {
-    transform: translate(-6%, 0%) scale(1.03) !important;
-  }
-}
 /* ===== MOBILE SPOTS FIX ===== */
 
 @media (max-width: 768px) {
