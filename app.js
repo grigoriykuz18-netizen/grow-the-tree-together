@@ -762,6 +762,7 @@ ${url}`;
   lastShareData = {
     name,
     tier,
+    spotId: selectedSpot?.id,
     emoji: emoji[tier],
     label: label[tier],
     url,
@@ -823,187 +824,223 @@ const claimed = spots
     </a>
   `).join('');
 }
-function downloadStoryImage(data) {
+async function downloadStoryImage(data) {
   const canvas = document.createElement('canvas');
   canvas.width = 1080;
   canvas.height = 1920;
 
   const ctx = canvas.getContext('2d');
 
-  const treeImg = new Image();
-  treeImg.crossOrigin = 'anonymous';
-  treeImg.src = 'tree.png';
+  try {
+    const treeImg = await loadImage('tree.png');
 
-  treeImg.onload = () => {
-    drawStoryCanvas(ctx, canvas, treeImg, data);
-  };
+    const avatarImages = {};
+    await Promise.all(
+      spots
+        .filter(s => s.claimed && s.avatar)
+        .map(async s => {
+          try {
+            avatarImages[s.id] = await loadImage(s.avatar);
+          } catch (e) {
+            console.warn('Avatar failed:', s.avatar);
+          }
+        })
+    );
 
-  treeImg.onerror = () => {
-    alert('Could not load tree image for story.');
-  };
+    drawPremiumStoryCanvas(ctx, canvas, treeImg, avatarImages, data);
+  } catch (err) {
+    console.error(err);
+    alert('Could not generate story image.');
+  }
 }
 
-function drawStoryCanvas(ctx, canvas, treeImg, data) {
+function loadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+}
+
+function drawPremiumStoryCanvas(ctx, canvas, treeImg, avatarImages, data) {
   const W = canvas.width;
   const H = canvas.height;
 
-  const tierColor = {
+  const colors = {
     gold: '#ffd54a',
     white: '#ffffff',
     green: '#57ff7f'
   };
 
-  const tierLabel = {
+  const tierText = {
     gold: 'GOLD FOUNDER',
     white: 'WHITE FOUNDER',
     green: 'GREEN FOUNDER'
   };
 
+  const tierLimit = {
+    gold: 'ONE OF ONLY 4 GOLD SPOTS',
+    white: 'ONE OF ONLY 15 WHITE SPOTS',
+    green: 'ONE OF ONLY 21 GREEN SPOTS'
+  };
+
   const claimed = spots.filter(s => s.claimed);
   const founderNumber = claimed.length || 1;
+  const activeSpot = spots.find(s => s.id === data.spotId) || claimed[claimed.length - 1];
 
-  const activeSpot = spots.find(s => s.id === selectedSpot?.id) || claimed[claimed.length - 1];
+  const mainColor = colors[data.tier] || colors.green;
 
-  const gradient = ctx.createLinearGradient(0, 0, 0, H);
-  gradient.addColorStop(0, '#050807');
-  gradient.addColorStop(0.45, '#07100d');
-  gradient.addColorStop(1, '#000000');
+  const bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, '#020403');
+  bg.addColorStop(0.38, '#07100d');
+  bg.addColorStop(1, '#000000');
 
-  ctx.fillStyle = gradient;
+  ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
+  drawParticles(ctx, W, H, mainColor);
+
   ctx.textAlign = 'center';
+  ctx.textBaseline = 'alphabetic';
+
+  ctx.font = '900 54px Inter, Arial';
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText('GROW THE TREE', W / 2, 105);
+
+  ctx.font = 'italic 800 42px Inter, Arial';
+  ctx.fillStyle = '#57ff7f';
+  ctx.fillText('together', W / 2, 158);
+
+  ctx.font = '800 34px Inter, Arial';
+  ctx.fillStyle = mainColor;
+  ctx.fillText('FOUNDING MEMBER', W / 2, 235);
+
+  ctx.font = '900 118px Inter, Arial';
+  ctx.fillStyle = mainColor;
+  ctx.shadowColor = mainColor;
+  ctx.shadowBlur = 28;
+  ctx.fillText(tierText[data.tier] || 'FOUNDER', W / 2, 365);
+  ctx.shadowBlur = 0;
+
+  drawNumberBadge(ctx, W / 2, 465, founderNumber, mainColor);
+
+  ctx.font = '700 30px Inter, Arial';
+  ctx.fillStyle = '#dce8e1';
+  ctx.fillText('CLAIMED BY', W / 2, 570);
 
   ctx.font = '900 58px Inter, Arial';
   ctx.fillStyle = '#ffffff';
-  ctx.fillText('GROW THE TREE', W / 2, 120);
+  ctx.shadowColor = 'rgba(255,255,255,.45)';
+  ctx.shadowBlur = 16;
+  ctx.fillText(data.name || 'Founder', W / 2, 640);
+  ctx.shadowBlur = 0;
 
-  ctx.font = 'italic 800 44px Inter, Arial';
-  ctx.fillStyle = '#57ff7f';
-  ctx.fillText('together', W / 2, 175);
-
-  ctx.font = '900 48px Inter, Arial';
-  ctx.fillStyle = tierColor[data.tier] || '#57ff7f';
-  ctx.fillText(`FOUNDER #${founderNumber}`, W / 2, 265);
-
-  const treeX = 90;
-  const treeY = 330;
-  const treeW = 900;
-  const treeH = 900;
+  const treeX = 70;
+  const treeY = 710;
+  const treeW = 940;
+  const treeH = 760;
 
   ctx.save();
-  roundRect(ctx, treeX, treeY, treeW, treeH, 42);
+  roundRect(ctx, treeX, treeY, treeW, treeH, 38);
   ctx.clip();
 
   ctx.fillStyle = '#030605';
   ctx.fillRect(treeX, treeY, treeW, treeH);
 
-  ctx.drawImage(treeImg, treeX, treeY, treeW, treeH);
+  ctx.drawImage(treeImg, treeX - 10, treeY - 70, treeW + 20, treeH + 90);
 
-  drawStorySpots(ctx, treeX, treeY, treeW, treeH, activeSpot, tierColor);
+  drawRealStorySpots(ctx, treeX, treeY, treeW, treeH, activeSpot, avatarImages);
 
   ctx.restore();
 
   ctx.strokeStyle = 'rgba(255,255,255,.12)';
   ctx.lineWidth = 2;
-  roundRect(ctx, treeX, treeY, treeW, treeH, 42);
+  roundRect(ctx, treeX, treeY, treeW, treeH, 38);
   ctx.stroke();
 
-  ctx.font = '900 64px Inter, Arial';
-  ctx.fillStyle = tierColor[data.tier] || '#57ff7f';
-  ctx.fillText(tierLabel[data.tier] || 'FOUNDER', W / 2, 1365);
+  drawBottomBadge(ctx, W / 2, 1555, tierLimit[data.tier], mainColor);
 
-  ctx.font = '800 54px Inter, Arial';
+  drawInfoRow(ctx, W, 1695, mainColor);
+
+  ctx.font = '900 38px Inter, Arial';
   ctx.fillStyle = '#ffffff';
-  ctx.fillText(data.name || 'Founder', W / 2, 1440);
+  ctx.fillText('growthetreetogether.com', W / 2, 1845);
 
-  ctx.font = '600 36px Inter, Arial';
-  ctx.fillStyle = '#9aa9a1';
-  ctx.fillText('claimed a spot on the founding tree', W / 2, 1505);
-
-  ctx.font = '900 42px Inter, Arial';
-  ctx.fillStyle = '#57ff7f';
-  ctx.fillText('Only 40 founder spots exist', W / 2, 1630);
-
-  ctx.font = '800 38px Inter, Arial';
-  ctx.fillStyle = '#ffffff';
-  ctx.fillText('growthetreetogether.com', W / 2, 1780);
-
-canvas.toBlob(async blob => {
-  if (!blob) return;
-
-  const file = new File(
-    [blob],
-    `grow-the-tree-founder-${founderNumber}.png`,
-    { type: 'image/png' }
-  );
-
-  if (navigator.canShare && navigator.canShare({ files: [file] })) {
-    await navigator.share({
-      title: 'Grow The Tree Together',
-      text: `${data.emoji} ${data.name} claimed a ${data.label} Spot on Grow The Tree Together`,
-      files: [file]
-    });
-    return;
-  }
-
-  const url = URL.createObjectURL(blob);
-  window.open(url, '_blank');
-}, 'image/png');
+  exportStoryCanvas(canvas, founderNumber);
 }
 
-function drawStorySpots(ctx, treeX, treeY, treeW, treeH, activeSpot, tierColor) {
+function drawRealStorySpots(ctx, treeX, treeY, treeW, treeH, activeSpot, avatarImages) {
+  const colors = {
+    gold: '#ffd54a',
+    white: '#ffffff',
+    green: '#57ff7f'
+  };
+
   spots.forEach(s => {
     const x = treeX + (s.x / 100) * treeW;
     const y = treeY + (s.y / 100) * treeH;
 
-    const color = tierColor[s.tier] || '#57ff7f';
+    const color = colors[s.tier] || colors.green;
     const isActive = activeSpot && s.id === activeSpot.id;
 
-    const baseSize =
-      s.tier === 'gold' ? 28 :
-      s.tier === 'white' ? 22 :
-      18;
+    const r =
+      s.tier === 'gold' ? 30 :
+      s.tier === 'white' ? 24 :
+      21;
 
-    const r = isActive ? baseSize + 8 : baseSize;
+    const size = isActive ? r + 8 : r;
 
     ctx.save();
 
     ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.arc(x, y, size, 0, Math.PI * 2);
 
     ctx.shadowColor = color;
-    ctx.shadowBlur = isActive ? 34 : 18;
+    ctx.shadowBlur = isActive ? 28 : 16;
 
     ctx.fillStyle = '#07100d';
     ctx.fill();
 
-    ctx.lineWidth = isActive ? 8 : 5;
+    ctx.lineWidth = isActive ? 7 : 5;
     ctx.strokeStyle = color;
     ctx.stroke();
 
-    if (s.claimed && s.avatar) {
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.src = s.avatar;
-    } else {
+    if (s.claimed && avatarImages[s.id]) {
+      ctx.save();
       ctx.beginPath();
-      ctx.arc(x, y, r - 7, 0, Math.PI * 2);
+      ctx.arc(x, y, size - 7, 0, Math.PI * 2);
+      ctx.clip();
+
+      const img = avatarImages[s.id];
+      ctx.drawImage(img, x - size + 7, y - size + 7, (size - 7) * 2, (size - 7) * 2);
+      ctx.restore();
+    } else if (s.claimed) {
+      ctx.beginPath();
+      ctx.arc(x, y, size - 8, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(255,255,255,.08)';
       ctx.fill();
 
-      ctx.font = `${Math.max(18, r)}px Arial`;
+      ctx.font = `${Math.max(18, size)}px Arial`;
       ctx.fillStyle = '#9aa9a1';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText('👤', x, y + 2);
+    } else {
+      ctx.beginPath();
+      ctx.arc(x, y, size - 11, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.globalAlpha = 0.9;
+      ctx.fill();
     }
 
     if (isActive) {
       ctx.beginPath();
-      ctx.arc(x, y, r + 12, 0, Math.PI * 2);
+      ctx.arc(x, y, size + 10, 0, Math.PI * 2);
       ctx.lineWidth = 3;
       ctx.strokeStyle = color;
+      ctx.shadowColor = color;
       ctx.shadowBlur = 22;
       ctx.stroke();
     }
@@ -1012,18 +1049,135 @@ function drawStorySpots(ctx, treeX, treeY, treeW, treeH, activeSpot, tierColor) 
   });
 }
 
-function roundRect(ctx, x, y, w, h, r) {
-  ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.lineTo(x + w - r, y);
-  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-  ctx.lineTo(x + w, y + h - r);
-  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-  ctx.lineTo(x + r, y + h);
-  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-  ctx.lineTo(x, y + r);
-  ctx.quadraticCurveTo(x, y, x + r, y);
-  ctx.closePath();
+function drawNumberBadge(ctx, x, y, number, color) {
+  ctx.save();
+
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 24;
+
+  ctx.fillStyle = 'rgba(0,0,0,.62)';
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 3;
+
+  roundRect(ctx, x - 145, y - 62, 290, 104, 22);
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.font = '900 78px Inter, Arial';
+  ctx.fillStyle = color;
+  ctx.textAlign = 'center';
+  ctx.fillText(`#${number}`, x, y + 18);
+
+  ctx.restore();
+}
+
+function drawBottomBadge(ctx, x, y, text, color) {
+  ctx.save();
+
+  ctx.fillStyle = 'rgba(0,0,0,.68)';
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 3;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 18;
+
+  roundRect(ctx, x - 330, y - 58, 660, 116, 24);
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.shadowBlur = 0;
+
+  ctx.font = '800 28px Inter, Arial';
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText('ONE OF THE FIRST TREE', x, y - 12);
+
+  ctx.font = '900 38px Inter, Arial';
+  ctx.fillStyle = color;
+  ctx.fillText(text, x, y + 34);
+
+  ctx.restore();
+}
+
+function drawInfoRow(ctx, W, y, color) {
+  const items = [
+    ['🌿', 'ONLY', '40 SPOTS'],
+    ['👥', 'FOUNDING', 'MEMBER'],
+    ['🔗', 'PUBLIC', 'LINK'],
+    ['🌍', 'CONNECT', '& GROW']
+  ];
+
+  const startX = 120;
+  const gap = 220;
+
+  ctx.save();
+
+  items.forEach((item, i) => {
+    const x = startX + i * gap;
+
+    ctx.beginPath();
+    ctx.arc(x, y, 38, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(87,255,127,.08)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(87,255,127,.35)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.font = '28px Arial';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(item[0], x, y + 9);
+
+    ctx.font = '800 20px Inter, Arial';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(item[1], x + 82, y - 8);
+
+    ctx.font = '900 25px Inter, Arial';
+    ctx.fillStyle = color;
+    ctx.fillText(item[2], x + 82, y + 22);
+  });
+
+  ctx.restore();
+}
+
+function drawParticles(ctx, W, H, color) {
+  ctx.save();
+
+  for (let i = 0; i < 90; i++) {
+    const x = Math.random() * W;
+    const y = Math.random() * H;
+    const r = Math.random() * 2.2 + 0.5;
+
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fillStyle = i % 3 === 0 ? color : 'rgba(87,255,127,.45)';
+    ctx.globalAlpha = Math.random() * 0.55;
+    ctx.fill();
+  }
+
+  ctx.globalAlpha = 1;
+  ctx.restore();
+}
+
+function exportStoryCanvas(canvas, founderNumber) {
+  canvas.toBlob(async blob => {
+    if (!blob) return;
+
+    const file = new File(
+      [blob],
+      `grow-the-tree-founder-${founderNumber}.png`,
+      { type: 'image/png' }
+    );
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({
+        title: 'Grow The Tree Together',
+        text: 'I just claimed a founder spot on Grow The Tree Together.',
+        files: [file]
+      });
+      return;
+    }
+
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  }, 'image/png');
 }
 
 init();
