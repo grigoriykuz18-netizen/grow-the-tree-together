@@ -830,57 +830,183 @@ function downloadStoryImage(data) {
 
   const ctx = canvas.getContext('2d');
 
-  const gradient = ctx.createLinearGradient(0, 0, 0, 1920);
-  gradient.addColorStop(0, '#07100d');
+  const treeImg = new Image();
+  treeImg.crossOrigin = 'anonymous';
+  treeImg.src = 'tree.png';
+
+  treeImg.onload = () => {
+    drawStoryCanvas(ctx, canvas, treeImg, data);
+  };
+
+  treeImg.onerror = () => {
+    alert('Could not load tree image for story.');
+  };
+}
+
+function drawStoryCanvas(ctx, canvas, treeImg, data) {
+  const W = canvas.width;
+  const H = canvas.height;
+
+  const tierColor = {
+    gold: '#ffd54a',
+    white: '#ffffff',
+    green: '#57ff7f'
+  };
+
+  const tierLabel = {
+    gold: 'GOLD FOUNDER',
+    white: 'WHITE FOUNDER',
+    green: 'GREEN FOUNDER'
+  };
+
+  const claimed = spots.filter(s => s.claimed);
+  const founderNumber = claimed.length || 1;
+
+  const activeSpot = spots.find(s => s.id === selectedSpot?.id) || claimed[claimed.length - 1];
+
+  const gradient = ctx.createLinearGradient(0, 0, 0, H);
+  gradient.addColorStop(0, '#050807');
+  gradient.addColorStop(0.45, '#07100d');
   gradient.addColorStop(1, '#000000');
 
   ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, 1080, 1920);
-
-  ctx.fillStyle = 'rgba(87,255,127,.12)';
-  ctx.beginPath();
-  ctx.arc(540, 680, 360, 0, Math.PI * 2);
-  ctx.fill();
+  ctx.fillRect(0, 0, W, H);
 
   ctx.textAlign = 'center';
 
-  ctx.font = '900 76px Inter, Arial';
+  ctx.font = '900 58px Inter, Arial';
   ctx.fillStyle = '#ffffff';
-  ctx.fillText('Grow The Tree', 540, 260);
+  ctx.fillText('GROW THE TREE', W / 2, 120);
 
-  ctx.font = 'italic 700 58px Inter, Arial';
+  ctx.font = 'italic 800 44px Inter, Arial';
   ctx.fillStyle = '#57ff7f';
-  ctx.fillText('together', 540, 330);
+  ctx.fillText('together', W / 2, 175);
 
-  ctx.font = '900 110px Inter, Arial';
-  ctx.fillStyle = data.tier === 'gold' ? '#ffd54a' : data.tier === 'white' ? '#ffffff' : '#57ff7f';
-  ctx.fillText(data.emoji, 540, 570);
+  ctx.font = '900 48px Inter, Arial';
+  ctx.fillStyle = tierColor[data.tier] || '#57ff7f';
+  ctx.fillText(`FOUNDER #${founderNumber}`, W / 2, 265);
 
-  ctx.font = '900 72px Inter, Arial';
+  const treeX = 90;
+  const treeY = 330;
+  const treeW = 900;
+  const treeH = 900;
+
+  ctx.save();
+  roundRect(ctx, treeX, treeY, treeW, treeH, 42);
+  ctx.clip();
+
+  ctx.fillStyle = '#030605';
+  ctx.fillRect(treeX, treeY, treeW, treeH);
+
+  ctx.drawImage(treeImg, treeX, treeY, treeW, treeH);
+
+  drawStorySpots(ctx, treeX, treeY, treeW, treeH, activeSpot, tierColor);
+
+  ctx.restore();
+
+  ctx.strokeStyle = 'rgba(255,255,255,.12)';
+  ctx.lineWidth = 2;
+  roundRect(ctx, treeX, treeY, treeW, treeH, 42);
+  ctx.stroke();
+
+  ctx.font = '900 64px Inter, Arial';
+  ctx.fillStyle = tierColor[data.tier] || '#57ff7f';
+  ctx.fillText(tierLabel[data.tier] || 'FOUNDER', W / 2, 1365);
+
+  ctx.font = '800 54px Inter, Arial';
   ctx.fillStyle = '#ffffff';
-  ctx.fillText(data.label.toUpperCase(), 540, 720);
+  ctx.fillText(data.name || 'Founder', W / 2, 1440);
 
-  ctx.font = '700 54px Inter, Arial';
-  ctx.fillStyle = '#dce8e1';
-  ctx.fillText(data.name, 540, 820);
-
-  ctx.font = '500 42px Inter, Arial';
+  ctx.font = '600 36px Inter, Arial';
   ctx.fillStyle = '#9aa9a1';
-  ctx.fillText('claimed a permanent spot', 540, 910);
-  ctx.fillText('on the founding tree', 540, 970);
+  ctx.fillText('claimed a spot on the founding tree', W / 2, 1505);
 
-  ctx.font = '800 46px Inter, Arial';
+  ctx.font = '900 42px Inter, Arial';
   ctx.fillStyle = '#57ff7f';
-  ctx.fillText('Only 40 spots exist', 540, 1170);
+  ctx.fillText('Only 40 founder spots exist', W / 2, 1630);
 
-  ctx.font = '700 42px Inter, Arial';
+  ctx.font = '800 38px Inter, Arial';
   ctx.fillStyle = '#ffffff';
-  ctx.fillText('growthetreetogether.com', 540, 1580);
+  ctx.fillText('growthetreetogether.com', W / 2, 1780);
 
   const link = document.createElement('a');
-  link.download = `grow-the-tree-${data.tier}-story.png`;
+  link.download = `grow-the-tree-founder-${founderNumber}.png`;
   link.href = canvas.toDataURL('image/png');
   link.click();
+}
+
+function drawStorySpots(ctx, treeX, treeY, treeW, treeH, activeSpot, tierColor) {
+  spots.forEach(s => {
+    const x = treeX + (s.x / 100) * treeW;
+    const y = treeY + (s.y / 100) * treeH;
+
+    const color = tierColor[s.tier] || '#57ff7f';
+    const isActive = activeSpot && s.id === activeSpot.id;
+
+    const baseSize =
+      s.tier === 'gold' ? 28 :
+      s.tier === 'white' ? 22 :
+      18;
+
+    const r = isActive ? baseSize + 8 : baseSize;
+
+    ctx.save();
+
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+
+    ctx.shadowColor = color;
+    ctx.shadowBlur = isActive ? 34 : 18;
+
+    ctx.fillStyle = '#07100d';
+    ctx.fill();
+
+    ctx.lineWidth = isActive ? 8 : 5;
+    ctx.strokeStyle = color;
+    ctx.stroke();
+
+    if (s.claimed && s.avatar) {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.src = s.avatar;
+    } else {
+      ctx.beginPath();
+      ctx.arc(x, y, r - 7, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,.08)';
+      ctx.fill();
+
+      ctx.font = `${Math.max(18, r)}px Arial`;
+      ctx.fillStyle = '#9aa9a1';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('👤', x, y + 2);
+    }
+
+    if (isActive) {
+      ctx.beginPath();
+      ctx.arc(x, y, r + 12, 0, Math.PI * 2);
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = color;
+      ctx.shadowBlur = 22;
+      ctx.stroke();
+    }
+
+    ctx.restore();
+  });
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
 }
 
 init();
