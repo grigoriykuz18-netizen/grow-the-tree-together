@@ -439,14 +439,12 @@ if (copyLinkBtn) {
   });
 }
 
-if (downloadStoryBtn) {
-  downloadStoryBtn.addEventListener('click', () => {
-    if (!lastShareData) return;
-
-    downloadStoryImage(lastShareData);
-  });
-}
-}
+// if (downloadStoryBtn) {
+//   downloadStoryBtn.addEventListener('click', () => {
+//     if (!lastShareData) return;
+//     downloadStoryImage(lastShareData);
+//   });
+// }
 
 function clearSelected() {
   document.querySelectorAll('.spot.selected').forEach(el => {
