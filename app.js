@@ -929,10 +929,27 @@ function drawStoryCanvas(ctx, canvas, treeImg, data) {
   ctx.fillStyle = '#ffffff';
   ctx.fillText('growthetreetogether.com', W / 2, 1780);
 
-  const link = document.createElement('a');
-  link.download = `grow-the-tree-founder-${founderNumber}.png`;
-  link.href = canvas.toDataURL('image/png');
-  link.click();
+canvas.toBlob(async blob => {
+  if (!blob) return;
+
+  const file = new File(
+    [blob],
+    `grow-the-tree-founder-${founderNumber}.png`,
+    { type: 'image/png' }
+  );
+
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    await navigator.share({
+      title: 'Grow The Tree Together',
+      text: `${data.emoji} ${data.name} claimed a ${data.label} Spot on Grow The Tree Together`,
+      files: [file]
+    });
+    return;
+  }
+
+  const url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+}, 'image/png');
 }
 
 function drawStorySpots(ctx, treeX, treeY, treeW, treeH, activeSpot, tierColor) {
