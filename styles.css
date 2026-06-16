@@ -1955,3 +1955,27 @@ body {
     inset:5% -4% 10% -4% !important;
   }
 }
+/* ===== RESTORE SPOTS ALIGNMENT ===== */
+
+.spots-layer{
+  position:absolute !important;
+  inset:0 !important;
+  pointer-events:none !important;
+  z-index:5 !important;
+}
+
+.spots-layer .spot{
+  pointer-events:auto !important;
+  display:grid !important;
+  place-items:center !important;
+  opacity:1 !important;
+  visibility:visible !important;
+}
+
+.spot::before{
+  display:block !important;
+}
+
+.spot.claimed::before{
+  display:none !important;
+}
