@@ -832,20 +832,27 @@ async function downloadStoryImage(data) {
   const ctx = canvas.getContext('2d');
 
   try {
-    const treeImg = await loadImage('tree.png');
+    const treeSrc =
+      document.querySelector('.tree-image')?.src || 'tree.png';
+
+    const treeImg = await loadImageSafe(treeSrc);
 
     const avatarImages = {};
-    await Promise.all(
-      spots
-        .filter(s => s.claimed && s.avatar)
-        .map(async s => {
-          try {
-            avatarImages[s.id] = await loadImage(s.avatar);
-          } catch (e) {
-            console.warn('Avatar failed:', s.avatar);
-          }
-        })
-    );
+
+    for (const s of spots.filter(s => s.claimed && s.avatar)) {
+      try {
+        avatarImages[s.id] = await loadImageSafe(s.avatar);
+      } catch (e) {
+        console.warn('Avatar skipped:', s.avatar);
+      }
+    }
+
+    drawPremiumStoryCanvas(ctx, canvas, treeImg, avatarImages, data);
+  } catch (err) {
+    console.error('Story error:', err);
+    alert('Could not generate story image. Check console.');
+  }
+}
 
     drawPremiumStoryCanvas(ctx, canvas, treeImg, avatarImages, data);
   } catch (err) {
@@ -854,12 +861,15 @@ async function downloadStoryImage(data) {
   }
 }
 
-function loadImage(src) {
+function loadImageSafe(src) {
   return new Promise((resolve, reject) => {
     const img = new Image();
+
     img.crossOrigin = 'anonymous';
+
     img.onload = () => resolve(img);
-    img.onerror = reject;
+    img.onerror = () => reject(new Error(`Image failed: ${src}`));
+
     img.src = src;
   });
 }
@@ -1158,25 +1168,40 @@ function drawParticles(ctx, W, H, color) {
 
 function exportStoryCanvas(canvas, founderNumber) {
   canvas.toBlob(async blob => {
-    if (!blob) return;
-
-    const file = new File(
-      [blob],
-      `grow-the-tree-founder-${founderNumber}.png`,
-      { type: 'image/png' }
-    );
-
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      await navigator.share({
-        title: 'Grow The Tree Together',
-        text: 'I just claimed a founder spot on Grow The Tree Together.',
-        files: [file]
-      });
+    if (!blob) {
+      alert('Could not export image.');
       return;
     }
 
+    const fileName = `grow-the-tree-founder-${founderNumber}.png`;
+
+    const file = new File([blob], fileName, {
+      type: 'image/png'
+    });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({
+          title: 'Grow The Tree Together',
+          text: 'I just claimed a founder spot on Grow The Tree Together.',
+          files: [file]
+        });
+        return;
+      } catch (e) {
+        console.warn('Share cancelled or failed:', e);
+      }
+    }
+
     const url = URL.createObjectURL(blob);
-    window.open(url, '_blank');
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 3000);
   }, 'image/png');
 }
 
