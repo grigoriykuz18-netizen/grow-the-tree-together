@@ -380,31 +380,6 @@ body {
 
 /* ===== FINAL TREE / SPOTS / ROUND CLAIMED AVATARS ===== */
 
-/* Tree area */
-.tree-container {
-  max-width: 990px !important;
-  aspect-ratio: 1.22 / 1 !important;
-  border-radius: 24px !important;
-  overflow: hidden !important;
-  background: radial-gradient(ellipse at 50% 70%, #132116 0%, #050807 72%) !important;
-  box-shadow: 0 28px 80px rgba(0,0,0,.32) !important;
-}
-
-.tree-image {
-  width: 108% !important;
-  height: 108% !important;
-  object-fit: contain !important;
-  object-position: center !important;
-  transform: translate(-4%, -3%) scale(1.05) !important;
-  display: block !important;
-  pointer-events: none !important;
-  user-select: none !important;
-}
-
-.spots-layer {
-  inset: 3% -2% 8% -2% !important;
-}
-
 /* Empty glowing spots */
 .spot {
   width: 22px !important;
