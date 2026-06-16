@@ -832,10 +832,7 @@ async function downloadStoryImage(data) {
   const ctx = canvas.getContext('2d');
 
   try {
-    const treeSrc =
-      document.querySelector('.tree-image')?.src || 'tree.png';
-
-    const treeImg = await loadImageSafe(treeSrc);
+const treeImg = await loadImageSafe('tree.png', false);
 
     const avatarImages = {};
 
@@ -854,11 +851,13 @@ async function downloadStoryImage(data) {
   }
 }
 
-function loadImageSafe(src) {
+function loadImageSafe(src, useCors = true) {
   return new Promise((resolve, reject) => {
     const img = new Image();
 
-    img.crossOrigin = 'anonymous';
+    if (useCors) {
+      img.crossOrigin = 'anonymous';
+    }
 
     img.onload = () => resolve(img);
     img.onerror = () => reject(new Error(`Image failed: ${src}`));
