@@ -1838,3 +1838,43 @@ body {
   color:white;
   font-size:22px;
 }
+/* ===== FOUNDING MEMBERS POSITION FIX ===== */
+
+.main > .panel-left{
+  grid-column:1;
+  grid-row:1 / span 2;
+}
+
+.main > .tree-section{
+  grid-column:2;
+  grid-row:1;
+}
+
+.main > .latest-section{
+  grid-column:2;
+  grid-row:2;
+
+  padding:0 !important;
+  margin-top:18px;
+  max-width:none !important;
+  width:100%;
+}
+
+.main > .panel-right{
+  grid-column:3;
+  grid-row:1 / span 2;
+}
+
+@media(max-width:1100px){
+  .main > .panel-left,
+  .main > .tree-section,
+  .main > .latest-section,
+  .main > .panel-right{
+    grid-column:1;
+    grid-row:auto;
+  }
+
+  .main > .latest-section{
+    margin-top:8px;
+  }
+}
