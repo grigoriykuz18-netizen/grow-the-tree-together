@@ -703,3 +703,115 @@ body {
     inset: 6% 7% 10% 7% !important;
   }
 }
+
+
+/* =========================================================
+   MOBILE ICON OVERLAP FIX
+   РўРѕР»СЊРєРѕ С‚РµР»РµС„РѕРЅ. РљРѕРјРїСЊСЋС‚РµСЂРЅСѓСЋ РІРµСЂСЃРёСЋ РЅРµ С‚СЂРѕРіР°РµС‚.
+   РЈРјРµРЅСЊС€Р°РµРј РєСѓРїР»РµРЅРЅС‹Рµ Р°РІР°С‚Р°СЂС‹ Рё РѕР±С‹С‡РЅС‹Рµ С‚РѕС‡РєРё, С‡С‚РѕР±С‹ РѕРЅРё РЅРµ РЅР°Р»РµР·Р°Р»Рё РґСЂСѓРі РЅР° РґСЂСѓРіР°.
+========================================================= */
+
+@media (max-width: 768px) {
+  .spots-layer {
+    inset: 7% 8% 11% 8% !important;
+  }
+
+  .spot {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .spot::before {
+    width: 9px !important;
+    height: 9px !important;
+    border-width: 1.5px !important;
+  }
+
+  .spot.selected::before {
+    width: 11px !important;
+    height: 11px !important;
+  }
+
+  .spot.claimed .claimed-avatar.green,
+  .claimed-avatar.green {
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
+    max-width: 22px !important;
+    max-height: 22px !important;
+    border-width: 2px !important;
+  }
+
+  .spot.claimed .claimed-avatar.white,
+  .claimed-avatar.white {
+    width: 25px !important;
+    height: 25px !important;
+    min-width: 25px !important;
+    min-height: 25px !important;
+    max-width: 25px !important;
+    max-height: 25px !important;
+    border-width: 2px !important;
+  }
+
+  .spot.claimed .claimed-avatar.gold,
+  .claimed-avatar.gold {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+    border-width: 2px !important;
+  }
+
+  .spot.claimed:hover .claimed-avatar {
+    transform: scale(1.06) translateZ(0) !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .spots-layer {
+    inset: 8% 9% 12% 9% !important;
+  }
+
+  .spot {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .spot::before {
+    width: 8px !important;
+    height: 8px !important;
+  }
+
+  .spot.claimed .claimed-avatar.green,
+  .claimed-avatar.green {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+  }
+
+  .spot.claimed .claimed-avatar.white,
+  .claimed-avatar.white {
+    width: 23px !important;
+    height: 23px !important;
+    min-width: 23px !important;
+    min-height: 23px !important;
+    max-width: 23px !important;
+    max-height: 23px !important;
+  }
+
+  .spot.claimed .claimed-avatar.gold,
+  .claimed-avatar.gold {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    max-width: 28px !important;
+    max-height: 28px !important;
+  }
+}
