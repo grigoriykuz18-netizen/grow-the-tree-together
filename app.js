@@ -375,7 +375,7 @@ document.addEventListener('click', e => {
   }
 });
 
-if (viewAllMembersBtn) {
+if (viewAllMembersBtn && membersModal) {
   viewAllMembersBtn.addEventListener('click', () => {
     renderMembersGrid();
     membersModal.classList.add('visible');
@@ -395,12 +395,12 @@ if (membersModal) {
     }
   });
 }
-  if (shareClose) {
+if (shareClose && shareModal) {
   shareClose.addEventListener('click', () => {
     shareModal.classList.remove('visible');
   });
 }
-
+  
 if (shareModal) {
   shareModal.addEventListener('click', e => {
     if (e.target === shareModal) {
