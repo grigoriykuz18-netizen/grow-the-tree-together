@@ -1916,3 +1916,42 @@ body {
     inset: 0 !important;
   }
 }
+/* ===== RESTORE TREE VIEW ===== */
+
+.tree-container{
+  max-width:990px !important;
+  width:100% !important;
+  aspect-ratio:1.22 / 1 !important;
+  border-radius:24px !important;
+  overflow:hidden !important;
+}
+
+.tree-image{
+  width:108% !important;
+  height:108% !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  transform:translate(-4%, -3%) scale(1.05) !important;
+}
+
+.spots-layer{
+  inset:3% -2% 8% -2% !important;
+}
+
+@media(max-width:768px){
+  .tree-container{
+    width:100% !important;
+    aspect-ratio:1.05 / 1 !important;
+  }
+
+  .tree-image{
+    width:112% !important;
+    height:112% !important;
+    object-fit:contain !important;
+    transform:translate(-6%, -4%) scale(1.03) !important;
+  }
+
+  .spots-layer{
+    inset:5% -4% 10% -4% !important;
+  }
+}
