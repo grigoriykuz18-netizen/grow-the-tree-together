@@ -604,18 +604,6 @@ body {
 }
 
 /* ===== MOBILE SPOTS FIX ===== */
-
-@media (max-width: 768px) {
-  .spots-layer {
-    inset: 12% -2% 8% -2% !important;
-  }
-
-  .tree-image {
-    width: 108% !important;
-    height: 108% !important;
-    transform: translate(-4%, -2%) scale(1.02) !important;
-  }
-}
 @media (max-width: 768px) {
 
   /* левые белые */
@@ -1809,7 +1797,7 @@ body {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   pointer-events: none;
   user-select: none;
