@@ -849,13 +849,6 @@ async function downloadStoryImage(data) {
 
     drawPremiumStoryCanvas(ctx, canvas, treeImg, avatarImages, data);
   } catch (err) {
-    console.error('Story error:', err);
-    alert('Could not generate story image. Check console.');
-  }
-}
-
-    drawPremiumStoryCanvas(ctx, canvas, treeImg, avatarImages, data);
-  } catch (err) {
     console.error(err);
     alert('Could not generate story image.');
   }
