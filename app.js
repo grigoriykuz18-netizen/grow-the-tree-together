@@ -1178,37 +1178,37 @@ function drawStoryStats(ctx, W, y, color) {
     ['🌍', 'CONNECT', '& GROW']
   ];
 
-  const startX = 130;
-  const gap = 270;
+  const centers = [165, 405, 645, 885];
 
   ctx.save();
 
   items.forEach((item, i) => {
-    const x = startX + i * gap;
+    const x = centers[i];
 
     ctx.beginPath();
-    ctx.arc(x, y, 42, 0, Math.PI * 2);
+    ctx.arc(x, y, 38, 0, Math.PI * 2);
     ctx.fillStyle = 'rgba(87,255,127,.10)';
     ctx.fill();
     ctx.strokeStyle = 'rgba(87,255,127,.45)';
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    ctx.font = '30px Arial';
+    ctx.font = '28px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(item[0], x, y + 2);
+    ctx.fillText(item[0], x, y + 1);
 
     ctx.textBaseline = 'alphabetic';
     ctx.textAlign = 'left';
-    ctx.font = '800 20px Inter, Arial';
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(item[1], x + 58, y - 8);
 
-    ctx.font = '900 25px Inter, Arial';
+    ctx.font = '800 18px Inter, Arial';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(item[1], x + 52, y - 7);
+
+    ctx.font = '900 22px Inter, Arial';
     ctx.fillStyle = color;
-    ctx.fillText(item[2], x + 58, y + 22);
+    ctx.fillText(item[2], x + 52, y + 21);
   });
 
   ctx.restore();
