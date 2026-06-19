@@ -20,6 +20,7 @@ const downloadStoryBtn = document.getElementById('downloadStoryBtn');
 const shareXBtn = document.getElementById('shareXBtn');
 const avatarInput = document.getElementById('avatarInput');
 const clearAvatarBtn = document.getElementById('clearAvatarBtn');
+const avatarFileName = document.getElementById('avatarFileName');
 
 let lastShareData = null;
 // ===== DATA: V32 ideal layout — 42 spots =====
@@ -414,6 +415,17 @@ function selectSpot(spot) {
 
   hideTooltip();
 }
+
+function bindEvents() {
+  form.addEventListener('submit', handleSubmit);
+
+  document.querySelectorAll('input[name="tier"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (selectedSpot && selectedSpot.tier !== radio.value) {
+        clearSelected();
+      }
+    });
+  });
 
 function bindEvents() {
   form.addEventListener('submit', handleSubmit);
