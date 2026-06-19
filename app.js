@@ -132,7 +132,12 @@ if (containsLink(about)) {
   if (name.length < 2) {
     return 'Name is too short.';
   }
-
+if (name.length > 32) {
+  return 'Name is too long.';
+}
+  if (url.length > 200) {
+  return 'Link is too long.';
+}
   if (about.length > 250) {
     return 'Description is too long.';
   }
