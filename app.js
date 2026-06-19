@@ -66,7 +66,20 @@ const SPOTS_DATA = [
   { id: 'gr21', tier: 'green', x: 50, y: 4 }
 ];
 
-const PRICES = { gold: 250, white: 100, green: 50 };
+const BASE_PRICES = { gold: 250, white: 100, green: 50 };
+
+function getCurrentPrices() {
+  const claimedTotal = spots.filter(s => s.claimed).length;
+
+  const multiplier = claimedTotal >= 10 ? 1.10 : 1;
+
+  return {
+    gold: Math.round(BASE_PRICES.gold * multiplier),
+    white: Math.round(BASE_PRICES.white * multiplier),
+    green: Math.round(BASE_PRICES.green * multiplier)
+  };
+}
+
 const TOTALS = { gold: 4, white: 15, green: 21 };
 const STORAGE_KEY = 'gtree_claims_v32';
 
