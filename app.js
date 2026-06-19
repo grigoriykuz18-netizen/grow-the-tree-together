@@ -813,186 +813,483 @@ async function downloadStoryImage(data) {
   canvas.height = 1920;
   const ctx = canvas.getContext('2d');
 
-  // === Background gradient ===
-  const bg = ctx.createLinearGradient(0, 0, 0, 1920);
-  bg.addColorStop(0, '#0a1510');
-  bg.addColorStop(0.5, '#071208');
-  bg.addColorStop(1, '#000000');
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, 1080, 1920);
+  try {
+    const treeImg = await loadCanvasImage('tree.png', false);
 
-  // === Load tree image ===
-  const treeImg = new Image();
-  treeImg.crossOrigin = 'anonymous';
-  treeImg.src = 'tree.png';
-
-  await new Promise((resolve, reject) => {
-    treeImg.onload = resolve;
-    treeImg.onerror = reject;
-  });
-
-  // === Draw tree (centered, scaled) ===
-  const treeW = 900;
-  const treeH = treeW / 1.24;
-  const treeX = (1080 - treeW) / 2;
-  const treeY = 580;
-  ctx.drawImage(treeImg, treeX, treeY, treeW, treeH);
-
-  // === Draw all spots ===
-  for (const spot of spots) {
-    const sx = treeX + (spot.x / 100) * treeW;
-    const sy = treeY + (spot.y / 100) * treeH;
-
-    const isCurrentSpot = spot.id === data.spotId;
-    const baseSize = spot.tier === 'gold' ? 28 : spot.tier === 'white' ? 22 : 18;
-    const size = isCurrentSpot ? baseSize * 1.8 : baseSize;
-
-    if (spot.claimed && spot.avatar) {
-      // Draw avatar circle
-      const avatarImg = new Image();
-      avatarImg.crossOrigin = 'anonymous';
-      avatarImg.src = spot.avatar;
-
+    const avatarImages = {};
+    for (const spot of spots.filter(s => s.claimed && s.avatar)) {
       try {
-        await new Promise((res, rej) => {
-          avatarImg.onload = res;
-          avatarImg.onerror = rej;
-          setTimeout(rej, 3000);
-        });
-
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(sx, sy, size / 2, 0, Math.PI * 2);
-        ctx.closePath();
-        ctx.clip();
-        ctx.drawImage(avatarImg, sx - size / 2, sy - size / 2, size, size);
-        ctx.restore();
-
-        // Border
-        ctx.strokeStyle = spot.tier === 'gold' ? '#ffd54a' : spot.tier === 'white' ? '#ffffff' : '#57ff7f';
-        ctx.lineWidth = isCurrentSpot ? 4 : 2;
-        ctx.beginPath();
-        ctx.arc(sx, sy, size / 2 + 2, 0, Math.PI * 2);
-        ctx.stroke();
-      } catch {
-        drawGlowDot(ctx, sx, sy, size, spot.tier);
+        avatarImages[spot.id] = await loadCanvasImage(spot.avatar, true);
+      } catch (e) {
+        console.warn('Avatar skipped:', spot.avatar);
       }
-    } else if (spot.claimed) {
-      drawGlowDot(ctx, sx, sy, size, spot.tier);
-    } else {
-      drawGlowDot(ctx, sx, sy, size * 0.6, spot.tier);
     }
 
-    // Highlight current spot with golden ring
-    if (isCurrentSpot) {
-      ctx.strokeStyle = '#ffd54a';
-      ctx.lineWidth = 5;
-      ctx.shadowColor = '#ffd54a';
-      ctx.shadowBlur = 30;
-      ctx.beginPath();
-      ctx.arc(sx, sy, size / 2 + 12, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.shadowBlur = 0;
-    }
+    drawStoryPoster(ctx, canvas, treeImg, avatarImages, data);
+    exportStory(canvas, data);
+  } catch (err) {
+    console.error(err);
+    alert('Could not generate story image.');
   }
-
-  // === Header text ===
-  ctx.textAlign = 'center';
-
-  // Logo
-  ctx.font = '700 32px Inter, Arial';
-  ctx.fillStyle = '#ffffff';
-  ctx.fillText('🌿 GROW THE TREE', 540, 60);
-  ctx.font = 'italic 600 28px Inter, Arial';
-  ctx.fillStyle = '#57ff7f';
-  ctx.fillText('together', 540, 100);
-
-  // Achievement
-  ctx.font = '600 24px Inter, Arial';
-  ctx.fillStyle = '#ffd54a';
-  ctx.fillText('✨ ACHIEVEMENT UNLOCKED ✨', 540, 180);
-
-  // Tier title
-  const tierLabel = data.tier === 'gold' ? 'GOLD FOUNDER' : data.tier === 'white' ? 'WHITE FOUNDER' : 'GREEN FOUNDER';
-  ctx.font = '900 72px Inter, Arial';
-  ctx.fillStyle = data.tier === 'gold' ? '#ffd54a' : data.tier === 'white' ? '#ffffff' : '#57ff7f';
-  ctx.fillText(tierLabel, 540, 280);
-
-  // Number badge
-  const claimedCount = spots.filter(s => s.claimed).length;
-  ctx.font = '900 64px Inter, Arial';
-  ctx.fillStyle = '#ffd54a';
-  ctx.fillText(`#${claimedCount}`, 540, 380);
-
-  // Name
-  ctx.font = '700 42px Inter, Arial';
-  ctx.fillStyle = '#ffffff';
-  ctx.fillText('PROUDLY CLAIMED BY', 540, 460);
-  ctx.font = '900 56px Inter, Arial';
-  ctx.fillText(data.name, 540, 530);
-  if (data.about) {
-    ctx.font = '500 28px Inter, Arial';
-    ctx.fillStyle = '#9aa9a1';
-    ctx.fillText(data.about, 540, 580);
-  }
-
-  // === Footer ===
-  // Badge
-  ctx.fillStyle = 'rgba(0,0,0,0.6)';
-  roundRect(ctx, 290, 1420, 500, 80, 16);
-  ctx.fill();
-  ctx.strokeStyle = '#ffd54a';
-  ctx.lineWidth = 2;
-  roundRect(ctx, 290, 1420, 500, 80, 16);
-  ctx.stroke();
-
-  ctx.font = '700 24px Inter, Arial';
-  ctx.fillStyle = '#ffd54a';
-  ctx.textAlign = 'center';
-  ctx.fillText(`🏆 ONE OF ONLY ${TOTALS[data.tier]} ${data.tier.toUpperCase()} SPOTS`, 540, 1470);
-
-  // Stats row
-  const statsY = 1560;
-  ctx.font = '600 20px Inter, Arial';
-  ctx.fillStyle = '#b9c8bf';
-  ctx.fillText('ONLY 40 SPOTS EXIST', 270, statsY);
-  ctx.fillText('FOUNDING MEMBER', 540, statsY);
-  ctx.fillText('PERMANENT PLACE', 810, statsY);
-
-  // CTA
-  ctx.fillStyle = 'rgba(87,255,127,0.12)';
-  roundRect(ctx, 180, 1700, 720, 70, 35);
-  ctx.fill();
-  ctx.strokeStyle = '#57ff7f';
-  ctx.lineWidth = 2;
-  roundRect(ctx, 180, 1700, 720, 70, 35);
-  ctx.stroke();
-
-  ctx.font = '800 28px Inter, Arial';
-  ctx.fillStyle = '#57ff7f';
-  ctx.fillText('🌿 BE PART OF SOMETHING REAL. GROW TOGETHER. 🌿', 540, 1745);
-
-  // URL
-  ctx.font = '700 32px Inter, Arial';
-  ctx.fillStyle = '#ffffff';
-  ctx.fillText('growthetreetogether.com', 540, 1850);
-
-  // === Download ===
-  const link = document.createElement('a');
-  link.download = `grow-the-tree-${data.tier}-founder-${data.name.replace(/\s+/g, '-')}.png`;
-  link.href = canvas.toDataURL('image/png');
-  link.click();
 }
 
-function drawGlowDot(ctx, x, y, size, tier) {
-  const color = tier === 'gold' ? '#ffd54a' : tier === 'white' ? '#ffffff' : '#57ff7f';
+function loadCanvasImage(src, useCors = true) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+
+    if (useCors) {
+      img.crossOrigin = 'anonymous';
+    }
+
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error(`Image failed: ${src}`));
+
+    img.src = src;
+  });
+}
+
+function drawStoryPoster(ctx, canvas, treeImg, avatarImages, data) {
+  const W = canvas.width;
+  const H = canvas.height;
+
+  const colors = {
+    gold: '#ffd54a',
+    white: '#ffffff',
+    green: '#57ff7f'
+  };
+
+  const tierTitle = {
+    gold: 'GOLD FOUNDER',
+    white: 'WHITE FOUNDER',
+    green: 'GREEN FOUNDER'
+  };
+
+  const tierLimit = {
+    gold: '4 GOLD SPOTS',
+    white: '15 WHITE SPOTS',
+    green: '21 GREEN SPOTS'
+  };
+
+  const mainColor = colors[data.tier] || colors.green;
+  const claimedCount = spots.filter(s => s.claimed).length;
+  const activeSpot = spots.find(s => s.id === data.spotId);
+
+  // Background
+  const bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, '#07120d');
+  bg.addColorStop(0.45, '#041008');
+  bg.addColorStop(1, '#000000');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawStoryParticles(ctx, W, H, mainColor);
+
+  // Header
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'alphabetic';
+
+  ctx.font = '900 44px Inter, Arial';
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText('🌿 GROW THE TREE', W / 2, 70);
+
+  ctx.font = 'italic 800 36px Inter, Arial';
+  ctx.fillStyle = '#57ff7f';
+  ctx.fillText('together', W / 2, 118);
+
+  ctx.font = '800 34px Inter, Arial';
+  ctx.fillStyle = mainColor;
+  ctx.shadowColor = mainColor;
+  ctx.shadowBlur = 18;
+  ctx.fillText('✨ ACHIEVEMENT UNLOCKED ✨', W / 2, 205);
+  ctx.shadowBlur = 0;
+
+  ctx.font = '900 96px Inter, Arial';
+  ctx.fillStyle = mainColor;
+  ctx.shadowColor = mainColor;
+  ctx.shadowBlur = 26;
+  ctx.fillText(tierTitle[data.tier] || 'FOUNDER', W / 2, 330);
+  ctx.shadowBlur = 0;
+
+  drawFounderNumberBadge(ctx, W / 2, 435, claimedCount, mainColor);
+
+  ctx.font = '800 28px Inter, Arial';
+  ctx.fillStyle = '#dbe8e0';
+  ctx.fillText('PROUDLY CLAIMED BY', W / 2, 555);
+
+  ctx.font = '900 58px Inter, Arial';
+  ctx.fillStyle = '#ffffff';
+  ctx.shadowColor = 'rgba(255,255,255,.35)';
+  ctx.shadowBlur = 14;
+  ctx.fillText(data.name || 'Founder', W / 2, 625);
+  ctx.shadowBlur = 0;
+
+  if (data.about) {
+    ctx.font = '500 34px Inter, Arial';
+    ctx.fillStyle = '#b9c8bf';
+    ctx.fillText(data.about, W / 2, 675);
+  }
+
+  // Tree area — крупнее и ближе к референсу
+  const treeX = 20;
+  const treeY = 650;
+  const treeW = 1040;
+  const treeH = 790;
+
+  ctx.save();
+
+  const treeGlow = ctx.createRadialGradient(W / 2, treeY + 420, 80, W / 2, treeY + 420, 520);
+  treeGlow.addColorStop(0, `${mainColor}55`);
+  treeGlow.addColorStop(0.45, 'rgba(87,255,127,.12)');
+  treeGlow.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = treeGlow;
+  ctx.fillRect(0, treeY - 80, W, treeH + 180);
+
+  ctx.drawImage(treeImg, treeX, treeY, treeW, treeH);
+
+  drawStorySpots(ctx, treeX, treeY, treeW, treeH, activeSpot, avatarImages);
+
+  ctx.restore();
+
+  // Bottom tier badge
+  drawPremiumBadge(
+    ctx,
+    W / 2,
+    1510,
+    `🏆 ONE OF ONLY ${tierLimit[data.tier]}`,
+    mainColor
+  );
+
+  drawStoryStats(ctx, W, 1645, mainColor);
+
+  drawBottomCTA(ctx, W / 2, 1770);
+
+  ctx.font = '900 38px Inter, Arial';
+  ctx.fillStyle = '#ffffff';
+  ctx.shadowColor = 'rgba(255,255,255,.25)';
+  ctx.shadowBlur = 10;
+  ctx.fillText('growthetreetogether.com', W / 2, 1870);
+  ctx.shadowBlur = 0;
+}
+
+function drawStorySpots(ctx, treeX, treeY, treeW, treeH, activeSpot, avatarImages) {
+  const colors = {
+    gold: '#ffd54a',
+    white: '#ffffff',
+    green: '#57ff7f'
+  };
+
+  // ВАЖНО: отдельная безопасная область для точек внутри дерева.
+  // Поэтому точки больше не выходят за пределы дерева на story-картинке.
+  const spotArea = {
+    x: treeX + 90,
+    y: treeY + 70,
+    w: treeW - 180,
+    h: treeH - 165
+  };
+
+  spots.forEach(spot => {
+    const color = colors[spot.tier] || colors.green;
+    const isActive = activeSpot && spot.id === activeSpot.id;
+
+    let x = spotArea.x + (spot.x / 100) * spotArea.w;
+    let y = spotArea.y + (spot.y / 100) * spotArea.h;
+
+    // Защита от крайних точек
+    x = clamp(x, treeX + 55, treeX + treeW - 55);
+    y = clamp(y, treeY + 45, treeY + treeH - 85);
+
+    const emptySize =
+      spot.tier === 'gold' ? 22 :
+      spot.tier === 'white' ? 18 :
+      16;
+
+    const claimedSize =
+      spot.tier === 'gold' ? 54 :
+      spot.tier === 'white' ? 44 :
+      38;
+
+    const size = spot.claimed ? claimedSize : emptySize;
+    const finalSize = isActive ? size + 26 : size;
+
+    if (isActive) {
+      drawActiveSpotAura(ctx, x, y, finalSize, color);
+    }
+
+    if (spot.claimed && avatarImages[spot.id]) {
+      drawAvatarCircle(ctx, avatarImages[spot.id], x, y, finalSize, color, isActive);
+    } else if (spot.claimed) {
+      drawPlaceholderCircle(ctx, x, y, finalSize, color, isActive);
+    } else {
+      drawEmptyDot(ctx, x, y, finalSize, color);
+    }
+  });
+}
+
+function drawAvatarCircle(ctx, img, x, y, size, color, isActive) {
+  ctx.save();
+
+  ctx.shadowColor = color;
+  ctx.shadowBlur = isActive ? 34 : 18;
+
+  ctx.beginPath();
+  ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+  ctx.fillStyle = '#06100c';
+  ctx.fill();
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(x, y, size / 2 - 5, 0, Math.PI * 2);
+  ctx.clip();
+  ctx.drawImage(img, x - size / 2 + 5, y - size / 2 + 5, size - 10, size - 10);
+  ctx.restore();
+
+  ctx.lineWidth = isActive ? 7 : 4;
+  ctx.strokeStyle = color;
+  ctx.beginPath();
+  ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+  ctx.stroke();
+
+  ctx.restore();
+}
+
+function drawPlaceholderCircle(ctx, x, y, size, color, isActive) {
+  ctx.save();
+
+  ctx.shadowColor = color;
+  ctx.shadowBlur = isActive ? 34 : 18;
+
+  ctx.beginPath();
+  ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+  ctx.fillStyle = '#06100c';
+  ctx.fill();
+
+  ctx.lineWidth = isActive ? 7 : 4;
+  ctx.strokeStyle = color;
+  ctx.stroke();
+
+  ctx.font = `${Math.round(size * 0.42)}px Arial`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = '#b9c8bf';
+  ctx.fillText('👤', x, y + 1);
+
+  ctx.restore();
+}
+
+function drawEmptyDot(ctx, x, y, size, color) {
+  ctx.save();
+
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 22;
+
   ctx.beginPath();
   ctx.arc(x, y, size / 2, 0, Math.PI * 2);
   ctx.fillStyle = color;
-  ctx.shadowColor = color;
-  ctx.shadowBlur = 20;
   ctx.fill();
+
+  ctx.beginPath();
+  ctx.arc(x, y, size / 2 + 5, 0, Math.PI * 2);
+  ctx.strokeStyle = `${color}66`;
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.restore();
+}
+
+function drawActiveSpotAura(ctx, x, y, size, color) {
+  ctx.save();
+
+  const aura = ctx.createRadialGradient(x, y, 8, x, y, size * 1.8);
+  aura.addColorStop(0, `${color}cc`);
+  aura.addColorStop(0.32, `${color}55`);
+  aura.addColorStop(1, 'rgba(0,0,0,0)');
+
+  ctx.fillStyle = aura;
+  ctx.beginPath();
+  ctx.arc(x, y, size * 1.8, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 5;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 35;
+  ctx.beginPath();
+  ctx.arc(x, y, size / 2 + 18, 0, Math.PI * 2);
+  ctx.stroke();
+
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(x, y, size / 2 + 30, 0, Math.PI * 2);
+  ctx.stroke();
+
+  ctx.restore();
+}
+
+function drawFounderNumberBadge(ctx, x, y, number, color) {
+  ctx.save();
+
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 24;
+
+  ctx.fillStyle = 'rgba(0,0,0,.62)';
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 3;
+
+  roundRect(ctx, x - 145, y - 60, 290, 104, 22);
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.font = '900 78px Inter, Arial';
+  ctx.fillStyle = color;
+  ctx.textAlign = 'center';
+  ctx.fillText(`#${number}`, x, y + 17);
+
+  ctx.restore();
+}
+
+function drawPremiumBadge(ctx, x, y, text, color) {
+  ctx.save();
+
+  ctx.fillStyle = 'rgba(0,0,0,.68)';
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 3;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 22;
+
+  roundRect(ctx, x - 340, y - 48, 680, 96, 20);
+  ctx.fill();
+  ctx.stroke();
+
   ctx.shadowBlur = 0;
+
+  ctx.font = '900 30px Inter, Arial';
+  ctx.fillStyle = color;
+  ctx.textAlign = 'center';
+  ctx.fillText(text, x, y + 10);
+
+  ctx.restore();
+}
+
+function drawStoryStats(ctx, W, y, color) {
+  const items = [
+    ['🌿', 'ONLY', '40 SPOTS'],
+    ['👥', 'FOUNDING', 'MEMBER'],
+    ['🛡️', 'VISIBLE', 'PLACE'],
+    ['🌍', 'CONNECT', '& GROW']
+  ];
+
+  const startX = 130;
+  const gap = 270;
+
+  ctx.save();
+
+  items.forEach((item, i) => {
+    const x = startX + i * gap;
+
+    ctx.beginPath();
+    ctx.arc(x, y, 42, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(87,255,127,.10)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(87,255,127,.45)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.font = '30px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(item[0], x, y + 2);
+
+    ctx.textBaseline = 'alphabetic';
+    ctx.textAlign = 'left';
+    ctx.font = '800 20px Inter, Arial';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(item[1], x + 58, y - 8);
+
+    ctx.font = '900 25px Inter, Arial';
+    ctx.fillStyle = color;
+    ctx.fillText(item[2], x + 58, y + 22);
+  });
+
+  ctx.restore();
+}
+
+function drawBottomCTA(ctx, x, y) {
+  ctx.save();
+
+  ctx.fillStyle = 'rgba(87,255,127,.10)';
+  ctx.strokeStyle = '#57ff7f';
+  ctx.lineWidth = 3;
+
+  roundRect(ctx, x - 395, y - 42, 790, 84, 42);
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.font = '900 30px Inter, Arial';
+  ctx.fillStyle = '#57ff7f';
+  ctx.textAlign = 'center';
+  ctx.fillText('BE PART OF SOMETHING REAL. GROW TOGETHER.', x, y + 10);
+
+  ctx.restore();
+}
+
+function drawStoryParticles(ctx, W, H, color) {
+  ctx.save();
+
+  for (let i = 0; i < 120; i++) {
+    const x = Math.random() * W;
+    const y = Math.random() * H;
+    const r = Math.random() * 2.4 + 0.4;
+
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fillStyle = i % 4 === 0 ? color : 'rgba(87,255,127,.42)';
+    ctx.globalAlpha = Math.random() * 0.65;
+    ctx.fill();
+  }
+
+  ctx.globalAlpha = 1;
+  ctx.restore();
+}
+
+function exportStory(canvas, data) {
+  const fileName = `grow-the-tree-${data.tier}-founder-${String(data.name || 'founder').replace(/\s+/g, '-')}.png`;
+
+  canvas.toBlob(async blob => {
+    if (!blob) {
+      alert('Could not export image.');
+      return;
+    }
+
+    const file = new File([blob], fileName, { type: 'image/png' });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({
+          title: 'Grow The Tree Together',
+          text: data.text,
+          files: [file]
+        });
+        return;
+      } catch (e) {
+        console.warn('Share cancelled or failed:', e);
+      }
+    }
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 3000);
+  }, 'image/png');
+}
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
 }
 
 function roundRect(ctx, x, y, w, h, r) {
