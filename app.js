@@ -1298,4 +1298,26 @@ function roundRect(ctx, x, y, w, h, r) {
   ctx.closePath();
 }
 
+updatePriceNotice(claimedTotal);
+
+function updatePriceNotice(claimedTotal) {
+  const kicker = document.getElementById('priceKicker');
+  const headline = document.getElementById('priceHeadline');
+  const subtext = document.getElementById('priceSubtext');
+
+  if (!kicker || !headline || !subtext) return;
+
+  if (claimedTotal >= 10) {
+    kicker.textContent = 'Founder pricing active';
+    headline.textContent = 'The first 10 founder spots have been claimed.';
+    subtext.textContent = 'Current prices include the 10% founder price increase.';
+  } else {
+    const left = 10 - claimedTotal;
+
+    kicker.textContent = 'Early founder price';
+    headline.textContent = 'Prices increase by 10% after the first 10 claimed spots.';
+    subtext.textContent = `${left} early founder spots left before the price increase.`;
+  }
+}
+
 init();
