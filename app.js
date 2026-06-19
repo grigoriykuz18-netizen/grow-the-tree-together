@@ -625,6 +625,8 @@ if (error) {
   return;
 }
 
+localStorage.setItem(LAST_CLAIM_KEY, String(Date.now()));
+
 await loadState();
 renderSpots();
 updateCount();
