@@ -122,7 +122,7 @@ function validateClaimContent({ name, about, url }) {
     return 'Name is too short.';
   }
 
-  if (about.length > 100) {
+  if (about.length > 250) {
     return 'Description is too long.';
   }
 
