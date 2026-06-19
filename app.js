@@ -736,10 +736,9 @@ const claimed = spots
         }
       </div>
 
-      <div class="founder-info">
-        <strong>${escapeHtml(s.name || 'Anonymous')}</strong>
-        ${s.about ? `<small>${escapeHtml(s.about)}</small>` : ''}
-      </div>
+<div class="founder-info">
+  <strong>${escapeHtml(s.name || 'Anonymous')}</strong>
+</div>
 
       <span class="founder-open">↗</span>
     </a>
@@ -880,10 +879,9 @@ const claimed = spots
         }
       </div>
 
-      <div class="founder-info">
-        <strong>${escapeHtml(s.name || 'Anonymous')}</strong>
-        ${s.about ? `<small>${escapeHtml(s.about)}</small>` : ''}
-      </div>
+<div class="founder-info">
+  <strong>${escapeHtml(s.name || 'Anonymous')}</strong>
+</div>
 
       <span class="founder-open">↗</span>
     </a>
@@ -1004,12 +1002,6 @@ function drawStoryPoster(ctx, canvas, treeImg, avatarImages, data) {
   ctx.shadowBlur = 14;
   ctx.fillText(data.name || 'Founder', W / 2, 625);
   ctx.shadowBlur = 0;
-
-if (data.about) {
-  ctx.font = '500 28px Inter, Arial';
-  ctx.fillStyle = '#b9c8bf';
-  drawWrappedText(ctx, data.about, W / 2, 675, 700, 34, 2);
-}
 
   // Tree area — крупнее и ближе к референсу
   const treeX = 20;
