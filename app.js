@@ -961,13 +961,13 @@ function drawStoryPoster(ctx, canvas, treeImg, avatarImages, data) {
 
   drawStoryStats(ctx, W, 1645, mainColor);
 
-  drawBottomCTA(ctx, W / 2, 1770);
+  drawBottomCTA(ctx, W / 2, 1810);
 
   ctx.font = '900 38px Inter, Arial';
   ctx.fillStyle = '#ffffff';
   ctx.shadowColor = 'rgba(255,255,255,.25)';
   ctx.shadowBlur = 10;
-  ctx.fillText('growthetreetogether.com', W / 2, 1870);
+  ctx.fillText('growthetreetogether.com', W / 2, 1900);
   ctx.shadowBlur = 0;
 }
 
@@ -1178,7 +1178,7 @@ function drawStoryStats(ctx, W, y, color) {
     ['🌍', 'CONNECT', '& GROW']
   ];
 
-  const centers = [150, 385, 620, 850];
+  const centers = [145, 410, 670, 935];
 
   ctx.save();
 
@@ -1200,15 +1200,14 @@ function drawStoryStats(ctx, W, y, color) {
     ctx.fillText(item[0], x, y + 1);
 
     ctx.textBaseline = 'alphabetic';
-    ctx.textAlign = 'left';
 
     ctx.font = '800 18px Inter, Arial';
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(item[1], x + 52, y - 7);
+    ctx.fillText(item[1], x, y + 78);
 
     ctx.font = '900 22px Inter, Arial';
     ctx.fillStyle = color;
-    ctx.fillText(item[2], x + 52, y + 21);
+    ctx.fillText(item[2], x, y + 106);
   });
 
   ctx.restore();
