@@ -1178,7 +1178,7 @@ function drawStoryStats(ctx, W, y, color) {
     ['🌍', 'CONNECT', '& GROW']
   ];
 
-  const centers = [165, 405, 645, 885];
+  const centers = [150, 385, 620, 850];
 
   ctx.save();
 
