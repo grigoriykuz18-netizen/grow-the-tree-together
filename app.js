@@ -1005,11 +1005,11 @@ function drawStoryPoster(ctx, canvas, treeImg, avatarImages, data) {
   ctx.fillText(data.name || 'Founder', W / 2, 625);
   ctx.shadowBlur = 0;
 
-  if (data.about) {
-    ctx.font = '500 34px Inter, Arial';
-    ctx.fillStyle = '#b9c8bf';
-    ctx.fillText(data.about, W / 2, 675);
-  }
+if (data.about) {
+  ctx.font = '500 28px Inter, Arial';
+  ctx.fillStyle = '#b9c8bf';
+  drawWrappedText(ctx, data.about, W / 2, 675, 700, 34, 2);
+}
 
   // Tree area — крупнее и ближе к референсу
   const treeX = 20;
@@ -1331,6 +1331,33 @@ function drawStoryParticles(ctx, W, H, color) {
 
   ctx.globalAlpha = 1;
   ctx.restore();
+}
+
+function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 2) {
+  const words = String(text || '').split(' ');
+  const lines = [];
+  let line = '';
+
+  for (const word of words) {
+    const testLine = line ? `${line} ${word}` : word;
+
+    if (ctx.measureText(testLine).width > maxWidth && line) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = testLine;
+    }
+
+    if (lines.length >= maxLines) break;
+  }
+
+  if (line && lines.length < maxLines) {
+    lines.push(line);
+  }
+
+  lines.forEach((l, i) => {
+    ctx.fillText(l, x, y + i * lineHeight);
+  });
 }
 
 function exportStory(canvas, data) {
