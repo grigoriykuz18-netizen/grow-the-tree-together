@@ -530,7 +530,7 @@ async function handleSubmit(e) {
 
   const formData = new FormData(form);
   const name = (formData.get('name') || '').trim().slice(0, 32);
-  const about = (formData.get('about') || '').trim().slice(0, 100);
+  const about = (formData.get('about') || '').trim().slice(0, 250);
   const url = normalizeUrl((formData.get('url') || '').trim());
   const validationError = validateClaimContent({ name, about, url });
 
