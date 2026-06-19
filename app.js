@@ -99,6 +99,13 @@ const BLOCKED_DOMAINS = [
   'fansly.com'
 ];
 
+const CLAIM_COOLDOWN_MS = 30 * 1000;
+const LAST_CLAIM_KEY = 'gtree_last_claim_time';
+
+function containsLink(text = '') {
+  return /(https?:\/\/|www\.|\.com|\.net|\.org|\.ru|\.io|\.co|t\.me|instagram\.com|x\.com|twitter\.com)/i.test(String(text));
+}
+
 function containsBadContent(text = '') {
   const clean = String(text).toLowerCase();
 
@@ -119,7 +126,9 @@ function validateClaimContent({ name, about, url }) {
   if (containsBlockedDomain(url)) {
     return 'This link is not allowed.';
   }
-
+if (containsLink(about)) {
+  return 'Links are not allowed in description.';
+}
   if (name.length < 2) {
     return 'Name is too short.';
   }
@@ -529,7 +538,13 @@ async function handleSubmit(e) {
   e.preventDefault();
 
   if (!selectedSpot) return;
+  
+  const lastClaimTime = Number(localStorage.getItem(LAST_CLAIM_KEY) || 0);
 
+if (lastClaimTime && Date.now() - lastClaimTime < CLAIM_COOLDOWN_MS) {
+  alert('Please wait before creating another claim.');
+  return;
+}
   const formData = new FormData(form);
   const name = (formData.get('name') || '').trim().slice(0, 32);
   const about = (formData.get('about') || '').trim().slice(0, 250);
