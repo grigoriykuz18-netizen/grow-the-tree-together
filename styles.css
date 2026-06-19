@@ -943,3 +943,22 @@ body {
     padding: 16px;
   }
 }
+.file-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.clear-file-btn {
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  color: #e8f0ec;
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.clear-file-btn:hover {
+  border-color: #57ff7f;
+  color: #57ff7f;
+}
