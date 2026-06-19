@@ -231,7 +231,7 @@ function renderSpots() {
 }
 
 function showTooltip(e, spot, pinned = false) {
-  const price = PRICES[spot.tier];
+  const price = getCurrentPrices()[spot.tier];
 
   const borderColor =
     spot.tier === 'gold'
@@ -352,7 +352,7 @@ function selectSpot(spot) {
   const el = document.querySelector(`.spot[data-id="${spot.id}"]`);
   if (el) {
   el.classList.add('selected');
-  el.setAttribute('data-price', `$${PRICES[spot.tier]}`);
+  el.setAttribute('data-price', `$${getCurrentPrices()[spot.tier]}`);
 }
 
   const radio = document.querySelector(`input[name="tier"][value="${spot.tier}"]`);
@@ -361,7 +361,7 @@ function selectSpot(spot) {
   const hint = document.querySelector('.hint');
   if (hint) {
     hint.classList.add('selected');
-    hint.innerHTML = `Selected: <strong>${capitalize(spot.tier)} Spot</strong> — $${PRICES[spot.tier]}`;
+    hint.innerHTML = `Selected: <strong>${capitalize(spot.tier)} Spot</strong> — $${getCurrentPrices()[spot.tier]}`;
   }
 
   hideTooltip();
@@ -474,7 +474,7 @@ async function handleSubmit(e) {
     return;
   }
 
-  const price = PRICES[tier];
+  const price = getCurrentPrices()[tier];
 const confirmed = confirm(
   `Claim ${tier.toUpperCase()} Spot for $${price}?`
 );
@@ -540,10 +540,12 @@ function updateCount() {
   const whiteClaimed = spots.filter(s => s.tier === 'white' && s.claimed).length;
   const greenClaimed = spots.filter(s => s.tier === 'green' && s.claimed).length;
 
-  const raised =
-    goldClaimed * PRICES.gold +
-    whiteClaimed * PRICES.white +
-    greenClaimed * PRICES.green;
+const currentPrices = getCurrentPrices();
+
+const raised =
+  goldClaimed * currentPrices.gold +
+  whiteClaimed * currentPrices.white +
+  greenClaimed * currentPrices.green;
 
   if (raisedAmount) {
     raisedAmount.textContent = `$${raised}`;
@@ -566,6 +568,7 @@ function updateCount() {
   updateTierUI('gold', goldClaimed);
   updateTierUI('white', whiteClaimed);
   updateTierUI('green', greenClaimed);
+  updatePriceNotice(claimedTotal);
 }
 
 function updateTierUI(tier, claimed) {
@@ -585,7 +588,7 @@ function updateTierUI(tier, claimed) {
     return;
   }
 
-  priceEl.textContent = `${left} left · $${PRICES[tier]}`;
+  priceEl.textContent = `${left} left · $${getCurrentPrices()[tier]}`;
   input.disabled = false;
   option.classList.remove('sold-out');
 }
@@ -1297,8 +1300,6 @@ function roundRect(ctx, x, y, w, h, r) {
   ctx.quadraticCurveTo(x, y, x + r, y);
   ctx.closePath();
 }
-
-updatePriceNotice(claimedTotal);
 
 function updatePriceNotice(claimedTotal) {
   const kicker = document.getElementById('priceKicker');
