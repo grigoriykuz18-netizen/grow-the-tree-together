@@ -763,7 +763,7 @@ ${url}`;
   if (shareTextEl) shareTextEl.textContent = `${name} claimed a ${label[tier]} Spot.`;
   if (shareModal) shareModal.classList.add('visible');
 }
-}
+
 function renderMembersGrid() {
 const tierOrder = {
   gold: 0,
