@@ -142,8 +142,23 @@
   <span>Avatar / logo</span>
 
   <div class="file-row">
-    <input type="file" name="avatar" id="avatarInput" accept="image/*">
-    <button type="button" id="clearAvatarBtn" class="clear-file-btn">Remove</button>
+    <label for="avatarInput" class="upload-btn">
+      📷 Choose image
+    </label>
+
+    <span id="avatarFileName">No file selected</span>
+
+    <button type="button" id="clearAvatarBtn" class="clear-file-btn">
+      Remove
+    </button>
+
+    <input
+      type="file"
+      name="avatar"
+      id="avatarInput"
+      accept="image/*"
+      hidden
+    >
   </div>
 </label>
         
