@@ -980,3 +980,14 @@ body {
   color: #9aa9a1;
   font-size: 13px;
 }
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.form-field > span {
+  color: var(--muted);
+  font-size: 13px;
+}
