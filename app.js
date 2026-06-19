@@ -27,7 +27,7 @@ const SPOTS_DATA = [
   { id: 'g1', tier: 'gold', x: 42, y: 36 },
   { id: 'g2', tier: 'gold', x: 58, y: 36 },
   { id: 'g3', tier: 'gold', x: 42, y: 51 },
-  { id: 'g4', tier: 'gold', x: 56, y: 51 },
+  { id: 'g4', tier: 'gold', x: 58, y: 51 },
 
   { id: 'w1', tier: 'white', x: 39, y: 19 },
   { id: 'w2', tier: 'white', x: 50, y: 17 },
