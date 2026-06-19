@@ -21,6 +21,8 @@ const shareXBtn = document.getElementById('shareXBtn');
 const avatarInput = document.getElementById('avatarInput');
 const clearAvatarBtn = document.getElementById('clearAvatarBtn');
 const avatarFileName = document.getElementById('avatarFileName');
+const claimCtaBlock = document.getElementById('claimCtaBlock');
+const soldOutBlock = document.getElementById('soldOutBlock');
 
 let lastShareData = null;
 // ===== DATA: V32 ideal layout — 42 spots =====
@@ -621,7 +623,26 @@ showShareMessage(name || 'Anonymous', tier, about, selectedSpot.id);
 
 function updateCount() {
   const claimedTotal = spots.filter(s => s.claimed).length;
+  
+const isSoldOut = claimedTotal >= SPOTS_DATA.length;
 
+if (claimCtaBlock) {
+  claimCtaBlock.hidden = isSoldOut;
+}
+
+if (soldOutBlock) {
+  soldOutBlock.hidden = !isSoldOut;
+}
+
+if (submitBtn) {
+  submitBtn.disabled = isSoldOut || !selectedSpot;
+  submitBtn.textContent = isSoldOut ? 'SOLD OUT' : 'CLAIM SELECTED SPOT';
+}
+
+document.querySelectorAll('.tier-option input').forEach(input => {
+  input.disabled = isSoldOut || input.disabled;
+});
+  
   const goldClaimed = spots.filter(s => s.tier === 'gold' && s.claimed).length;
   const whiteClaimed = spots.filter(s => s.tier === 'white' && s.claimed).length;
   const greenClaimed = spots.filter(s => s.tier === 'green' && s.claimed).length;
