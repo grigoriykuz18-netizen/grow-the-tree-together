@@ -18,8 +18,6 @@ const shareTitle = document.getElementById('shareTitle');
 const shareTextEl = document.getElementById('shareText');
 const downloadStoryBtn = document.getElementById('downloadStoryBtn');
 const shareXBtn = document.getElementById('shareXBtn');
-const copyPostBtn = document.getElementById('copyPostBtn');
-const copyLinkBtn = document.getElementById('copyLinkBtn');
 
 let lastShareData = null;
 // ===== DATA: V32 ideal layout — 42 spots =====
@@ -418,24 +416,6 @@ if (shareXBtn) {
       '_blank',
       'noopener'
     );
-  });
-}
-
-if (copyPostBtn) {
-  copyPostBtn.addEventListener('click', async () => {
-    if (!lastShareData) return;
-
-    await navigator.clipboard.writeText(lastShareData.text);
-    alert('Post text copied.');
-  });
-}
-
-if (copyLinkBtn) {
-  copyLinkBtn.addEventListener('click', async () => {
-    if (!lastShareData) return;
-
-    await navigator.clipboard.writeText(lastShareData.url);
-    alert('Link copied.');
   });
 }
 
