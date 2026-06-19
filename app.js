@@ -427,22 +427,21 @@ function bindEvents() {
     });
   });
 
-function bindEvents() {
-  form.addEventListener('submit', handleSubmit);
-
-  document.querySelectorAll('input[name="tier"]').forEach(radio => {
-    radio.addEventListener('change', () => {
-      if (selectedSpot && selectedSpot.tier !== radio.value) {
-        clearSelected();
-      }
-    });
+if (avatarInput && avatarFileName) {
+  avatarInput.addEventListener('change', () => {
+    avatarFileName.textContent =
+      avatarInput.files && avatarInput.files.length
+        ? avatarInput.files[0].name
+        : 'No file selected';
   });
+}
 
-  if (clearAvatarBtn && avatarInput) {
-    clearAvatarBtn.addEventListener('click', () => {
-      avatarInput.value = '';
-    });
-  }
+if (clearAvatarBtn && avatarInput && avatarFileName) {
+  clearAvatarBtn.addEventListener('click', () => {
+    avatarInput.value = '';
+    avatarFileName.textContent = 'No file selected';
+  });
+}
 
   document.addEventListener('click', e => {
     if (!tooltip.classList.contains('pinned')) return;
