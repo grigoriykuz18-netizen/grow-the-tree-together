@@ -80,6 +80,52 @@ function getCurrentPrices() {
   };
 }
 
+const BAD_WORDS = [
+  'fuck', 'shit', 'bitch', 'asshole', 'nigger', 'porn', 'sex', 'xxx',
+  'порно', 'секс', 'хуй', 'пизд', 'еба', 'ебл', 'сука', 'бляд', 'блять',
+  'нахуй', 'гандон', 'мудак'
+];
+
+const BLOCKED_DOMAINS = [
+  'pornhub.com',
+  'xvideos.com',
+  'xnxx.com',
+  'onlyfans.com',
+  'fansly.com'
+];
+
+function containsBadContent(text = '') {
+  const clean = String(text).toLowerCase();
+
+  return BAD_WORDS.some(word => clean.includes(word));
+}
+
+function containsBlockedDomain(url = '') {
+  const clean = String(url).toLowerCase();
+
+  return BLOCKED_DOMAINS.some(domain => clean.includes(domain));
+}
+
+function validateClaimContent({ name, about, url }) {
+  if (containsBadContent(name) || containsBadContent(about) || containsBadContent(url)) {
+    return 'Please remove offensive or inappropriate content.';
+  }
+
+  if (containsBlockedDomain(url)) {
+    return 'This link is not allowed.';
+  }
+
+  if (name.length < 2) {
+    return 'Name is too short.';
+  }
+
+  if (about.length > 100) {
+    return 'Description is too long.';
+  }
+
+  return null;
+}
+
 const TOTALS = { gold: 4, white: 15, green: 21 };
 const STORAGE_KEY = 'gtree_claims_v32';
 
@@ -466,6 +512,12 @@ async function handleSubmit(e) {
   const name = (formData.get('name') || '').trim().slice(0, 32);
   const about = (formData.get('about') || '').trim().slice(0, 100);
   const url = normalizeUrl((formData.get('url') || '').trim());
+  const validationError = validateClaimContent({ name, about, url });
+
+if (validationError) {
+  alert(validationError);
+  return;
+}
   const tier = formData.get('tier');
   const avatarFile = formData.get('avatar');
 
@@ -483,6 +535,20 @@ if (!confirmed) return;
 
   let avatarUrl = '';
 
+  if (avatarFile && avatarFile.size > 0) {
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+
+  if (!allowedTypes.includes(avatarFile.type)) {
+    alert('Only JPG, PNG or WEBP images are allowed.');
+    return;
+  }
+
+  if (avatarFile.size > 3 * 1024 * 1024) {
+    alert('Image is too large. Please upload an image under 3 MB.');
+    return;
+  }
+}
+  
   try {
     if (avatarFile && avatarFile.size > 0) {
       submitBtn.textContent = 'UPLOADING PHOTO...';
