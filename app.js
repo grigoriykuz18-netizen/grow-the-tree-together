@@ -739,7 +739,7 @@ function shortUrl(url) {
 function showShareMessage(name, tier, about = '', spotId = '') {
   const emoji = { gold: '🏆', white: '⚪', green: '🌿' };
   const label = { gold: 'Gold Founder', white: 'White Founder', green: 'Green Founder' };
-  const url = '[growthetreetogether.com](https://growthetreetogether.com)';
+  const url = 'https://growthetreetogether.com';
 
   const text = `${emoji[tier]} I just claimed a ${label[tier]} Spot on Grow The Tree Together.
 
