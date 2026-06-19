@@ -253,7 +253,7 @@ body {
 .founder-card.green { border-color: #39ff88; box-shadow: none; }
 .founder-card.white { border-color: #ffffff !important; box-shadow: 0 0 14px rgba(255,255,255,.28), 0 0 34px rgba(255,255,255,.12) !important; }
 .founder-card.gold { position: relative; border-color: #ffd54a !important; box-shadow: 0 0 16px rgba(255,213,74,.45), 0 0 42px rgba(255,213,74,.18) !important; animation: founderGoldPulse 3s infinite; }
-.founder-card.gold::before { content: "рџ‘‘"; position: absolute; top: 10px; right: 12px; font-size: 17px; filter: drop-shadow(0 0 8px rgba(255,213,74,.8)); z-index: 3; }
+.founder-card.gold::before { content: "👑"; position: absolute; top: 10px; right: 12px; font-size: 17px; filter: drop-shadow(0 0 8px rgba(255,213,74,.8)); z-index: 3; }
 @keyframes founderGoldPulse { 0%,100% { box-shadow: 0 0 10px rgba(255,213,74,.20), 0 0 24px rgba(255,213,74,.10); } 50% { box-shadow: 0 0 20px rgba(255,213,74,.55), 0 0 50px rgba(255,213,74,.25); } }
 .founder-avatar { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; background: #07100d !important; isolation: isolate; transform: translateZ(0); }
 .founder-avatar img { display: block !important; width: 100% !important; height: 100% !important; object-fit: cover !important; border-radius: 50% !important; transform: translateZ(0); }
