@@ -533,7 +533,7 @@ await loadState();
 renderSpots();
 updateCount();
 renderLatest();
-showShareMessage(name || 'Anonymous', tier);
+showShareMessage(name || 'Anonymous', tier, about, selectedSpot.id);
 
   form.reset();
   clearSelected();
@@ -736,23 +736,12 @@ function shortUrl(url) {
 
   return host;
 }
-function showShareMessage(name, tier) {
-  const emoji = {
-    gold: '🏆',
-    white: '⚪',
-    green: '🌿'
-  };
+function showShareMessage(name, tier, about = '', spotId = '') {
+  const emoji = { gold: '🏆', white: '⚪', green: '🌿' };
+  const label = { gold: 'Gold Founder', white: 'White Founder', green: 'Green Founder' };
+  const url = '[growthetreetogether.com](https://growthetreetogether.com)';
 
-  const label = {
-    gold: 'Gold Founder',
-    white: 'White Founder',
-    green: 'Green Founder'
-  };
-
-  const url = 'https://growthetreetogether.com';
-
-  const text =
-`${emoji[tier]} I just claimed a ${label[tier]} Spot on Grow The Tree Together.
+  const text = `${emoji[tier]} I just claimed a ${label[tier]} Spot on Grow The Tree Together.
 
 Only 40 permanent spots exist on the tree.
 
@@ -762,23 +751,18 @@ ${url}`;
   lastShareData = {
     name,
     tier,
+    about,
+    spotId,
     emoji: emoji[tier],
     label: label[tier],
     url,
     text
   };
 
-  if (shareTitle) {
-    shareTitle.textContent = `${emoji[tier]} Spot claimed!`;
-  }
-
-  if (shareTextEl) {
-    shareTextEl.textContent = `${name} claimed a ${label[tier]} Spot.`;
-  }
-
-  if (shareModal) {
-    shareModal.classList.add('visible');
-  }
+  if (shareTitle) shareTitle.textContent = `${emoji[tier]} Spot claimed!`;
+  if (shareTextEl) shareTextEl.textContent = `${name} claimed a ${label[tier]} Spot.`;
+  if (shareModal) shareModal.classList.add('visible');
+}
 }
 function renderMembersGrid() {
 const tierOrder = {
@@ -823,64 +807,206 @@ const claimed = spots
     </a>
   `).join('');
 }
-function downloadStoryImage(data) {
+async function downloadStoryImage(data) {
   const canvas = document.createElement('canvas');
   canvas.width = 1080;
   canvas.height = 1920;
-
   const ctx = canvas.getContext('2d');
 
-  const gradient = ctx.createLinearGradient(0, 0, 0, 1920);
-  gradient.addColorStop(0, '#07100d');
-  gradient.addColorStop(1, '#000000');
-
-  ctx.fillStyle = gradient;
+  // === Background gradient ===
+  const bg = ctx.createLinearGradient(0, 0, 0, 1920);
+  bg.addColorStop(0, '#0a1510');
+  bg.addColorStop(0.5, '#071208');
+  bg.addColorStop(1, '#000000');
+  ctx.fillStyle = bg;
   ctx.fillRect(0, 0, 1080, 1920);
 
-  ctx.fillStyle = 'rgba(87,255,127,.12)';
-  ctx.beginPath();
-  ctx.arc(540, 680, 360, 0, Math.PI * 2);
-  ctx.fill();
+  // === Load tree image ===
+  const treeImg = new Image();
+  treeImg.crossOrigin = 'anonymous';
+  treeImg.src = 'tree.png';
 
+  await new Promise((resolve, reject) => {
+    treeImg.onload = resolve;
+    treeImg.onerror = reject;
+  });
+
+  // === Draw tree (centered, scaled) ===
+  const treeW = 900;
+  const treeH = treeW / 1.24;
+  const treeX = (1080 - treeW) / 2;
+  const treeY = 580;
+  ctx.drawImage(treeImg, treeX, treeY, treeW, treeH);
+
+  // === Draw all spots ===
+  for (const spot of spots) {
+    const sx = treeX + (spot.x / 100) * treeW;
+    const sy = treeY + (spot.y / 100) * treeH;
+
+    const isCurrentSpot = spot.id === data.spotId;
+    const baseSize = spot.tier === 'gold' ? 28 : spot.tier === 'white' ? 22 : 18;
+    const size = isCurrentSpot ? baseSize * 1.8 : baseSize;
+
+    if (spot.claimed && spot.avatar) {
+      // Draw avatar circle
+      const avatarImg = new Image();
+      avatarImg.crossOrigin = 'anonymous';
+      avatarImg.src = spot.avatar;
+
+      try {
+        await new Promise((res, rej) => {
+          avatarImg.onload = res;
+          avatarImg.onerror = rej;
+          setTimeout(rej, 3000);
+        });
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(sx, sy, size / 2, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.clip();
+        ctx.drawImage(avatarImg, sx - size / 2, sy - size / 2, size, size);
+        ctx.restore();
+
+        // Border
+        ctx.strokeStyle = spot.tier === 'gold' ? '#ffd54a' : spot.tier === 'white' ? '#ffffff' : '#57ff7f';
+        ctx.lineWidth = isCurrentSpot ? 4 : 2;
+        ctx.beginPath();
+        ctx.arc(sx, sy, size / 2 + 2, 0, Math.PI * 2);
+        ctx.stroke();
+      } catch {
+        drawGlowDot(ctx, sx, sy, size, spot.tier);
+      }
+    } else if (spot.claimed) {
+      drawGlowDot(ctx, sx, sy, size, spot.tier);
+    } else {
+      drawGlowDot(ctx, sx, sy, size * 0.6, spot.tier);
+    }
+
+    // Highlight current spot with golden ring
+    if (isCurrentSpot) {
+      ctx.strokeStyle = '#ffd54a';
+      ctx.lineWidth = 5;
+      ctx.shadowColor = '#ffd54a';
+      ctx.shadowBlur = 30;
+      ctx.beginPath();
+      ctx.arc(sx, sy, size / 2 + 12, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  // === Header text ===
   ctx.textAlign = 'center';
 
-  ctx.font = '900 76px Inter, Arial';
+  // Logo
+  ctx.font = '700 32px Inter, Arial';
   ctx.fillStyle = '#ffffff';
-  ctx.fillText('Grow The Tree', 540, 260);
-
-  ctx.font = 'italic 700 58px Inter, Arial';
+  ctx.fillText('🌿 GROW THE TREE', 540, 60);
+  ctx.font = 'italic 600 28px Inter, Arial';
   ctx.fillStyle = '#57ff7f';
-  ctx.fillText('together', 540, 330);
+  ctx.fillText('together', 540, 100);
 
-  ctx.font = '900 110px Inter, Arial';
-  ctx.fillStyle = data.tier === 'gold' ? '#ffd54a' : data.tier === 'white' ? '#ffffff' : '#57ff7f';
-  ctx.fillText(data.emoji, 540, 570);
+  // Achievement
+  ctx.font = '600 24px Inter, Arial';
+  ctx.fillStyle = '#ffd54a';
+  ctx.fillText('✨ ACHIEVEMENT UNLOCKED ✨', 540, 180);
 
+  // Tier title
+  const tierLabel = data.tier === 'gold' ? 'GOLD FOUNDER' : data.tier === 'white' ? 'WHITE FOUNDER' : 'GREEN FOUNDER';
   ctx.font = '900 72px Inter, Arial';
-  ctx.fillStyle = '#ffffff';
-  ctx.fillText(data.label.toUpperCase(), 540, 720);
+  ctx.fillStyle = data.tier === 'gold' ? '#ffd54a' : data.tier === 'white' ? '#ffffff' : '#57ff7f';
+  ctx.fillText(tierLabel, 540, 280);
 
-  ctx.font = '700 54px Inter, Arial';
-  ctx.fillStyle = '#dce8e1';
-  ctx.fillText(data.name, 540, 820);
+  // Number badge
+  const claimedCount = spots.filter(s => s.claimed).length;
+  ctx.font = '900 64px Inter, Arial';
+  ctx.fillStyle = '#ffd54a';
+  ctx.fillText(`#${claimedCount}`, 540, 380);
 
-  ctx.font = '500 42px Inter, Arial';
-  ctx.fillStyle = '#9aa9a1';
-  ctx.fillText('claimed a permanent spot', 540, 910);
-  ctx.fillText('on the founding tree', 540, 970);
-
-  ctx.font = '800 46px Inter, Arial';
-  ctx.fillStyle = '#57ff7f';
-  ctx.fillText('Only 40 spots exist', 540, 1170);
-
+  // Name
   ctx.font = '700 42px Inter, Arial';
   ctx.fillStyle = '#ffffff';
-  ctx.fillText('growthetreetogether.com', 540, 1580);
+  ctx.fillText('PROUDLY CLAIMED BY', 540, 460);
+  ctx.font = '900 56px Inter, Arial';
+  ctx.fillText(data.name, 540, 530);
+  if (data.about) {
+    ctx.font = '500 28px Inter, Arial';
+    ctx.fillStyle = '#9aa9a1';
+    ctx.fillText(data.about, 540, 580);
+  }
 
+  // === Footer ===
+  // Badge
+  ctx.fillStyle = 'rgba(0,0,0,0.6)';
+  roundRect(ctx, 290, 1420, 500, 80, 16);
+  ctx.fill();
+  ctx.strokeStyle = '#ffd54a';
+  ctx.lineWidth = 2;
+  roundRect(ctx, 290, 1420, 500, 80, 16);
+  ctx.stroke();
+
+  ctx.font = '700 24px Inter, Arial';
+  ctx.fillStyle = '#ffd54a';
+  ctx.textAlign = 'center';
+  ctx.fillText(`🏆 ONE OF ONLY ${TOTALS[data.tier]} ${data.tier.toUpperCase()} SPOTS`, 540, 1470);
+
+  // Stats row
+  const statsY = 1560;
+  ctx.font = '600 20px Inter, Arial';
+  ctx.fillStyle = '#b9c8bf';
+  ctx.fillText('ONLY 40 SPOTS EXIST', 270, statsY);
+  ctx.fillText('FOUNDING MEMBER', 540, statsY);
+  ctx.fillText('PERMANENT PLACE', 810, statsY);
+
+  // CTA
+  ctx.fillStyle = 'rgba(87,255,127,0.12)';
+  roundRect(ctx, 180, 1700, 720, 70, 35);
+  ctx.fill();
+  ctx.strokeStyle = '#57ff7f';
+  ctx.lineWidth = 2;
+  roundRect(ctx, 180, 1700, 720, 70, 35);
+  ctx.stroke();
+
+  ctx.font = '800 28px Inter, Arial';
+  ctx.fillStyle = '#57ff7f';
+  ctx.fillText('🌿 BE PART OF SOMETHING REAL. GROW TOGETHER. 🌿', 540, 1745);
+
+  // URL
+  ctx.font = '700 32px Inter, Arial';
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText('growthetreetogether.com', 540, 1850);
+
+  // === Download ===
   const link = document.createElement('a');
-  link.download = `grow-the-tree-${data.tier}-story.png`;
+  link.download = `grow-the-tree-${data.tier}-founder-${data.name.replace(/\s+/g, '-')}.png`;
   link.href = canvas.toDataURL('image/png');
   link.click();
+}
+
+function drawGlowDot(ctx, x, y, size, tier) {
+  const color = tier === 'gold' ? '#ffd54a' : tier === 'white' ? '#ffffff' : '#57ff7f';
+  ctx.beginPath();
+  ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+  ctx.fillStyle = color;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 20;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
 }
 
 init();
